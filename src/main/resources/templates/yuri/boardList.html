@@ -8,6 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<h2>유리 컨트롤러테스트</h2>
+
+<div th:fragment="header">
+    <div th:insert="~{header.html::header}"></div>
+</div>
+<h2>연결테스트</h2>
 </body>
 </html>
