@@ -16,6 +16,11 @@ public class YuriController {
     public String yuriBoardWrite() throws Exception {
         return "yuri/boardWrite";
     }
+
+    @RequestMapping("/detail")
+    public String yuriBoardDetail() throws Exception {
+        return "yuri/boardDetail";
+    }
 }
 
 
