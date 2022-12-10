@@ -15,9 +15,8 @@ public class BoardDto {
 //    String userAdd2;
 //    int userManner;
 //    String userTel;
-//    String userEmail ;
+//    String userEmail;
 //    int userGender;
 //    int userCheck;
 //    int userLike;
-
 }
