@@ -1,4 +1,4 @@
-//package com.example.newboard.service;
+package com.example.pamarket00.service;//package com.example.newboard.service;
 //
 //import com.bitc.board.service.BoardService;
 //import com.example.newboard.dto.BoardDto;

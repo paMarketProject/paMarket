@@ -1,6 +1,6 @@
-package com.example.newboard.dto;
+package com.example.pamarket00.dto;
 
-import com.bitc.board.dto.BoardFileDto;
+
 import lombok.Data;
 
 import java.util.List;
