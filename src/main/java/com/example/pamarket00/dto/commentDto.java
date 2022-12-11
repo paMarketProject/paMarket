@@ -7,5 +7,8 @@ public class commentDto {
     int commentId;
     int commentType;
     String commentUserId;
-    String comment;
+    String commentContents;
+    String commentDate;
+    String commentDeleted_yn;
+    int commentBoardId;
 }
