@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
+
+    <resultMap id="BoardDto" type="BoardDto">
+        <result column="boardTitle" property="boardTitle"/>
+        <result column="boardProPrice" property="boardProPrice"/>
+        <result column="boardProPrice" property="boardProPrice"/>
+        <result column="boardKategory" property="boardKategory"/>
+        <result column="boardNum" property="boardNum"/>
+    </resultMap>
+
+    <resultMap id="FileDto" type="FileDto">
+        <result column="fileBoardNum" property="fileBoardNum"/>
+        <result column="filePath" property="filePath"/>
+    </resultMap>
+
+    <resultMap id="KategoryDto" type="KategoryDto">
+        <result column="kategoryNum" property="kategoryNum"/>
+    </resultMap>
+
+    <resultMap id="LocationDto" type="LocationDto">
+        <result column="locationName" property="locationName"/>
+    </resultMap>
+
     <select id="selectBoardList" resultType="com.example.pamarket00.dto.BoardDto">
         <![CDATA[
-        SELECT * from board where boardUserId='aaa'
+        SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, file.filePath
+        FROM board
+                 JOIN location location
+                      ON location.locationNum = board.boardUserCheck
+                 JOIN kategory kategory
+                      ON kategory.kategoryNum = board.boardKategory
+                 JOIN file file
+                      ON file.fileBoardNum = board.boardNum
+        WHERE board.boardUserId = 'aaa' AND board.deleted_yn='N';
 ]]>
     </select>
+
+
 </mapper>
