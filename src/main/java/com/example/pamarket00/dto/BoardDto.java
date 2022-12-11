@@ -7,17 +7,18 @@ import java.util.List;
 
 @Data
 public class BoardDto {
-//    int userNum;
-//    String userName;
-//    String userId;
-//    String userPw;
-//    String userAdd1;
-//    String userAdd2;
-//    int userManner;
-//    String userTel;
-//    String userEmail ;
-//    int userGender;
-//    int userCheck;
-//    int userLike;
-
+    int boardNum;
+    String boardTitle;
+    String boardType;
+    int boardKategory;
+    int boardProState;
+    String boardUserId;
+    String boardContents;
+    String boardDate;
+    int boardUserCheck;
+    String boardImagePath;
+    int boardProPrice;
+    String deleted_yn;
+    int boardLike;
+    int boardHitCnt;
 }

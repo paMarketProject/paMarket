@@ -8,8 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class YuriController {
 //    게시글 목록 페이지
     @RequestMapping("/list")
-    public String boardList() throws Exception {
+    public String yuriBoardList() throws Exception {
         return "yuri/boardList";
+    }
+
+    @RequestMapping("/write")
+    public String yuriBoardWrite() throws Exception {
+        return "yuri/boardWrite";
+    }
+
+    @RequestMapping("/detail")
+    public String yuriBoardDetail() throws Exception {
+        return "yuri/boardDetail";
     }
 }
 
