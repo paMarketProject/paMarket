@@ -3,7 +3,7 @@ package com.example.pamarket00.dto;
 import lombok.Data;
 
 @Data
-public class ReviewDto {
+public class reviewDto {
     int reviewNum;
     String reviewToUserId;
     String reviewFromUserId;
