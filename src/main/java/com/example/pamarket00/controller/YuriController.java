@@ -21,7 +21,7 @@ public class YuriController {
 //    게시글 목록 페이지
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
     public ModelAndView openProdeuctList() throws Exception{
-        ModelAndView mv = new ModelAndView("yuri/yuriBoardList");
+        ModelAndView mv = new ModelAndView("yuri/test");
         List<BoardDto> dataList = yuriBoardService.selectBoardList();
         mv.addObject("dataList", dataList);
 
