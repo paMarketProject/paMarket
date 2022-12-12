@@ -24,22 +24,22 @@ public class YuriController {
         this.yuriBoardService = yuriBoardService;
     }
 //    게시글 목록 페이지
-//    @RequestMapping(value = "/productList", method = RequestMethod.GET)
-//    public ModelAndView openProdeuctList() throws Exception{
-//        ModelAndView mv = new ModelAndView("yuri/test");
-//        List<BoardDto> dataList = yuriBoardService.selectBoardList();
-//        mv.addObject("dataList", dataList);
-//
-//        return mv;
-//    }
-
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public String ProductList(Model model) {
-        ProductListDao dao = sqlSession.getMapper(ProductListDao.class);
-        ProductListDto list = dao.productList();
-        model.addAttribute("list",list);
-        return "yuri/yuriBoardList";
+    public ModelAndView openProdeuctList() throws Exception{
+        ModelAndView mv = new ModelAndView("yuri/test");
+        List<BoardDto> dataList = yuriBoardService.selectBoardList();
+        mv.addObject("dataList", dataList);
+
+        return mv;
     }
+
+//    @RequestMapping(value = "/productList", method = RequestMethod.GET)
+//    public String ProductList(Model model) {
+//        ProductListDao dao = sqlSession.getMapper(ProductListDao.class);
+//        ProductListDto list = dao.productList();
+//        model.addAttribute("list",list);
+//        return "yuri/yuriBoardList";
+//    }
 
     @RequestMapping("/productWrite")
     public String yuriBoardWrite() throws Exception {
