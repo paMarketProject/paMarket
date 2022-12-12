@@ -35,7 +35,7 @@
                         <a href="/board/openBoardDetail?idx=" th:attrappend="href=${list.boardNum}" th:text="${list.boardTitle}"></a>
                     </td>
                     <td th:text="${list.boardUserId}"></td>
-                    <td th:text="${list.boardDate}"></td>
+                    <td th:text="${list.locationName}"></td>
                     <td th:text="${list.boardHitCnt}"></td>
                 </tr>
                 <tr th:unless="${#lists.size(dataList)} > 0">

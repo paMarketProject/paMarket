@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
 
-    <resultMap id="BoardDto" type="BoardDto">
+    <resultMap id="BoardMap" type="com.example.pamarket00.dto.BoardDto">
         <result column="boardTitle" property="boardTitle"/>
         <result column="boardProPrice" property="boardProPrice"/>
         <result column="boardProPrice" property="boardProPrice"/>
@@ -10,22 +10,29 @@
         <result column="boardNum" property="boardNum"/>
     </resultMap>
 
-    <resultMap id="FileDto" type="FileDto">
+    <resultMap id="FileMap" type="com.example.pamarket00.dto.FileDto">
         <result column="fileBoardNum" property="fileBoardNum"/>
         <result column="filePath" property="filePath"/>
     </resultMap>
 
-    <resultMap id="KategoryDto" type="KategoryDto">
+    <resultMap id="KategoryMap" type="com.example.pamarket00.dto.KategoryDto">
         <result column="kategoryNum" property="kategoryNum"/>
     </resultMap>
 
-    <resultMap id="LocationDto" type="LocationDto">
+    <resultMap id="LocationMap" type="com.example.pamarket00.dto.LocationDto">
         <result column="locationName" property="locationName"/>
     </resultMap>
 
-    <select id="selectBoardList" resultType="com.example.pamarket00.dto.BoardDto">
+    <resultMap id="ProductListMap" type="com.example.pamarket00.yuriDto.ProductListDto">
+        <collection property="boardDto" resultMap="BoardMap"/>
+        <collection property="fileDto" resultMap="FileMap"/>
+        <collection property="locationDto" resultMap="LocationMap"/>
+        <collection property="kategoryDto" resultMap="KategoryMap"/>
+    </resultMap>
+
+    <select id="selectBoardList" resultType="ProductListMap">
         <![CDATA[
-        SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, file.filePath
+        SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName
         FROM board
                  JOIN location location
                       ON location.locationNum = board.boardUserCheck
