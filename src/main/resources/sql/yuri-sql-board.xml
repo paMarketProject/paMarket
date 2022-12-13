@@ -6,4 +6,21 @@
         SELECT * from board where boardUserId='aaa'
 ]]>
     </select>
+
+    <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
+        <![CDATA[
+        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
+        values(${boardTitle},${boardKategory},'ㅊㅊㅊ',${boardContents},now(),${boardProPrice});
+    ]]>
+    </insert>
+
+    <insert id="insertProductBoardList" parameterType="com.example.pamarket00.dto.FileDto">
+        <![CDATA[
+        INSERST INTO file(fileName, filePath, fileBoardNum)
+        VALUES
+]]>
+        <foreach collection="productlist" item="productlist" separator=",">
+            (#{productItem.boardNum}, #{productItem.fileName}, #{productItem.filePath})
+        </foreach>
+    </insert>
 </mapper>
