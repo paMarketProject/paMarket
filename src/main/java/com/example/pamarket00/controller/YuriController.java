@@ -27,7 +27,7 @@ public class YuriController {
 
         return mv;
     }
-
+//
     @RequestMapping("/productWrite")
     public String yuriBoardWrite() throws Exception {
         return "yuriBoardWrite";
