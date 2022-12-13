@@ -10,13 +10,19 @@ import java.util.List;
 
 @Service
 
-public class YuriBoardServiceImpl implements YuriBoardService{
+public class YuriBoardServiceImpl implements YuriBoardService {
     @Autowired
     private YuriBoardMapper yuriBoardMapper;
 
     @Override
-    public List<BoardDto> selectBoardList() throws Exception{
+    public List<BoardDto> selectBoardList() throws Exception {
         return yuriBoardMapper.selectBoardList();
+    }
+
+
+    @Override
+    public void insertProductBoard(BoardDto board) throws Exception {
+//        YuriBoardMapper.insertProductBoard(board); //boardmapper에 만들어준다.
     }
 
 }

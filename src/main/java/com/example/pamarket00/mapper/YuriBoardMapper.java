@@ -6,5 +6,6 @@ import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
     List<BoardDto> selectBoardList() throws Exception;
+    void insertProductBoard(BoardDto board);
 
 }

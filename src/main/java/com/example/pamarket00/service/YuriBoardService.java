@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface YuriBoardService {
     List<BoardDto> selectBoardList() throws Exception;
+
+    public void insertProductBoard(BoardDto board) throws Exception;
 }

@@ -6,4 +6,11 @@
         SELECT * from board where boardUserId='aaa'
 ]]>
     </select>
+
+<!--    글 쓰기 페이지-->
+    <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
+        <![CDATA[
+        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice) values(#{title},${kategory},'bbb',${contents},now(),${price});
+]]>
+    </insert>
 </mapper>
