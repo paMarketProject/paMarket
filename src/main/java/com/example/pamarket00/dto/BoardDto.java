@@ -2,10 +2,13 @@ package com.example.pamarket00.dto;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class BoardDto {
     int boardNum;
     String boardTitle;
