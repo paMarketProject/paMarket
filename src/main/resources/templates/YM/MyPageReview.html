@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,23 +17,23 @@
 <div class="container mb-5">
   <div class="row mt-4">
     <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand text-success fs-3 me-5" href="#">MyPage</a>
+      <a class="navbar-brand text-success fs-3 me-5" href="MyPage">MyPage</a>
       <div class="collapse navbar-collapse justify-content-start">
         <ul class="navbar-nav fs-5">
           <li class="nav-item">
-            <a class="nav-link" href="#">작성한 글 목록</a>
+            <a class="nav-link" href="MyPage">작성한 글 목록</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">판매내역</a>
+            <a class="nav-link" href="MyPageSell">판매내역</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">구매내역</a>
+            <a class="nav-link" href="MyPageBuy">구매내역</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-success" href="#">거래후기</a>
+            <a class="nav-link text-success" href="MyPageReview">거래후기</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">개인정보 수정</a>
+            <a class="nav-link" href="MyPageUserInfo">개인정보 수정</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">지역인증</a>
@@ -57,11 +57,11 @@
               </thead>
               <tbody>
               <tr>
-                <td>타임리프</td>
-                <td>타임리프</td>
-                <td>타임리프</td>
-                <td>타임리프</td>
-                <td>타임리프</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
               <!--                            나중에 값이 많아지면 처리 페이지네이션-->
               </tbody>
