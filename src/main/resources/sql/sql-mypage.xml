@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pamarket00.mapper.MyPageMapper">
 
-    <select id="MyPageList" resultType="com.example.pamarket00.dto.BoardDto">
+    <select id="MyPageList" resultType="com.example.pamarket00.dto.MyPageMainDto">
     <![CDATA[
-        SELECT board.boardImagePath, board.boardTitle, Kategory.KategoryName, board.boardDate, board.boardHitCnt
+        SELECT board.boardImagePath, board.boardTitle, Kategory.KategoryName as KategoryName, board.boardDate, board.boardHitCnt
         FROM board
         JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
         WHERE boardUserId = 'aaa'
