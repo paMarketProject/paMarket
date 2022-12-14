@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>판매내역</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script>
+
+    </script>
+    <div th:fragment="header">
+        <div th:insert="~{header.html::header}"></div>
+    </div>
+</head>
+<body>
+<div class="container mb-5">
+    <div class="row mt-4">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand text-success fs-3 me-5" href="MyPage">MyPage</a>
+            <div class="collapse navbar-collapse justify-content-start">
+                <ul class="navbar-nav fs-5">
+                    <li class="nav-item">
+                        <a class="nav-link" href="MyPage">작성한 글 목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-success" href="MyPageSell">판매내역</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MyPageBuy">구매내역</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MyPageReview">거래후기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MyPageUserInfo">개인정보 수정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">지역인증</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div th:if="${#lists.size(sellList)} > 0" th:each="list : ${sellList}" class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" th:src="${list.boardImagePath}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 th:text="${list.boardTitle}" class="fw-bolder"></h5>
+                                <!-- Product price-->
+                                <span th:text="${list.boardUserCheck}"></span><br>
+                                <span th:text="${list.boardProPrice}">가격</span><br>
+
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-success mt-auto" th:text="${list.boardProState}"></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div th:unless="${#lists.size(sellList) > 0 }" class="container px-4 px-lg-5 mt-5">
+                <div class="container text-center">
+                    <h1>판매한 상품이 없습니다.</h1>
+                </div>
+            </div>
+    </div>
+    </div>
+</body>
+</html>

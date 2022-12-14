@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
+    <select id="selectBoardList" resultType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        SELECT * from board where boardUserId='aaa'
+]]>
+    </select>
+
+    <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
+        <![CDATA[
+        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
+        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice});
+    ]]>
+    </insert>
+
+    <insert id="insertProductBoardFileList" parameterType="com.example.pamarket00.dto.FileDto">
+<!--        insertProductBoardFileList / insertProductBoardList-->
+        <![CDATA[
+        insert INTO file(fileBoardNum,fileName, filePath)
+        VALUES
+]]>
+        <foreach collection="list" item="item" separator=",">
+            (#{item.fileBoardNum}, #{item.fileName}, #{item.filePath})
+        </foreach>
+    </insert>
+</mapper>
