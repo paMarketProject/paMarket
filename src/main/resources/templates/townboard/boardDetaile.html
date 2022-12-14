@@ -82,28 +82,26 @@
             <table class="table table-condensed">
                 <thead style="background-color: rgba(0,204,0,0.6)">
                 <tr align="center">
-                    <th width="10%">제목</th>
-                    <th width="60%">게시판 제목 입니다.</th>
+                    <label for="boardTitle">글제목</label>
+                    <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="글제목" th:value="${board.boardTitle}">
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>작성일
-                    </td>
-                    <td>
-                        2022-12-15 04:45:23
-                    </td>
+                    <label for="boardDate">등록날짜</label>
+                    <input type="text" class="form-control" id="boardDate" name="boardDate" placeholder="등록날짜" readonly th:value="${board.boardDate}">
                 </tr>
                 <tr>
-                    <td>글쓴이
-                    </td>
+                    <label for="boardUserId">글쓴이</label>
+                    <input type="text" class="form-control" id="boardUserId" name="boardUserId" placeholder="글쓴이" readonly th:value="${board.boardUserId}">
                     <td>
-                        husk <span style='float:right'>조회 : 0</span>
+                        <label for="boardHitCnt">조회수</label>
+                        <input style="float:right" type="text" class="form-control" id="boardHitCnt" name="boardHitCnt" placeholder="조회수" readonly th:value="${board.hitCnt}">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <p>이름, 패스워드 내용을 적으시고 확인버튼을 누르세요.</p>
+                        <textarea class="form-control" rows="5" id="boardContents" name="boardContents" placeholder="글내용" th:text="${board.boardContents}"></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -136,7 +134,7 @@
                 <tr>
                     <td>
                         <span style="float: left">
-                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
+                            <a class="btn btn-success" href="http://localhost:8080/board/town" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
                         </span>
                         <span style='float:right'>
                             <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">수정</a>

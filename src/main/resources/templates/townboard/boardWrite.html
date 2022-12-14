@@ -28,8 +28,8 @@
     <script>
         $(document).ready(function (){
 
-            $("#sel1").on("change", function (){
-                const selectValue = $("#sel1 option:selected").val();
+            $("#boardKategory").on("change", function (){
+                const selectValue = $("#boardKategory option:selected").val();
                 const datas = {areaName: selectValue};
 
                 $.ajax({
@@ -99,28 +99,29 @@
     </div>
 </nav>
 
-<div class="container">
+<form class="container" action="/board/town/write" method="post">
+
     <hr/>
     <div class="row" style="padding-left: 10%">
         <div class="col-md-10">
             <table class="table table-condensed">
                 <div class="col-sm" style="width: 60px; margin-left: 8px">
-                    <select class="form-control me-3" id="sel1">
-                        <option value="" selected>분류</option>
-                        <option value="동네질문">질문</option>
-                        <option value="동네소식">소식</option>
-                        <option value="동네맛집">맛집</option>
-                        <option value="일상">일상</option>
-                        <option value="취미생활">취미</option>
+                    <select class="form-control me-3" id="boardKategory" name="boardKategory">
+                        <option value="20" selected>분류</option>
+                        <option value="21">질문</option>
+                        <option value="22">소식</option>
+                        <option value="23">맛집</option>
+                        <option value="24">일상</option>
+                        <option value="25">취미</option>
                     </select>
                 </div>
                 <td colspan="2">
-                    <input type="text" id="boardTitle" class="form-control col-lg-12" style="width:100%" placeholder="제목" >
+                    <input type="text"  class="form-control col-lg-12" id="boardTitle" name="boardTitle" style="width:100%" placeholder="제목"  >
                 </td>
                 <tbody>
                 <tr>
                     <td colspan="2">
-                        <textarea id="commentParentText" class="form-control col-lg-12"  rows="20" placeholder="내용"></textarea>
+                        <textarea  class="form-control col-lg-12" id="boardContents" name="boardContents" rows="20" placeholder="내용"></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -131,10 +132,10 @@
                 <tr>
                     <td>
                         <span style="float: left">
-                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
+                            <a class="btn btn-success" href="http://localhost:8080/board/town" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
                         </span>
                         <span style='float:right'>
-                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">완료</a>
+                            <button type="submit" class="btn btn-secondary btn-sm " style="background-color: rgba(0,204,0,0.6)" >완료</button>
                         </span>
                     </td>
                 </tr>
@@ -143,7 +144,7 @@
         </div>
     </div>
     <hr/>
-</div>
+</form>
 
 
 </body>

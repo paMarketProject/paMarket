@@ -25,36 +25,6 @@
             width: 2.3rem;
         }
     </style>
-    <script>
-        $(document).ready(function (){
-
-            $("#sel1").on("change", function (){
-                const selectValue = $("#sel1 option:selected").val();
-                const datas = {areaName: selectValue};
-
-                $.ajax({
-                    url:"/ajax/selectbox",
-                    type: "post",
-                    data: datas,
-                    success: function (data){
-                        let  selBox = $("#sel2");
-                        selBox.empty();
-                        selBox.append("<option>선택하세요</option>")
-
-                        for (let i = 0; i < data.length; i++){
-                            selBox.append("<option>"+ data[i].areaName + "</option>" );
-                        }
-                    },
-                    error: function (){
-                        alert("ajax통신 중 오류가 발생했습니다.")
-                    }
-                })
-
-            })
-
-        })
-    </script>
-
 </head>
 
 <body>
@@ -63,9 +33,15 @@
 </div>
 
 <nav class="navbar navbar-expand-lg bg-light col-md-8 offset-md-2 ">
-    <div class="container-fluid" style="background-color: rgba(66,177,100,0.6); padding-top: 15px; padding-bottom: 15px">
-        <a class="navbar-brand col-md-2" href="#" style="font-size: 33px; padding-left: 50px"><img src="/image/logo.png" alt="Logo" width="50" height="50" style="padding-right:10px" class="d-inline-block align-text-top">대파마켓</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container-fluid "
+         style="background-color: rgba(66,177,100,0.6); padding-top: 15px; padding-bottom: 15px">
+        <a class="navbar-brand col-md-2" href="#" style="font-size: 33px; padding-left: 50px"><img src="/image/logo.png"
+                                                                                                   alt="Logo" width="50"
+                                                                                                   height="50"
+                                                                                                   style="padding-right:10px     "
+                                                                                                   class="d-inline-block align-text-top">대파마켓</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse">
@@ -101,40 +77,68 @@
 
 <div class="container">
     <hr/>
-    <div class="row" style="padding-left: 10%">
+    <div class="row">
         <div class="col-md-10">
             <table class="table table-condensed">
-                <div class="col-sm" style="width: 60px; margin-left: 8px">
-                    <select class="form-control me-3" id="sel1">
-                        <option value="" selected>분류</option>
-                        <option value="동네질문">질문</option>
-                        <option value="동네소식">소식</option>
-                        <option value="동네맛집">맛집</option>
-                        <option value="일상">일상</option>
-                        <option value="취미생활">취미</option>
-                    </select>
-                </div>
-                <td colspan="2">
-                    <input type="text" id="boardTitle" class="form-control col-lg-12" style="width:100%" placeholder="제목" >
-                </td>
+                <thead style="background-color: rgba(0,204,0,0.6)">
+                <tr align="center">
+                    <label for="boardTitle">글제목</label>
+                    <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="글제목" th:value="${board.boardTitle}">
+                </tr>
+                </thead>
                 <tbody>
                 <tr>
+                    <label for="boardDate">등록날짜</label>
+                    <input type="text" class="form-control" id="boardDate" name="boardDate" placeholder="등록날짜" readonly th:value="${board.boardDate}">
+                </tr>
+                <tr>
+                    <label for="boardUserId">글쓴이</label>
+                    <input type="text" class="form-control" id="boardUserId" name="boardUserId" placeholder="글쓴이" readonly th:value="${board.boardUserId}">
+                    <td>
+                        <label for="boardHitCnt">조회수</label>
+                        <input style="float:right" type="text" class="form-control" id="boardHitCnt" name="boardHitCnt" placeholder="조회수" readonly th:value="${board.hitCnt}">
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2">
-                        <textarea id="commentParentText" class="form-control col-lg-12"  rows="20" placeholder="내용"></textarea>
+                        <textarea class="form-control" rows="5" id="boardContents" name="boardContents" placeholder="글내용" th:text="${board.boardContents}"></textarea>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
+            <table id="commentTable" class="table table-condensed"></table>
+            <table class="table table-condensed">
+                <tr>
+                    <td>
+                        <span class="form-inline" role="form">
+                            <div class="form-group">
+                                <div class="row" style="margin-bottom: 10px">
+                                    <div class="col-md-3">
+                                        <input type="text" id="commentParentName" name="commentParentName" class="form-control col-lg-2" data-rule-required="true" placeholder="이름" maxlength="10" >
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="password" id="commentParentPassword" name="commentParentPassword" class="form-control col-lg-2" data-rule-required="true" placeholder="패스워드" maxlength="10" >
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">확인</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <textarea id="commentParentText" class="form-control col-lg-12" style="width:100%" rows="4"></textarea>
+                        </span>
+                    </td>
+                </tr>
+            </table>
             <table class="table table-condensed">
                 <thead>
                 <tr>
                     <td>
                         <span style="float: left">
-                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
+                            <a class="btn btn-success" href="http://localhost:8080/board/town" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
                         </span>
                         <span style='float:right'>
-                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">완료</a>
+                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">수정</a>
+                            <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">삭제</a>
                         </span>
                     </td>
                 </tr>

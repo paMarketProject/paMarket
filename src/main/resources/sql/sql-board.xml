@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.pamarket00.mapper.TownMapper">
+    <insert id="insertBoard" parameterType="com.example.pamarket00.dto.TownDto">
+        INSERT INTO board
+            (boardKategory, boardTitle, boardContents, boardDate)
+        VALUES
+            (#{boardKategory}, #{boardTitle}, #{boardContents}, NOW())
+    </insert>
+
+    <select id="selectBoardList" resultType="com.example.pamarket00.dto.TownDto">
+        SELECT
+            boardNum, boardTitle, boardUserId,
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s'),boardHitCnt AS boardDate
+        FROM
+            board
+        WHERE
+            deleted_yn = 'N'
+        ORDER BY
+            boardNum DESC
+    </select>
+
+    <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
+        SELECT
+            idx, title, contents, user_id, hit_cnt,
+            DATE_FORMAT(create_dt, '%Y.%m.%d %H:%i:%s') AS create_dt,
+            DATE_FORMAT(update_dt, '%Y.%m.%d %H:%i:%s') AS update_dt
+        FROM
+            board
+        WHERE
+            idx = #{idx}
+    </select>
+</mapper>
