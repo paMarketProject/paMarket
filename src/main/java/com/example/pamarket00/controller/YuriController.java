@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,9 +27,10 @@ public class YuriController {
 //    게시글 목록 페이지
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public ModelAndView openProductList() throws Exception{
+    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
-        List<ProductBoardDto> dataList = yuriBoardService.selectProductBoardList();
+
+        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
         mv.addObject("dataList", dataList);
 
         return mv;

@@ -15,7 +15,7 @@
                       ON file.fileBoardNum = board.boardNum
                  JOIN state state
                       ON board.boardProState = state.stateNum
-        WHERE board.boardUserId = 'aaa' AND board.deleted_yn='N';
+        WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N';
 ]]>
     </select>
 

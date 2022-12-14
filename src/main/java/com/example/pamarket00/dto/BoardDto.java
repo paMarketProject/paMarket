@@ -24,4 +24,5 @@ public class BoardDto {
     String deleted_yn;
     int boardLike;
     int boardHitCnt;
+    List<FileDto> fileList;
 }
