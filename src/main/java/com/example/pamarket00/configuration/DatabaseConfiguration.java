@@ -37,7 +37,7 @@ import javax.sql.DataSource;
         public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
             SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
             sqlSessionFactoryBean.setDataSource(dataSource);
-            sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/**/yuri-sql-*.xml"));
+            sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/**/sql-*.xml"));
             sqlSessionFactoryBean.setConfiguration(mybatisConfig());
 
             return sqlSessionFactoryBean.getObject();

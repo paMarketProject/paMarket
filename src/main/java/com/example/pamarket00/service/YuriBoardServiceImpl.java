@@ -16,8 +16,8 @@ import java.util.List;
 public class YuriBoardServiceImpl implements YuriBoardService{
     @Autowired
     private YuriBoardMapper yuriBoardMapper;
-
-    private FileUtils productFileUtils;
+    @Autowired
+    private FileUtils fileUtils;
 
     @Override
     public List<BoardDto> selectProductBoardList() throws Exception{
@@ -31,10 +31,11 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     public void insertProductBoard (BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception{
         yuriBoardMapper.insertProductBoard(board);
 
-        List<FileDto> productFileList = productFileUtils.parseFileInfo(board.getBoardNum(),uploadFiles);
+        List<FileDto> fileList = fileUtils.parseFileInfo(board.getBoardNum(),uploadFiles);
+//uploadFiles였는데
 
-        if(CollectionUtils.isEmpty(productFileList) == false){
-            yuriBoardMapper.insertProductBoardFileList(productFileList);
+        if(CollectionUtils.isEmpty(fileList) == false){
+            yuriBoardMapper.insertProductBoardFileList(fileList);
         }
     }
 
@@ -52,5 +53,4 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     public FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception {
         return yuriBoardMapper.selectProductBoardFileInfo(fileNum,boardNum);
     }
-
 }

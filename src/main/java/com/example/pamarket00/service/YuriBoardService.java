@@ -10,10 +10,10 @@ import java.util.List;
 public interface YuriBoardService {
     List<BoardDto> selectProductBoardList() throws Exception;
     void insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;
+//    insertProductBoard(board,multipart)
 
     void updateProductBoard(BoardDto board) throws Exception;
 
     void deleteProductBoard(int boardNum) throws Exception;
-
     FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception;
 }

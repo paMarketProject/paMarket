@@ -10,17 +10,18 @@
     <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
         <![CDATA[
         insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
-        values(${boardTitle},${boardKategory},'ㅊㅊㅊ',${boardContents},now(),${boardProPrice});
+        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice});
     ]]>
     </insert>
 
-    <insert id="insertProductBoardList" parameterType="com.example.pamarket00.dto.FileDto">
+    <insert id="insertProductBoardFileList" parameterType="com.example.pamarket00.dto.FileDto">
+<!--        insertProductBoardFileList / insertProductBoardList-->
         <![CDATA[
-        INSERST INTO file(fileName, filePath, fileBoardNum)
+        insert INTO file(fileBoardNum,fileName, filePath)
         VALUES
 ]]>
-        <foreach collection="productlist" item="productlist" separator=",">
-            (#{productItem.boardNum}, #{productItem.fileName}, #{productItem.filePath})
+        <foreach collection="list" item="item" separator=",">
+            (#{item.fileBoardNum}, #{item.fileName}, #{item.filePath})
         </foreach>
     </insert>
 </mapper>

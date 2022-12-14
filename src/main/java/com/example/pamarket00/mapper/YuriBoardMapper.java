@@ -17,7 +17,7 @@ public interface YuriBoardMapper {
 
     void deleteProductBoard(int boardNum) throws Exception;
 
-    void insertProductBoardFileList(List<FileDto> productFileList) throws Exception;
+    void insertProductBoardFileList(List<FileDto> fileList) throws Exception;
 
     List<FileDto> selectProductBoardFileList(int boardNum) throws Exception;
 

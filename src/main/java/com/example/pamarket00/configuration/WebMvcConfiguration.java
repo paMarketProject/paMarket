@@ -13,7 +13,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 //    기본 문자셋 설정
     commonsMultipartResolver.setDefaultEncoding("UTF-8");
 //    업로드 파일 최대 크기 설정, byte 크기로 설정하기 때문에 5 * 1024 * 1024 = 5MB가 됨
-    commonsMultipartResolver.setMaxUploadSizePerFile(5 * 1024 * 1024);
+    commonsMultipartResolver.setMaxUploadSizePerFile(10 * 1024 * 1024);
 
     return commonsMultipartResolver;
   }
