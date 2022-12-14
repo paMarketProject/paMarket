@@ -75,40 +75,39 @@
     </div>
 </nav>
 
-<div class="container">
-    <hr/>
-    <div class="row">
+<div class="container" style="margin-top: 30px">
+    <hr>
         <div class="col-md-10">
             <table class="table table-condensed">
-                <thead style="background-color: rgba(0,204,0,0.6)">
-                <tr align="center">
+                <thead>
+                <tr>
                     <label for="boardTitle">글제목</label>
-                    <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="글제목"
-                           th:value="${board.boardTitle}">
+                    <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="글제목" th:value="${board.boardTitle}">
                 </tr>
                 </thead>
                 <tbody>
+                <div class="row" style="margin-bottom: 20px; margin-top: 10px" >
+                    <div class="col-sm-3">
+                            <label for="boardUserId">글쓴이</label>
+                            <input type="text" style="width: 170px" class="form-control" id="boardUserId" name="boardUserId" placeholder="글쓴이" readonly th:value="${board.boardUserId}">
+                    </div>
 
-                <tr>
-                    <td>
-                        <span>
-                    <label for="boardDate">등록날짜</label>
-                    <input style="width: 170px" type="text" class="form-control" id="boardDate" name="boardDate"
-                           placeholder="등록날짜" readonly th:value="${board.boardDate}">
-                        </span>
-                        <span>
-                    <label for="boardHitCnt">조회수</label>
-                    <input style=" width: 100px " type="text" class="form-control" id="boardHitCnt" name="boardHitCnt"
-                           placeholder="조회수" readonly th:value="${board.boardHitCnt}">
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <label for="boardUserId">글쓴이</label>
-                    <input type="text" style="width: 170px" class="form-control" id="boardUserId" name="boardUserId"
-                           placeholder="글쓴이" readonly th:value="${board.boardUserId}">
+                    <div class="col-sm-3">
+                            <label for="boardDate">등록날짜</label>
+                            <input style="width: 170px" type="text" class="form-control" id="boardDate" name="boardDate" placeholder="등록날짜" readonly th:value="${board.boardDate}">
+                    </div>
 
-                </tr>
+                    <div class="col-sm-3">
+                            <label for="boardHitCnt">조회수</label>
+                            <input style=" width: 100px " type="text" class="form-control" id="boardHitCnt" name="boardHitCnt" placeholder="조회수" readonly th:value="${board.boardHitCnt}">
+                    </div>
+
+                </div>
+
+                <div class="form-floating">
+                    <textarea class="col-lg-12" rows="15" id="boardContents" name="boardContents" placeholder="글내용" th:text="${board.boardContents}"></textarea>
+                </div>
+
 
                 </tbody>
             </table>
@@ -120,23 +119,16 @@
                             <div class="form-group">
                                 <div class="row" style="margin-bottom: 10px">
                                     <div class="col-md-3">
-                                        <input type="text" id="commentParentName" name="commentParentName"
-                                               class="form-control col-lg-2" data-rule-required="true" placeholder="이름"
-                                               maxlength="10">
+                                        <input type="text" id="commentParentName" name="commentParentName" class="form-control col-lg-2" data-rule-required="true" placeholder="이름" maxlength="10">
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="password" id="commentParentPassword" name="commentParentPassword"
-                                               class="form-control col-lg-2" data-rule-required="true"
-                                               placeholder="패스워드" maxlength="10">
+                                        <input type="password" id="commentParentPassword" name="commentParentPassword" class="form-control col-lg-2" data-rule-required="true" placeholder="패스워드" maxlength="10">
                                     </div>
                                     <div class="col-md-3">
-                                        <a class="btn btn-success" href="#" role="button"
-                                           style="background-color: rgba(0,204,0,0.6)">확인</a>
+                                        <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">확인</a>
                                     </div>
                                 </div>
                             </div>
-                            <textarea id="commentParentText" class="form-control col-lg-12" style="width:100%"
-                                      rows="4"></textarea>
                         </span>
                     </td>
                 </tr>
@@ -160,7 +152,6 @@
                 </thead>
             </table>
         </div>
-    </div>
     <hr/>
 </div>
 
