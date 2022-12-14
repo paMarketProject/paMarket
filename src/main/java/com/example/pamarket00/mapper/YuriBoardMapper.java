@@ -2,6 +2,7 @@ package com.example.pamarket00.mapper;
 
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
+import com.example.pamarket00.dto.ProductBoardDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +10,7 @@ import java.io.File;
 import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
-    List<BoardDto> selectProductBoardList() throws Exception;
+    List<ProductBoardDto> selectProductBoardList() throws Exception;
 
     void insertProductBoard(BoardDto board) throws Exception;
 

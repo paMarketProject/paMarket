@@ -3,6 +3,7 @@ package com.example.pamarket00.controller;
 
 import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
+import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.service.YuriBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,9 @@ public class YuriController {
 //    게시글 목록 페이지
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public ModelAndView openProdeuctList() throws Exception{
-        ModelAndView mv = new ModelAndView("yuri/test");
-        List<BoardDto> dataList = yuriBoardService.selectProductBoardList();
+    public ModelAndView openProductList() throws Exception{
+        ModelAndView mv = new ModelAndView("yuri/boardList");
+        List<ProductBoardDto> dataList = yuriBoardService.selectProductBoardList();
         mv.addObject("dataList", dataList);
 
         return mv;

@@ -3,6 +3,7 @@ package com.example.pamarket00.service;
 import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
+import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.mapper.YuriBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,8 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     private FileUtils fileUtils;
 
     @Override
-    public List<BoardDto> selectProductBoardList() throws Exception{
-        List<BoardDto> list = null;
+    public List<ProductBoardDto> selectProductBoardList() throws Exception{
+        List<ProductBoardDto> list = null;
         list = yuriBoardMapper.selectProductBoardList();
         return list;
     }

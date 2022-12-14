@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
-    <select id="selectBoardList" resultType="com.example.pamarket00.dto.BoardDto">
+    <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-        SELECT * from board where boardUserId='aaa'
+        SELECT board.boardTitle, board.boardProPrice, location.locationName,
+               kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
+               file.filePath, board.boardContents,board.boardUserId
+        FROM board board
+                 JOIN location location
+                      ON location.locationNum = board.boardUserCheck
+                 JOIN kategory kategory
+                      ON kategory.kategoryNum = board.boardKategory
+                 JOIN file file
+                      ON file.fileBoardNum = board.boardNum
+                 JOIN state state
+                      ON board.boardProState = state.stateNum
+        WHERE board.boardUserId = 'aaa' AND board.deleted_yn='N';
 ]]>
     </select>
 
