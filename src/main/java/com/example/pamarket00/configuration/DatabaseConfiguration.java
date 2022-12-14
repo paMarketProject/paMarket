@@ -13,10 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
-<<<<<<< HEAD
-=======
 
->>>>>>> 145f7558e3971da73fb0227aebf7863cab15b0a9
     @Configuration
     @PropertySource("classpath:/application.properties")
     public class DatabaseConfiguration {
@@ -58,8 +55,4 @@ import javax.sql.DataSource;
         }
     }
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 145f7558e3971da73fb0227aebf7863cab15b0a9
