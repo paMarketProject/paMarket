@@ -13,7 +13,7 @@
     <select id="selectBoardList" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardNum, boardTitle, boardUserId,
-            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s'),boardHitCnt AS boardDate
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardHitCnt
         FROM
             board
         WHERE
@@ -24,12 +24,12 @@
 
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
-            idx, title, contents, user_id, hit_cnt,
-            DATE_FORMAT(create_dt, '%Y.%m.%d %H:%i:%s') AS create_dt,
-            DATE_FORMAT(update_dt, '%Y.%m.%d %H:%i:%s') AS update_dt
+            boardTitle,
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s') AS boardDate,boardHitCnt, boardUserId, boardContents
+
         FROM
             board
         WHERE
-            idx = #{idx}
+            boardNum = #{boardNum}
     </select>
 </mapper>

@@ -55,9 +55,9 @@ public class townBoardController {
         return mv;
     }
 
-    @RequestMapping(value = "/board/town/{idx}", method = RequestMethod.GET)
+    @RequestMapping(value = "/board/town/{boardNum}", method = RequestMethod.GET)
     public ModelAndView openBoardDetail(@PathVariable("boardNum") int boardNum) throws Exception {
-        ModelAndView mv = new ModelAndView("townboard/boardDetail");
+        ModelAndView mv = new ModelAndView("townboard/boardDetaile");
 
         TownDto board = boardService.selectBoardDetail(boardNum);
         mv.addObject("board", board);
