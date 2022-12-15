@@ -17,4 +17,6 @@ public interface YuriBoardService {
 
     void deleteProductBoard(int boardNum) throws Exception;
     FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception;
+
+    ProductBoardDto selectProductBoardDetail(int boardNum) throws Exception;
 }

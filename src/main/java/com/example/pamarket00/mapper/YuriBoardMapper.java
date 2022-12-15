@@ -25,5 +25,7 @@ public interface YuriBoardMapper {
     FileDto selectProductBoardFileInfo(@Param("fileNum")int fileNum, @Param("boardNum") int boardNum) throws Exception;
 
 
-
+//    조회수 증가
+    void updateProductHitCount(int boardNum) throws Exception;
+    ProductBoardDto selectProductBoardDetail(@Param("boardNum") int boardNum) throws Exception;
 }

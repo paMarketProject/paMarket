@@ -54,4 +54,13 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     public FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception {
         return yuriBoardMapper.selectProductBoardFileInfo(fileNum,boardNum);
     }
+
+    @Override
+    public ProductBoardDto selectProductBoardDetail(int boardNum) throws Exception{
+        yuriBoardMapper.updateProductHitCount(boardNum);
+        ProductBoardDto board = yuriBoardMapper.selectProductBoardDetail(boardNum);
+        List<FileDto> fileList = yuriBoardMapper.selectProductBoardFileList(boardNum);
+        board.setFileList(fileList);
+        return board;
+    }
 }

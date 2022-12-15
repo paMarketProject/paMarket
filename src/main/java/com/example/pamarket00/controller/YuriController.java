@@ -27,15 +27,20 @@ public class YuriController {
 //    게시글 목록 페이지
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
+    public ModelAndView openProductList() throws Exception {
+//    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
 
-        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
+//        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
+//        mv.addObject("dataList", dataList);
+
+        List<ProductBoardDto> dataList = yuriBoardService.selectProductBoardList();
         mv.addObject("dataList", dataList);
 
         return mv;
     }
-// 게시물 등록 view 페이지
+
+    // 게시물 등록 view 페이지
     @RequestMapping("/productWrite")
     public String yuriBoardWrite() throws Exception {
         return "yuri/boardWrite";
@@ -43,7 +48,7 @@ public class YuriController {
 
     @RequestMapping("/insertProductBoard")
     public String insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception {
-        yuriBoardService.insertProductBoard(board,multipart);
+        yuriBoardService.insertProductBoard(board, multipart);
         return "redirect:/productWrite";
     }
 
@@ -55,9 +60,15 @@ public class YuriController {
 
     }
 
-    @RequestMapping("/detail")
-    public String yuriBoardDetail() throws Exception {
-        return "yuri/boardDetail";
+
+//    상세페이지
+    @RequestMapping("/productDetail")
+    public ModelAndView openProductBoardDetail(@RequestParam(value = "boardNum")int boardNum) throws Exception {
+        ModelAndView mv = new ModelAndView("yuri/boardDetail");
+        ProductBoardDto board = yuriBoardService.selectProductBoardDetail(boardNum);
+        mv.addObject("board",board);
+
+        return mv;
     }
 }
 

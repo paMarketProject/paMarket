@@ -3,9 +3,9 @@
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
     <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-        SELECT board.boardTitle, board.boardProPrice, location.locationName,
+        SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
                kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-               file.filePath, board.boardContents,board.boardUserId
+                board.boardContents,board.boardUserId, board.boardNum
         FROM board board
                  JOIN location location
                       ON location.locationNum = board.boardUserCheck
@@ -26,6 +26,7 @@
     ]]>
     </insert>
 
+<!--    파일테이블에 입력하기-->
     <insert id="insertProductBoardFileList" parameterType="com.example.pamarket00.dto.FileDto">
 <!--        insertProductBoardFileList / insertProductBoardList-->
         <![CDATA[
@@ -36,4 +37,45 @@
             (#{item.fileBoardNum}, #{item.fileName}, #{item.filePath})
         </foreach>
     </insert>
+
+<!--    파일리스트 가져오기-->
+    <select id="selectProductBoardFileList" resultType="com.example.pamarket00.dto.FileDto">
+        <![CDATA[
+        SELECT * FROM file where fileBoardNum = #{boardNum}
+    ]]>
+    </select>
+
+
+
+
+<!--    상세페이지 가져오기-->
+    <select id="selectProductBoardDetail" resultType="com.example.pamarket00.dto.ProductBoardDto">
+        <![CDATA[
+        SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
+                        kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
+                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner
+        FROM board board
+                 JOIN location location
+                      ON location.locationNum = board.boardUserCheck
+                 JOIN kategory kategory
+                      ON kategory.kategoryNum = board.boardKategory
+                 JOIN file file
+                      ON file.fileBoardNum = board.boardNum
+                 JOIN state state
+                      ON board.boardProState = state.stateNum
+                JOIN user user
+                    ON board.boardUserId = user.userId
+        WHERE boardNum = #{boardNum} AND board.deleted_yn='N';
+]]>
+    </select>
+
+<!--    조회수 증가-->
+    <update id="updateProductHitCount" parameterType="com.example.pamarket00.dto.ProductBoardDto">
+        <![CDATA[
+        UPDATE board SET boardHitCnt = boardHitCnt + 1
+        WHERE boardNum = #{boardNum}
+        ]]>
+    </update>
+
+
 </mapper>
