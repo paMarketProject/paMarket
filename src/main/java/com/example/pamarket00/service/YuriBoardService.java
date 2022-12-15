@@ -3,6 +3,7 @@ package com.example.pamarket00.service;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.github.pagehelper.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface YuriBoardService {
     List<ProductBoardDto> selectProductBoardList() throws Exception;
+    Page<ProductBoardDto> selectProductBoardListPage(int pageNo);
     void insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;
 //    insertProductBoard(board,multipart)
 

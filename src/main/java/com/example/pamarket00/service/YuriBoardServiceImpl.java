@@ -5,6 +5,8 @@ import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.mapper.YuriBoardMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,11 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         List<ProductBoardDto> list = null;
         list = yuriBoardMapper.selectProductBoardList();
         return list;
+    }
+    @Override
+    public Page<ProductBoardDto> selectProductBoardListPage(int pageNo){
+        PageHelper.startPage(pageNo, 20);
+        return yuriBoardMapper.selectProductBoardListPage();
     }
 
 //    게시물저장

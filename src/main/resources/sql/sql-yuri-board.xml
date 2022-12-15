@@ -3,19 +3,55 @@
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
     <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-        SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
+--         SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
+--                kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
+--                 board.boardContents,board.boardUserId, board.boardNum, file.filePath
+--         FROM board board
+--                  JOIN location location
+--                       ON location.locationNum = board.boardUserCheck
+--                  JOIN kategory kategory
+--                       ON kategory.kategoryNum = board.boardKategory
+--                  JOIN file file
+--                       ON file.fileBoardNum = board.boardNum
+--                  JOIN state state
+--                       ON board.boardProState = state.stateNum
+--         WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N';
+
+-- 중복값 제거 성공!!!ㅡㅜㅜㅜㅠㅠ
+
+            select board.boardTitle, board.boardProPrice, location.locationName,
+                   kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
+                   board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
+            FROM board
+                     LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum HAVING MAX(fileBoardNum))file
+                               ON board.boardNum = file.fileBoardNum
+                     JOIN location location
+                          ON location.locationNum = board.boardUserCheck
+                     JOIN kategory kategory
+                          ON kategory.kategoryNum = board.boardKategory
+                     JOIN state state
+                          ON board.boardProState = state.stateNum
+            WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
+            ORDER BY board.boardNum;
+        ]]>
+    </select>
+
+    <select id="selectProductBoardListPage" resultType="com.example.pamarket00.dto.ProductBoardDto">
+        <![CDATA[
+        select board.boardTitle, board.boardProPrice, location.locationName,
                kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-                board.boardContents,board.boardUserId, board.boardNum
-        FROM board board
+               board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
+        FROM board
+                 LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum HAVING MAX(fileBoardNum))file
+                           ON board.boardNum = file.fileBoardNum
                  JOIN location location
                       ON location.locationNum = board.boardUserCheck
                  JOIN kategory kategory
                       ON kategory.kategoryNum = board.boardKategory
-                 JOIN file file
-                      ON file.fileBoardNum = board.boardNum
                  JOIN state state
                       ON board.boardProState = state.stateNum
-        WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N';
+        WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
+        ORDER BY board.boardNum;
 ]]>
     </select>
 
@@ -53,7 +89,7 @@
         <![CDATA[
         SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
                         kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner
+                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath
         FROM board board
                  JOIN location location
                       ON location.locationNum = board.boardUserCheck

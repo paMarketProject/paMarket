@@ -5,6 +5,7 @@ import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.service.YuriBoardService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +28,14 @@ public class YuriController {
 //    게시글 목록 페이지
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public ModelAndView openProductList() throws Exception {
+    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1", value = "pageNum") int pageNum) throws Exception {
 //    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
 
 //        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
 //        mv.addObject("dataList", dataList);
 
-        List<ProductBoardDto> dataList = yuriBoardService.selectProductBoardList();
+        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardListPage(pageNum),10);
         mv.addObject("dataList", dataList);
 
         return mv;
@@ -59,7 +60,6 @@ public class YuriController {
         return "redirect:/productWrite";
 
     }
-
 
 //    상세페이지
     @RequestMapping("/productDetail")

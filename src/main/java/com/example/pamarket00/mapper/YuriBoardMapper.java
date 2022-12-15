@@ -3,6 +3,7 @@ package com.example.pamarket00.mapper;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,6 +12,8 @@ import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
     List<ProductBoardDto> selectProductBoardList() throws Exception;
+
+    Page<ProductBoardDto> selectProductBoardListPage();
 
     void insertProductBoard(BoardDto board) throws Exception;
 
