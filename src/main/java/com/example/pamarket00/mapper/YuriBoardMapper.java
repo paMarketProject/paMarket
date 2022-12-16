@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
-    List<ProductBoardDto> selectProductBoardList() throws Exception;
+//    List<ProductBoardDto> selectProductBoardList() throws Exception;
 
     Page<ProductBoardDto> selectProductBoardListPage();
 

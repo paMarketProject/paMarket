@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.util.List;
 
 public interface YuriBoardService {
-    List<ProductBoardDto> selectProductBoardList() throws Exception;
-    Page<ProductBoardDto> selectProductBoardListPage(int pageNo);
+//    List<ProductBoardDto> selectProductBoardList() throws Exception;
+    Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception;
     void insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;
 //    insertProductBoard(board,multipart)
 

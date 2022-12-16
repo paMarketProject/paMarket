@@ -3,62 +3,51 @@
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
     <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
---         SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
---                kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
---                 board.boardContents,board.boardUserId, board.boardNum, file.filePath
---         FROM board board
---                  JOIN location location
---                       ON location.locationNum = board.boardUserCheck
---                  JOIN kategory kategory
---                       ON kategory.kategoryNum = board.boardKategory
---                  JOIN file file
---                       ON file.fileBoardNum = board.boardNum
---                  JOIN state state
---                       ON board.boardProState = state.stateNum
---         WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N';
 
 -- 중복값 제거 성공!!!ㅡㅜㅜㅜㅠㅠ
+--
+select board.boardTitle, board.boardProPrice, location.locationName,
+       kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
+       board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
+FROM board
+         JOIN file file
+                   ON board.boardNum = file.fileBoardNum
+         JOIN location location
+              ON location.locationNum = board.boardUserCheck
+         JOIN kategory kategory
+              ON kategory.kategoryNum = board.boardKategory
+         JOIN state state
+              ON board.boardProState = state.stateNum
+WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
+ORDER BY board.boardNum
 
-            select board.boardTitle, board.boardProPrice, location.locationName,
-                   kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-                   board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
-            FROM board
-                     LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum HAVING MAX(fileBoardNum))file
-                               ON board.boardNum = file.fileBoardNum
-                     JOIN location location
-                          ON location.locationNum = board.boardUserCheck
-                     JOIN kategory kategory
-                          ON kategory.kategoryNum = board.boardKategory
-                     JOIN state state
-                          ON board.boardProState = state.stateNum
-            WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
-            ORDER BY board.boardNum;
         ]]>
     </select>
 
-    <select id="selectProductBoardListPage" resultType="com.example.pamarket00.dto.ProductBoardDto">
+    <select id="selectProductBoardListPage" parameterType="hashmap"  resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-        select board.boardTitle, board.boardProPrice, location.locationName,
-               kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-               board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
-        FROM board
-                 LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum HAVING MAX(fileBoardNum))file
-                           ON board.boardNum = file.fileBoardNum
-                 JOIN location location
-                      ON location.locationNum = board.boardUserCheck
-                 JOIN kategory kategory
-                      ON kategory.kategoryNum = board.boardKategory
-                 JOIN state state
-                      ON board.boardProState = state.stateNum
-        WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
-        ORDER BY board.boardNum;
-]]>
+            SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, state.stateName,
+                   board.boardHitCnt,board.boardLike, board.boardContents,board.boardUserId, board.boardNum, file.filePath,
+                   file.fileBoardNum
+            FROM board
+            LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum) file
+                ON board.boardNum = file.fileBoardNum
+            JOIN location location
+                ON location.locationNum = board.boardUserCheck
+            JOIN kategory kategory
+                ON kategory.kategoryNum = board.boardKategory
+            JOIN state state
+                ON board.boardProState = state.stateNum
+            WHERE board.boardUserId = 'ㅊㅊㅊ'
+            AND board.deleted_yn='N'
+            ORDER BY board.boardNum
+        ]]>
     </select>
 
     <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
         <![CDATA[
         insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
-        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice});
+        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice})
     ]]>
     </insert>
 
@@ -101,7 +90,7 @@
                       ON board.boardProState = state.stateNum
                 JOIN user user
                     ON board.boardUserId = user.userId
-        WHERE boardNum = #{boardNum} AND board.deleted_yn='N';
+        WHERE boardNum = #{boardNum} AND board.deleted_yn='N'
 ]]>
     </select>
 

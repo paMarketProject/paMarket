@@ -28,14 +28,14 @@ public class YuriController {
 //    게시글 목록 페이지
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
-    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1", value = "pageNum") int pageNum) throws Exception {
+    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
 //    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
 
 //        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
 //        mv.addObject("dataList", dataList);
 
-        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardListPage(pageNum),10);
+        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),10);
         mv.addObject("dataList", dataList);
 
         return mv;

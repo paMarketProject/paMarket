@@ -26,8 +26,9 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="card h-100" th:if="${#lists.size(dataList)} > 0" th:each="list : ${dataList}">
-                <img class="card-img-top" th:src="${list.filePath}" alt="..." />
+            <div class="col mb-5" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
+            <div class="card h-100">
+                <img class="card-img-top" th:src="@{${list.filePath}}" alt="..." />
                 <div class="card-body p-4">
                     <div class="text-center">
                         <h5 class="fw-bolder" th:text="${list.boardTitle}"></h5>
@@ -52,6 +53,7 @@
                 </div>
             </div>
         </div>
+        </div>
 
 <!--글쓰기버튼-->
         <form action="/productWrite" method="post">
@@ -61,6 +63,23 @@
     </div>
 
 </section>
+<!--페이지 번호-->
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${dataList.getPrePage()==0}?'disabled'">
+            <a class="page-link" th:href="@{/page(pageNum=${dataList.getPrePage()})}">&laquo;</a>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(dataList.getNavigateFirstPage(), dataList.getNavigateLastPage())}"
+            th:classappend="${page==dataList.getPageNum()}?'active'">
+            <a class="page-link" th:text="${page}" th:href="@{/page(pageNum=${page})}"></a>
+        </li>
+        <li class="page-item" th:classappend="${dataList.getNextPage()==0}?'disabled'">
+            <!--              getNextPage()로 다음 페이지가 있는지 확인 하고 없다면 disabled-->
+            <a class="page-link" th:href="@{/page(pageNum=${dataList.getNextPage()})}">&raquo;</a>
+            <!--              pageNum 이름을 바꾸고 싶으면 controller에서 @RequestParam에 value=""로 넣어줘야 한다.-->
+        </li>
+    </ul>
+</nav>
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
 </footer>
