@@ -2,15 +2,32 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>판매내역</title>
+    <title>마이페이지 - 판매내역</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
-    <script>
+    <style>
 
-    </script>
+        .pagination > .active > a,
+        .pagination > .active > span,
+        .pagination > .active > a:hover,
+        .pagination > .active > span:hover,
+        .pagination > .active > a:focus,
+        .pagination > .active > span:focus {
+            background: #5bbebb;
+            border-color: #5bbebb;
+        }
+        .page-link{
+            color: #999;
+        }
+
+    </style>
+
+
     <div th:fragment="header">
         <div th:insert="~{header.html::header}"></div>
     </div>
+
+
 </head>
 <body>
 <div class="container mb-5">
@@ -40,37 +57,53 @@
                 </ul>
             </div>
         </nav>
-        <div th:if="${#lists.size(sellList)} > 0" th:each="list : ${sellList}" class="container px-4 px-lg-5 mt-5">
+        <section class="py-5">
+        <div class="px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5">
+                <div class="col mb-5" th:if="${#lists.size(sellList.getList())} > 0" th:each="list : ${sellList.getList()}">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" th:src="${list.boardImagePath}" alt="..." />
+                        <img class="card-img-top mx-auto margin" id="pro-img" th:src="${list.boardImagePath}" alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 th:text="${list.boardTitle}" class="fw-bolder"></h5>
+                                <h5 th:text="${list.boardTitle}" class="fw-bolder fs-3"></h5>
                                 <!-- Product price-->
-                                <span th:text="${list.boardUserCheck}"></span><br>
-                                <span th:text="${list.boardProPrice}">가격</span><br>
-
+                                <span th:text="'('+${list.KategoryName}+')'"></span><br>
+                                <span th:text="${list.locationName}"></span><br><br>
+                                <span th:text="가격 +' : ' +${list.boardProPrice}" class="fs-4"></span><br>
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-success mt-auto" th:text="${list.boardProState}"></a></div>
+                            <div class="text-center"><a class="btn btn-outline-success mt-auto" th:text="${list.stateName}"></a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <div th:unless="${#lists.size(sellList) > 0 }" class="container px-4 px-lg-5 mt-5">
+        </section>
+            <div th:unless="${#lists.size(sellList.getList()) > 0 }" class="px-4 px-lg-5 mt-5">
                 <div class="container text-center">
                     <h1>판매한 상품이 없습니다.</h1>
                 </div>
             </div>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item rounded-5" th:class="${sellList.getPrePage() == 0}? 'disabled'">
+                    <a class="page-link" th:href="@{/MyPageSell(pageNum=${sellList.getPrePage()})}"><</a>
+                </li>
+                <li class="page-item" th:each="page : ${#numbers.sequence(sellList.getNavigateFirstPage(),
+                                sellList.getNavigateLastPage())}" th:classappend="${page == sellList.getPageNum()}? 'active'">
+                    <a class="page-link" th:text="${page}" th:href="@{/MyPageSell(pageNum=${page})}"></a>
+                </li>
+                <li class="page-item" th:classappend="${sellList.getNextPage() == 0 }? 'disabled'">
+                    <a class="page-link" th:href="@{/MyPageSell(pageNum=${sellList.getNextPage()})}">></a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    </div>
+</div>
 </body>
 </html>

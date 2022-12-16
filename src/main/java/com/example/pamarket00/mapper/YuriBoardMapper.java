@@ -2,6 +2,8 @@ package com.example.pamarket00.mapper;
 
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
+import com.example.pamarket00.dto.ProductBoardDto;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +11,9 @@ import java.io.File;
 import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
-    List<BoardDto> selectProductBoardList() throws Exception;
+//    List<ProductBoardDto> selectProductBoardList() throws Exception;
+
+    Page<ProductBoardDto> selectProductBoardListPage();
 
     void insertProductBoard(BoardDto board) throws Exception;
 
@@ -24,5 +28,7 @@ public interface YuriBoardMapper {
     FileDto selectProductBoardFileInfo(@Param("fileNum")int fileNum, @Param("boardNum") int boardNum) throws Exception;
 
 
-
+//    조회수 증가
+    void updateProductHitCount(int boardNum) throws Exception;
+    ProductBoardDto selectProductBoardDetail(@Param("boardNum") int boardNum) throws Exception;
 }

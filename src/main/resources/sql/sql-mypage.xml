@@ -7,16 +7,19 @@
         SELECT board.boardImagePath, board.boardTitle, Kategory.KategoryName as KategoryName, board.boardDate, board.boardHitCnt
         FROM board
         JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
-        WHERE boardUserId = 'aaa'
+        WHERE boardUserId = 'ㅊㅊㅊ'
     ]]>
     </select>
 
-    <select id="MyPageSellList" resultType="com.example.pamarket00.dto.BoardDto">
+    <select id="MyPageSellList" resultType="com.example.pamarket00.dto.MyPageSellDto">
         <![CDATA[
-        SELECT boardNum, boardImagePath, boardKategory, boardTitle, boardDate, boardProPrice,
-               boardUserCheck, boardProState
+        SELECT board.boardTitle,location.locationName as locationName,board.boardProPrice,
+               state.stateName as stateName, board.boardImagePath,Kategory.KategoryName as KategoryName
         FROM board
-        WHERE boardUserId = 'aaa'
+        JOIN location location ON boardUserCheck = location.locationNum
+        JOIN State State ON boardProState = State.stateNum
+        JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
+        WHERE boardUserId = 'ㅊㅊㅊ'
         ]]>
     </select>
 
@@ -45,4 +48,24 @@
         ]]>
     </update>
 
+    <insert id="insertUserInfo" parameterType="com.example.pamarket00.dto.UserDto">
+        <![CDATA[
+            INSERT INTO user(userName, userId, userPw, userTel, userEmail, userAdd1, userAdd2)
+            VALUES (#{userName},#{userId},#{userPw},#{userTel},#{userEmail},#{userAdd1},#{userAdd2})
+        ]]>
+    </insert>
+
+    <select id="idCheck" parameterType="com.example.pamarket00.dto.UserDto" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*)
+            FROM user
+            WHERE userId = #{userId}
+        ]]>
+    </select>
+
+    <select id="loginCheck" parameterType="String" resultType="com.example.pamarket00.dto.UserDto">
+        SELECT *
+        FROM user
+        WHERE userId = #{userId} AND userPw = #{userPw}
+    </select>
 </mapper>

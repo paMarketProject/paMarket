@@ -3,7 +3,10 @@ package com.example.pamarket00.service;
 import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
+import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.mapper.YuriBoardMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,11 +22,18 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Autowired
     private FileUtils fileUtils;
 
+//    @Override
+//    public List<ProductBoardDto> selectProductBoardList() throws Exception{
+////        List<ProductBoardDto> list = null;
+////        list = yuriBoardMapper.selectProductBoardList();
+////        return list;
+//        return yuriBoardMapper.selectProductBoardList();
+//
+//    }
     @Override
-    public List<BoardDto> selectProductBoardList() throws Exception{
-        List<BoardDto> list = null;
-        list = yuriBoardMapper.selectProductBoardList();
-        return list;
+    public Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception {
+        PageHelper.startPage(pageNo, 5);
+        return yuriBoardMapper.selectProductBoardListPage();
     }
 
 //    게시물저장
@@ -52,5 +62,15 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Override
     public FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception {
         return yuriBoardMapper.selectProductBoardFileInfo(fileNum,boardNum);
+    }
+
+    @Override
+    public ProductBoardDto selectProductBoardDetail(int boardNum) throws Exception{
+        yuriBoardMapper.updateProductHitCount(boardNum);
+        ProductBoardDto board = yuriBoardMapper.selectProductBoardDetail(boardNum);
+        List<FileDto> fileList = yuriBoardMapper.selectProductBoardFileList(boardNum);
+        board.setFileList(fileList);
+
+        return board;
     }
 }
