@@ -31,31 +31,55 @@
         $(document).ready(function (){
             $("#commentSubmit").on("click", function(){
                 /*<![CDATA[*/
-                let pageNum = [[${board.boardNum}]];
+                const pageNum = [[${board.boardNum}]];
                 /*]]>*/
-                let commentBoardNum =pageNum;
+                const commentBoardNum = pageNum;
+                // const commentBoardNum = 30;
+                const commentContents = $("#commentContents").val();
+                // const commentUserId = $("#commentUserId").val()
+                const commentUserId = 'testid';
 
-                let commentContents = $("#commentContents").val();    //댓글의 내용
-                let commentDate = $("#commentDate").val();
-                let commentUserId = $("#commentUserId").val()
-
-                console.log(commentContents);
+                const datas = {"commentContents": commentContents, "commentUserId":commentUserId, "commentBoardNum" :commentBoardNum};
 
                 $.ajax({
                     url:"/board/town/replywrite",
                     type: "post",
-                    data: {commentContents: commentContents, commentDate : commentDate, commentUserId:commentUserId, pageNum : pageNum, commentBoardNum:commentBoardNum},
-                    contentType: "application/json; charset=utf-8",
+                    data: datas,
                     success: function (data){
-                        alert("ajax통신 성공")
+                        $('#commentContents').val('');
+
+                        if (data.length > 0) {
+                            $("#comment--group").empty();
+
+                            for (let i = 0; i < data.length; i++) {
+                                let comments = '';
+                                comments = '<li id="comment--1" class="list-group-item d-flex justify-content-between">';
+                                comments += '<div name="commentContents">' + data[i].commentContents + '</div>';
+                                comments += '<div>';
+                                comments += '<div class="d-flex">';
+                                comments += '<div class="text-muted" id="commentUserId" style="margin-right: 8px" name="commentUserId">' + data[i].commentUserId + ' &nbsp;</div>';
+                                comments += '<div class="text-muted">' + data[i].commentDate + '&nbsp;</div>';
+                                comments += '<button class="badge" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글 </button>'
+                                comments += '<button class="badge" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>'
+                                comments += '<button class="badge" style="background-color: rgba(0,204,0,0.6)">삭제</button>'
+                                comments += '</div>'
+                                comments += '</div>'
+                                comments += '</li>'
+
+                                $("#comment--group").append(comments);
+                            }
+
+                        }
+                        else {
+
+                        }
+
                     },
-                    error: function (){
-                        alert("ajax통신 중 오류가 발생했습니다.")
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 })
-
             })
-
         })
 
     </script>
@@ -179,29 +203,27 @@
     </div>
     <div class="card" style="width: 83.4%">
         <div class="card-header"  >댓글리스트</div>
-        <ul th:if="${#lists.size(commentList)}>0"  th:each="item : ${commentList}" id="comment--group" class="list-group">
-            <li  id="comment--1" class="list-group-item d-flex justify-content-between" >
+        <ul id="comment--group" class="list-group">
+            <li th:if="${#lists.size(commentList)}>0" th:each="item : ${commentList}" id="comment--1" class="list-group-item d-flex justify-content-between" >
 
-                <div th:text="${item.commentContents}"  name="commentContents">댓글내용</div>
+                <div th:text="${item.commentContents}"  name="commentContents">
+
+                </div>
                 <div>
                 <div class="d-flex">
                     <div th:text="${item.commentUserId}" class="text-muted" id="commentUserId" style="margin-right: 8px" name="commentUserId">지은이 &nbsp;</div>
-                    <div th:text="${item.commentDate}" class="text-muted">등록날짜&nbsp;</div>
+                    <div th:text="${item.commentDate}" id="commentDate" name="commentDate" class="text-muted">등록날짜&nbsp;</div>
                     <button class="badge" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글</button>
                     <button class="badge" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>
                     <button class="badge" style="background-color: rgba(0,204,0,0.6)">삭제</button>
                 </div>
                 </div>
             </li>
-        </ul>
 
-        <ul th:unless="${#lists.size(commentList)} > 0" id="commentGroup" class="list-group">
-            <li  class="list-group-item d-flex justify-content-between" >
+            <li th:unless="${#lists.size(commentList)} > 0" class="list-group-item d-flex justify-content-between" >
                 <div class="text-muted">댓글이 없습니다&nbsp;</div>
             </li>
         </ul>
-
-
     </div>
 
 <!--    댓글끝-->

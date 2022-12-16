@@ -67,11 +67,36 @@ public class townBoardController {
 
     @ResponseBody
     @RequestMapping(value = "/board/town/replywrite" , method = RequestMethod.POST)
-    public Object commentWrite(@RequestParam("commentContents") String commentContents, @RequestParam("commentDate") String commentDate,
-                               @RequestParam("commentUserId") String commentUserId, @RequestParam("pageNum") int pageNum ,
-                               @RequestParam("commentBoardNum") int commentBoardNum) throws Exception{
-        boardService.insertComment();
+    public Object commentWrite(
+            @RequestParam("commentContents") String commentContents,
+            @RequestParam("commentUserId") String commentUserId,
+            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
 
-        return commentWrite(commentContents,commentDate,commentUserId,pageNum, commentBoardNum);
+
+        boardService.insertComment(commentUserId, commentContents, commentBoardNum);
+        List<CommentDto> commentList = boardService.selectCommentList(commentBoardNum);
+
+        return commentList;
     }
+
+//    @ResponseBody
+//    @RequestMapping(value = "/board/town/rereplywrite" , method = RequestMethod.POST)
+//    public Object cocommentWrite(
+//            @RequestParam("commentContents") String commentContents,
+//            @RequestParam("commentUserId") String commentUserId,
+//            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+//
+//        List<CommentDto> commentList = boardService.selectCommentList(commentBoardNum);
+//        boardService.insertComment(commentUserId, commentContents, commentBoardNum);
+//        CommentDto cocoment = boardService.selectCocoment(commentNum);
+//        cocoment.setCommentContents(">> " + cocoment.getCommentContents());
+//        commentList.
+//
+//
+//        return commentList;
+//    }
+
+
+
+
 }

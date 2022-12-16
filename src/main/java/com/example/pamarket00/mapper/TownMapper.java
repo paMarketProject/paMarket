@@ -13,7 +13,7 @@ public interface TownMapper {
 
     public List<CommentDto> selectCommentList(int boardNum) throws Exception;
 
-    public void insertComment() throws Exception;
+    public void insertComment(CommentDto comment) throws Exception;
 
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 

@@ -21,5 +21,5 @@ public interface BoardService {
 
     List<CommentDto> selectCommentList(int boardNum) throws Exception;
 
-    public void insertComment() throws Exception;
+    public void insertComment( String commentUserId, String commentContents, int commentBoardNum) throws Exception;
 }

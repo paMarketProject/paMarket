@@ -52,8 +52,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void insertComment() throws Exception {
-        TownMapper.insertComment();
+    public void insertComment( String commentUserId, String commentContents, int commentBoardNum) throws Exception {
+        CommentDto comment = new CommentDto();
+        comment.setCommentBoardNum(commentBoardNum);
+        comment.setCommentUserId(commentUserId);
+        comment.setCommentContents(commentContents);
+
+        TownMapper.insertComment(comment);
     }
 
 }
