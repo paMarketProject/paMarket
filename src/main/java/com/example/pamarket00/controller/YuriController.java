@@ -8,11 +8,8 @@ import com.example.pamarket00.service.YuriBoardService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,8 +52,9 @@ public class YuriController {
 
 //    게시글 수정
     @ResponseBody
-    @RequestMapping("/updateProductBoard")
-    public String updateProductBoard(BoardDto board) throws Exception {
+    @RequestMapping(value = "/updateProductBoard", method = RequestMethod.POST)
+//    public String updateProductBoard(BoardDto board) throws Exception {
+    public String updateProductBoard(@RequestBody BoardDto board) throws Exception {
         yuriBoardService.updateProductBoard(board);
 
         return "redirect:/productWrite";
@@ -64,9 +62,10 @@ public class YuriController {
 
 
 //      게시글 삭제
-    @ResponseBody
+
     @RequestMapping("/deleteProductBoard")
-    public String deleteProductBoard(@RequestParam int boardNum) throws Exception {
+    @ResponseBody
+    public String deleteProductBoard(@RequestParam("boardNum") int boardNum) throws Exception {
         yuriBoardService.deleteProductBoard(boardNum);
         return "redirect:yuri/productList";
     }
