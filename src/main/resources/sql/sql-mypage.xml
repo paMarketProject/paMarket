@@ -19,7 +19,7 @@
         JOIN location location ON boardUserCheck = location.locationNum
         JOIN State State ON boardProState = State.stateNum
         JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
-        WHERE boardUserId = 'aaa'
+        WHERE boardUserId = 'ㅊㅊㅊ'
         ]]>
     </select>
 

@@ -101,7 +101,7 @@ public class YoungController {
         HttpSession session = request.getSession();
         UserDto userDto = myPageService.loginCheck(userId, userPw);
 
-//    세션이 존재하면 없앰
+
         if (session.getAttribute("userId") != null) {
             session.removeAttribute("userId");
         }
