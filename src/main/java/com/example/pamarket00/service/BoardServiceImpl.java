@@ -51,5 +51,10 @@ public class BoardServiceImpl implements BoardService {
         return TownMapper.selectCommentList(boardNum);
     }
 
+    @Override
+    public void insertComment() throws Exception {
+        TownMapper.insertComment();
+    }
+
 }
 

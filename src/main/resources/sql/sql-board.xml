@@ -10,6 +10,14 @@
             (#{boardKategory}, #{boardTitle}, #{boardContents}, NOW())
     </insert>
 
+    <insert id="insertComment" parameterType="com.example.pamarket00.dto.CommentDto">
+        INSERT INTO comment
+            (commentContents, commentUserId, commentdate, commentBoardNum)
+        values
+            (#{commentContents},#{commentUserId},NOW(),commentBoardNum)
+    </insert>
+
+
     <select id="selectBoardList" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardNum, boardTitle, boardUserId,
@@ -38,7 +46,7 @@
 
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
-            boardTitle,
+            boardNum, boardTitle,
             DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s') AS boardDate,boardHitCnt, boardUserId, boardContents
 
         FROM

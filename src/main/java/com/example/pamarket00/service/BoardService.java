@@ -20,4 +20,6 @@ public interface BoardService {
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 
     List<CommentDto> selectCommentList(int boardNum) throws Exception;
+
+    public void insertComment() throws Exception;
 }

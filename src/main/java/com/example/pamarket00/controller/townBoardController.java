@@ -6,10 +6,7 @@ import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -66,5 +63,15 @@ public class townBoardController {
         mv.addObject("commentList", commentList);
 
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/board/town/replywrite" , method = RequestMethod.POST)
+    public Object commentWrite(@RequestParam("commentContents") String commentContents, @RequestParam("commentDate") String commentDate,
+                               @RequestParam("commentUserId") String commentUserId, @RequestParam("pageNum") int pageNum ,
+                               @RequestParam("commentBoardNum") int commentBoardNum) throws Exception{
+        boardService.insertComment();
+
+        return commentWrite(commentContents,commentDate,commentUserId,pageNum, commentBoardNum);
     }
 }

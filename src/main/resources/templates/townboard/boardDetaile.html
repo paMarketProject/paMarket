@@ -5,6 +5,7 @@
     <meta name="viewport" content="widh=device-width" , initial-scale="1">
     <link rel="stylesheet" href="/css/bootstrap.css ">
     <title>대파마켓</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
     <style>
         body {
@@ -26,26 +27,27 @@
         }
     </style>
 
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function (){
+            $("#commentSubmit").on("click", function(){
+                /*<![CDATA[*/
+                let pageNum = [[${board.boardNum}]];
+                /*]]>*/
+                let commentBoardNum =pageNum;
 
-            $("#commentSubmit").on("click", function (){
-                var commentContents = $("#commentContents").val();    //댓글의 내용
-                var boardNum =  "${dto.member_bno}";
-                var params = {"r_content" : r_content, "member_bno" : member_bno};
+                let commentContents = $("#commentContents").val();    //댓글의 내용
+                let commentDate = $("#commentDate").val();
+                let commentUserId = $("#commentUserId").val()
+
+                console.log(commentContents);
 
                 $.ajax({
-                    url:"/ajax/selectbox",
+                    url:"/board/town/replywrite",
                     type: "post",
-                    data: datas,
+                    data: {commentContents: commentContents, commentDate : commentDate, commentUserId:commentUserId, pageNum : pageNum, commentBoardNum:commentBoardNum},
+                    contentType: "application/json; charset=utf-8",
                     success: function (data){
-                        let  selBox = $("#sel2");
-                        selBox.empty();
-                        selBox.append("<option>선택하세요</option>")
-
-                        for (let i = 0; i < data.length; i++){
-                            selBox.append("<option>"+ data[i].areaName + "</option>" );
-                        }
+                        alert("ajax통신 성공")
                     },
                     error: function (){
                         alert("ajax통신 중 오류가 발생했습니다.")
@@ -55,6 +57,7 @@
             })
 
         })
+
     </script>
 
 
@@ -168,10 +171,10 @@
 
     <div class="card" style="width: 83.4%">
         <div class="card-body">
-            <textarea class="form-control" rows="1"></textarea>
+            <textarea id="commentContents" name="commentContents" class="form-control" rows="1" ></textarea>
         </div>
         <div class="card-footer">
-            <button id="commentSubmit" class="btn btn-success" style="background-color: rgba(0,204,0,0.6); float: right">댓글 등록</button>
+            <button type="submit" id="commentSubmit" class="btn btn-success" style="background-color: rgba(0,204,0,0.6); float: right">댓글 등록</button>
         </div>
     </div>
     <div class="card" style="width: 83.4%">
@@ -179,7 +182,7 @@
         <ul th:if="${#lists.size(commentList)}>0"  th:each="item : ${commentList}" id="comment--group" class="list-group">
             <li  id="comment--1" class="list-group-item d-flex justify-content-between" >
 
-                <div th:text="${item.commentContents}" id="commentContents" name="commentContents">댓글내용</div>
+                <div th:text="${item.commentContents}"  name="commentContents">댓글내용</div>
                 <div>
                 <div class="d-flex">
                     <div th:text="${item.commentUserId}" class="text-muted" id="commentUserId" style="margin-right: 8px" name="commentUserId">지은이 &nbsp;</div>
@@ -207,7 +210,7 @@
 
 
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>
