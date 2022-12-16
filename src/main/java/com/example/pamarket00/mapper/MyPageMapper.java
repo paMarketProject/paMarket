@@ -2,15 +2,17 @@ package com.example.pamarket00.mapper;
 
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.MyPageMainDto;
+import com.example.pamarket00.dto.MyPageSellDto;
 import com.example.pamarket00.dto.UserDto;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 @Mapper
 public interface MyPageMapper {
-    List<MyPageMainDto> MyPageList() throws Exception;
+    Page<MyPageMainDto> MyPageList() throws Exception;
 
-    List<BoardDto> MyPageSellList() throws Exception;
+    Page<MyPageSellDto> MyPageSellList() throws Exception;
 
     List<BoardDto> MyPageBuyList() throws Exception;
 
@@ -19,4 +21,10 @@ public interface MyPageMapper {
 
 
     void UpdateUserInfo(UserDto userInfo) throws Exception;
+
+    void insertUserInfo(UserDto userDto) throws Exception;
+
+    int idCheck(String userId) throws Exception;
+
+    UserDto loginCheck(String userId, String userPw) throws Exception;
 }

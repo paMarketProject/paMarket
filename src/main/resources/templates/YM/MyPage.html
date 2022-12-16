@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>마이페이지 - 작성한 글</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -17,6 +17,19 @@
     #boardImg{
         width: 50px;
         height: 50px;
+    }
+
+    .pagination > .active > a,
+    .pagination > .active > span,
+    .pagination > .active > a:hover,
+    .pagination > .active > span:hover,
+    .pagination > .active > a:focus,
+    .pagination > .active > span:focus {
+        background: #5bbebb;
+        border-color: #5bbebb;
+    }
+    .page-link{
+        color: #999;
     }
 </style>
 
@@ -54,6 +67,7 @@
                     <div class="col-sm">
                         <table class="table table-bordered table-hover table-striped table-success">
                             <thead>
+
                             <tr>
                                 <th>사진</th>
                                 <th>제목</th>
@@ -63,19 +77,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${#lists.size(boardList)} > 0" th:each="list : ${boardList}">
+                            <tr th:if="${#lists.size(boardList.getList())} > 0" th:each="list : ${boardList.getList()}">
                                 <td><img th:src="${list.boardImagePath}" id="boardImg"></td>
                                 <td th:text="${list.boardTitle}"></td>
                                 <td th:text="${list.KategoryName}"></td>
                                 <td th:text="${list.boardDate}"></td>
                                 <td th:text="${list.boardHitCnt}"></td>
                             </tr>
-                            <tr th:unless="${#lists.size(boardList) > 0}">
+                            <tr th:unless="${#lists.size(boardList.getList()) > 0}">
                                 <td th:cols="10">조회된 결과가 없습니다.</td>
                             </tr>
-<!--                            나중에 값이 많아지면 처리 페이지네이션-->
                             </tbody>
                         </table>
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item rounded-5" th:class="${boardList.getPrePage() == 0}? 'disabled'">
+                                    <a class="page-link" th:href="@{/MyPage(pageNum=${boardList.getPrePage()})}"><</a>
+                                </li>
+                                <li class="page-item" th:each="page : ${#numbers.sequence(boardList.getNavigateFirstPage(),
+                                boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()}? 'active'">
+                                   <a class="page-link" th:text="${page}" th:href="@{/MyPage(pageNum=${page})}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${boardList.getNextPage() == 0 }? 'disabled'">
+                                    <a class="page-link" th:href="@{/MyPage(pageNum=${boardList.getNextPage()})}">></a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
         </div>
