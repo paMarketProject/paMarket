@@ -99,5 +99,19 @@ ORDER BY board.boardNum
         ]]>
     </update>
 
+<!--    게시글 수정-->
+    <update id="updateProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardTitle}
+        where boardNum = #{boardNum}
+]]>
+    </update>
 
+<!--    게시글 삭제-->
+    <update id="deleteProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        UPDATE board set deleted_yn = 'Y'
+        WHERE boardNum = #{boardNum}
+]]>
+    </update>
 </mapper>

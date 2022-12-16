@@ -15,6 +15,19 @@
         hr{
             background-color : pink;
         }
+
+        .pagination > .active > a,
+        .pagination > .active > span,
+        .pagination > .active > a:hover,
+        .pagination > .active > span:hover,
+        .pagination > .active > a:focus,
+        .pagination > .active > span:focus {
+            background: #5bbebb;
+            border-color: #5bbebb;
+        }
+        .page-link{
+            color: #999;
+        }
     </style>
 
 <!--헤더-->
@@ -28,7 +41,8 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div class="col mb-5" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
             <div class="card h-100">
-                <img class="card-img-top" th:src="@{${list.filePath}}" alt="..." />
+                <img class="card-img-top mx-auto my-auto" th:src="${list.filePath}" alt="..." />
+<!--                @{${list.filePath}}-->
                 <div class="card-body p-4">
                     <div class="text-center">
                         <h5 class="fw-bolder" th:text="${list.boardTitle}"></h5>
@@ -67,15 +81,15 @@
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${dataList.getPrePage()==0}?'disabled'">
-            <a class="page-link" th:href="@{/page(pageNum=${dataList.getPrePage()})}">&laquo;</a>
+            <a class="page-link" th:href="@{/productList(pageNum=${dataList.getPrePage()})}">&laquo;</a>
         </li>
         <li class="page-item" th:each="page : ${#numbers.sequence(dataList.getNavigateFirstPage(), dataList.getNavigateLastPage())}"
             th:classappend="${page==dataList.getPageNum()}?'active'">
-            <a class="page-link" th:text="${page}" th:href="@{/page(pageNum=${page})}"></a>
+            <a class="page-link" th:text="${page}" th:href="@{/productList(pageNum=${page})}"></a>
         </li>
         <li class="page-item" th:classappend="${dataList.getNextPage()==0}?'disabled'">
             <!--              getNextPage()로 다음 페이지가 있는지 확인 하고 없다면 disabled-->
-            <a class="page-link" th:href="@{/page(pageNum=${dataList.getNextPage()})}">&raquo;</a>
+            <a class="page-link" th:href="@{/productList(pageNum=${dataList.getNextPage()})}">&raquo;</a>
             <!--              pageNum 이름을 바꾸고 싶으면 controller에서 @RequestParam에 value=""로 넣어줘야 한다.-->
         </li>
     </ul>

@@ -8,9 +8,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     #kTitle{
-      color: #00FF80;
-      font-weight: bold;
-      font-size: 20px;
+        color: #00FF80;
+        font-weight: bold;
+        font-size: 20px;
     }
     #userImage{
         float: left;
@@ -46,18 +46,55 @@
         margin: auto;
         display: block;
     }
-  </style>
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#edit").click(function() {
+                $.ajax({
+                    type:"post",
+                    url : "/updateProductBoard",
+                    dataType:"json",
+                    data : {
+                        "boardNum" : "boardNum"
+                    },
+                    success: function(result) {
+                        alert(result.msg);
+                    },
+                    error: function (data){
+                        // alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        alert("통신오류")
+                    }
+                });
+            });
+        });
+
+        $('#delete').on('click', function() {
+            $.ajax({
+                url : "/deleteProductBoard",
+                type: "post",
+                data:{"boardNum" : "boardNum"},
+                dataType : "json",
+                success : function(data) {
+                    alert("삭제 통신성공")
+                },
+                error:function(data) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
+        });
+
+    </script>
 
 
   <!--헤더-->
-  <div th:fragment="header">
+    <div th:fragment="header">
     <div th:insert="~{header.html::header}"></div>
-  </div>
+    </div>
 </head>
 
 <body>
-
 <div class="container">
+    <form id="frm" method="post">
     <!--    글쓰기 부분-->
     <div class="row">
     <div class=" mx-auto">
@@ -80,7 +117,7 @@
 <!--          제목-->
         <div class="mt-4 p-2">
         <!--                    <label class="form-label" for="title" >글제목  </label>-->
-                <input type="text" class="form-control" id="title" name="title" placeholder="제목" th:value="${board.boardTitle}"
+                <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목" th:value="${board.boardTitle}"
                 style="border: none; background: transparent; font-size: 40px; font-weight: bold">
             </div>
 
@@ -91,34 +128,38 @@
         </div>
       <div class="mt-4 p-2">
         <!--                    <label class="form-label" for="contents">글내용 : </label>-->
-        <textarea class="form-control" id="contents" name="contents" rows="20"
+        <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
                   th:text="${board.boardContents}"  style="border: none; background: transparent;"></textarea>
       </div>
             <div class="mt-4 p-2">
 <!--                <label class="form-label" for="hitCnt">조회수 :</label>-->
                 <p class="form-control" id="hitCnt" name="hitCnt"
                             th:text="'조회수 : '+${board.boardHitCnt}"  style="border: none; background: transparent;"></p>
-
             </div>
+        </div>
+      </div>
     <div class="my-3">
         <hr>
         <p>지도넣는 위치</p>
         <hr>
     </div>
         </div>
+    </div>
 
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button class="btn btn-success" type="button">채팅하기</button>
+            <div class="col-sm d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-warning me-2" id="edit">수정</button>
+                <button type="button" class="btn btn-outline-danger" id="delete">삭제</button>
         </div>
+    </form>
         <div class="container mt-5 p-5">
         <hr>
       </div>
         </div>
+
         <div id="footer">
             <div class="container">
             <div class="my-3 mt-4 ms-5">
                 <img src="/YuriImage/heart.png" height="50px" id="heartImage">
-
                 <div class="ms-5">
                 <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>
                 <button class="btn btn-success" type="button">채팅하기</button>
@@ -126,8 +167,6 @@
             </div>
             </div>
         </div>
-    </div>
-  </div>
 </div>
 </body>
 </html>

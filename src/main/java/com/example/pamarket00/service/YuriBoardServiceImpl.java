@@ -21,18 +21,9 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     private YuriBoardMapper yuriBoardMapper;
     @Autowired
     private FileUtils fileUtils;
-
-//    @Override
-//    public List<ProductBoardDto> selectProductBoardList() throws Exception{
-////        List<ProductBoardDto> list = null;
-////        list = yuriBoardMapper.selectProductBoardList();
-////        return list;
-//        return yuriBoardMapper.selectProductBoardList();
-//
-//    }
     @Override
-    public Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception {
-        PageHelper.startPage(pageNo, 5);
+    public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 8);
         return yuriBoardMapper.selectProductBoardListPage();
     }
 
@@ -49,11 +40,13 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         }
     }
 
+//    게시글 수정
     @Override
     public void updateProductBoard(BoardDto board) throws Exception {
         yuriBoardMapper.updateProductBoard(board);
     }
 
+//    게시글 삭제
     @Override
     public void deleteProductBoard(int boardNum) throws Exception {
         yuriBoardMapper.deleteProductBoard(boardNum);

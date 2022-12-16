@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,13 +30,12 @@ public class YuriController {
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
     public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
-//    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
 
 //        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
 //        mv.addObject("dataList", dataList);
 
-        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),10);
+        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),20);
         mv.addObject("dataList", dataList);
 
         return mv;
@@ -53,12 +53,22 @@ public class YuriController {
         return "redirect:/productWrite";
     }
 
+//    게시글 수정
+    @ResponseBody
     @RequestMapping("/updateProductBoard")
     public String updateProductBoard(BoardDto board) throws Exception {
         yuriBoardService.updateProductBoard(board);
 
         return "redirect:/productWrite";
+    }
 
+
+//      게시글 삭제
+    @ResponseBody
+    @RequestMapping("/deleteProductBoard")
+    public String deleteProductBoard(@RequestParam int boardNum) throws Exception {
+        yuriBoardService.deleteProductBoard(boardNum);
+        return "redirect:yuri/productList";
     }
 
 //    상세페이지
