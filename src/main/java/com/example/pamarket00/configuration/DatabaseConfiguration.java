@@ -26,6 +26,7 @@ public class DatabaseConfiguration {
         return new HikariConfig();
     }
 
+
     @Bean
     public DataSource dataSource() throws Exception {
         DataSource dataSource = new HikariDataSource(hikariConfig());
@@ -54,3 +55,4 @@ public class DatabaseConfiguration {
         return new org.apache.ibatis.session.Configuration();
     }
 }
+
