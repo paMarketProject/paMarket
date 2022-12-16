@@ -59,5 +59,12 @@ public class MyPageServiceImpl implements MyPageService{
         return myPageMapper.idCheck(userId);
     }
 
+    @Override
+    public UserDto loginCheck(String userId, String userPw) throws Exception {
+        UserDto userDto = myPageMapper.loginCheck(userId, userPw);
+        return userDto;
+    }
+
+
 
 }

@@ -25,4 +25,6 @@ public interface MyPageMapper {
     void insertUserInfo(UserDto userDto) throws Exception;
 
     int idCheck(String userId) throws Exception;
+
+    UserDto loginCheck(String userId, String userPw) throws Exception;
 }

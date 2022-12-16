@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -88,8 +90,30 @@ public class YoungController {
          return result;
     }
 
+    @RequestMapping("Login")
+    public String LoginCheck(){
+        return "YM/Login";
+    }
 
+    @PostMapping("/loginCheck")
+    @ResponseBody
+    public Object loginIdCheck(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        UserDto userDto = myPageService.loginCheck(userId, userPw);
 
+//    세션이 존재하면 없앰
+        if (session.getAttribute("userId") != null) {
+            session.removeAttribute("userId");
+        }
 
+        session.setAttribute("userId", userDto);
+
+        if (userDto == null) {
+            return 0;
+        }
+        else {
+            return userDto;
+        }
+    }
 
 }
