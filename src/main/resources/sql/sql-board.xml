@@ -22,6 +22,20 @@
             boardNum DESC
     </select>
 
+
+    <select id="selectCommentList" parameterType="int" resultType="com.example.pamarket00.dto.CommentDto">
+        SELECT
+            commentContents,
+            DATE_FORMAT(commentDate, '%Y.%m.%d %H:%i:%s')AS commentDate,commentUserId, commentNum, commentBoardNum,commentGroupNum
+        FROM
+            comment
+        WHERE
+            commentDeleted_yn = '1' and commentBoardNum = #{boardNum}
+        ORDER BY
+            commentNum ASC
+    </select>
+
+
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardTitle,

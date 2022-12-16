@@ -18,6 +18,7 @@ package com.example.pamarket00.service;//package com.example.newboard.service;
 //        return boardMapper.selectBoardList();
 //    }
 //}
+import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.mapper.TownMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class BoardServiceImpl implements BoardService {
     public TownDto selectBoardDetail(int boardNum) throws Exception {
         TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
         return townBoard;
+    }
+
+    @Override
+    public List<CommentDto> selectCommentList(int boardNum) throws Exception {
+        return TownMapper.selectCommentList(boardNum);
     }
 
 }

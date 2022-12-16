@@ -25,11 +25,43 @@
             width: 2.3rem;
         }
     </style>
+
+    <script>
+        $(document).ready(function (){
+
+            $("#commentSubmit").on("click", function (){
+                var commentContents = $("#commentContents").val();    //댓글의 내용
+                var boardNum =  "${dto.member_bno}";
+                var params = {"r_content" : r_content, "member_bno" : member_bno};
+
+                $.ajax({
+                    url:"/ajax/selectbox",
+                    type: "post",
+                    data: datas,
+                    success: function (data){
+                        let  selBox = $("#sel2");
+                        selBox.empty();
+                        selBox.append("<option>선택하세요</option>")
+
+                        for (let i = 0; i < data.length; i++){
+                            selBox.append("<option>"+ data[i].areaName + "</option>" );
+                        }
+                    },
+                    error: function (){
+                        alert("ajax통신 중 오류가 발생했습니다.")
+                    }
+                })
+
+            })
+
+        })
+    </script>
+
+
 </head>
 
 <body>
 <div class="container" style="padding-top: 30px">
-
 </div>
 
 <nav class="navbar navbar-expand-lg bg-light col-md-8 offset-md-2 ">
@@ -47,10 +79,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: large">
                 <li class="nav-item">
-                    <a class="nav-link active" style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
+                    <a class="nav-link" style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="padding-left: 50px" href="#">동네생활</a>
+                    <a class="nav-link active" style="padding-left: 50px" href="#">동네생활</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="padding-left: 50px" href="#">채팅</a>
@@ -111,28 +143,7 @@
 
                 </tbody>
             </table>
-            <table id="commentTable" class="table table-condensed"></table>
-            <table class="table table-condensed">
-                <tr>
-                    <td>
-                        <span class="form-inline" role="form">
-                            <div class="form-group">
-                                <div class="row" style="margin-bottom: 10px">
-                                    <div class="col-md-3">
-                                        <input type="text" id="commentParentName" name="commentParentName" class="form-control col-lg-2" data-rule-required="true" placeholder="이름" maxlength="10">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="password" id="commentParentPassword" name="commentParentPassword" class="form-control col-lg-2" data-rule-required="true" placeholder="패스워드" maxlength="10">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a class="btn btn-success" href="#" role="button" style="background-color: rgba(0,204,0,0.6)">확인</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
-                    </td>
-                </tr>
-            </table>
+
             <table class="table table-condensed">
                 <thead>
                 <tr>
@@ -152,7 +163,46 @@
                 </thead>
             </table>
         </div>
-    <hr/>
+
+<!--댓글 시작-->
+
+    <div class="card" style="width: 83.4%">
+        <div class="card-body">
+            <textarea class="form-control" rows="1"></textarea>
+        </div>
+        <div class="card-footer">
+            <button id="commentSubmit" class="btn btn-success" style="background-color: rgba(0,204,0,0.6); float: right">댓글 등록</button>
+        </div>
+    </div>
+    <div class="card" style="width: 83.4%">
+        <div class="card-header"  >댓글리스트</div>
+        <ul th:if="${#lists.size(commentList)}>0"  th:each="item : ${commentList}" id="comment--group" class="list-group">
+            <li  id="comment--1" class="list-group-item d-flex justify-content-between" >
+
+                <div th:text="${item.commentContents}" id="commentContents" name="commentContents">댓글내용</div>
+                <div>
+                <div class="d-flex">
+                    <div th:text="${item.commentUserId}" class="text-muted" id="commentUserId" style="margin-right: 8px" name="commentUserId">지은이 &nbsp;</div>
+                    <div th:text="${item.commentDate}" class="text-muted">등록날짜&nbsp;</div>
+                    <button class="badge" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글</button>
+                    <button class="badge" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>
+                    <button class="badge" style="background-color: rgba(0,204,0,0.6)">삭제</button>
+                </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul th:unless="${#lists.size(commentList)} > 0" id="commentGroup" class="list-group">
+            <li  class="list-group-item d-flex justify-content-between" >
+                <div class="text-muted">댓글이 없습니다&nbsp;</div>
+            </li>
+        </ul>
+
+
+    </div>
+
+<!--    댓글끝-->
+
 </div>
 
 

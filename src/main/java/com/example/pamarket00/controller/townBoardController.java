@@ -1,6 +1,7 @@
 package com.example.pamarket00.controller;
 
 
+import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +61,9 @@ public class townBoardController {
         ModelAndView mv = new ModelAndView("townboard/boardDetaile");
 
         TownDto board = boardService.selectBoardDetail(boardNum);
+        List<CommentDto> commentList = boardService.selectCommentList(boardNum);
         mv.addObject("board", board);
-
+        mv.addObject("commentList", commentList);
 
         return mv;
     }
