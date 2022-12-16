@@ -3,9 +3,6 @@
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
     <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-
--- 중복값 제거 성공!!!ㅡㅜㅜㅜㅠㅠ
---
 select board.boardTitle, board.boardProPrice, location.locationName,
        kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
        board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
@@ -40,7 +37,7 @@ ORDER BY board.boardNum
                 ON board.boardProState = state.stateNum
             WHERE board.boardUserId = 'ㅊㅊㅊ'
             AND board.deleted_yn='N'
-            ORDER BY board.boardNum
+            ORDER BY board.boardNum desc
         ]]>
     </select>
 
