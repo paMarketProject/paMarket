@@ -60,14 +60,20 @@ ORDER BY board.boardNum
         </foreach>
     </insert>
 
+    <!--    좌표값 입력하기-->
+    <insert id="insertMarkerXY" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{BoardNum}, #{mapX}, #{mapY});
+        ]]>
+    </insert>
+
+
 <!--    파일리스트 가져오기-->
     <select id="selectProductBoardFileList" resultType="com.example.pamarket00.dto.FileDto">
         <![CDATA[
         SELECT * FROM file where fileBoardNum = #{boardNum}
     ]]>
     </select>
-
-
 
 
 <!--    상세페이지 가져오기-->
@@ -114,4 +120,8 @@ ORDER BY board.boardNum
         WHERE boardNum = #{boardNum}
 ]]>
     </update>
+
+
+
+
 </mapper>

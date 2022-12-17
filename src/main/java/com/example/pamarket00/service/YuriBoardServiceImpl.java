@@ -31,9 +31,7 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Override
     public void insertProductBoard (BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception{
         yuriBoardMapper.insertProductBoard(board);
-
         List<FileDto> fileList = fileUtils.parseFileInfo(board.getBoardNum(),uploadFiles);
-//uploadFiles였는데
 
         if(CollectionUtils.isEmpty(fileList) == false){
             yuriBoardMapper.insertProductBoardFileList(fileList);
