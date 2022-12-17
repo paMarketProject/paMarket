@@ -47,42 +47,45 @@
         display: block;
     }
     </style>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
-            $("#edit").click(function() {
-                const data = $('#boardNum').val();
-                const sendDTO = {
-                    result : data
-                };
+            $("#edit").on("click", function() {
+                const boardNum = $("#boardNum").val();
+                const boardTitle = $("#boardTitle").val();
+                const boardContents = $("#boardContents").val();
+
                 $.ajax({
-                    type:"post",
-                    url : "/updateProductBoard",
-                    dataType:"json",
-                    data : sendDTO,
-                    success: function(data) {
-                        alert("통신성공")
+                    url:"/updateProductBoard",
+                    type : "POST",
+                    data : {boardNum : boardNum,
+                            boardTitle : boardTitle,
+                            boardContents : boardContents
                     },
-                    error: function (data){
-                        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    success : function(data) {
+                        alert("수정되었습니다")
+                    },
+                    error : function (){
                         alert("통신오류")
                     }
-                });
+                })
             });
-            $('#delete').on('click', function() {
+            $("#delete").on("click", function() {
+                const boardNum = $("#boardNum").val();
+
                 $.ajax({
-                    url : "/deleteProductBoard",
-                    type: "post",
-                    data:{"boardNum" : boardNum},
-                    dataType : "json",
+                    url:"/deleteProductBoard",
+                    type : "POST",
+                    data : {boardNum : boardNum},
                     success : function(data) {
-                        alert("삭제 통신성공")
+                        alert("삭제되었습니다")
                     },
-                    error:function(data) {
-                        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    error : function (){
+                        alert("통신오류")
                     }
-                });
+                })
             });
-        });
+        })
+
 
     </script>
 

@@ -102,7 +102,7 @@ ORDER BY board.boardNum
 <!--    게시글 수정-->
     <update id="updateProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
         <![CDATA[
-        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardTitle}
+        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardContents}
         where boardNum = #{boardNum}
 ]]>
     </update>

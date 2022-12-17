@@ -54,8 +54,8 @@ public class YuriController {
     @ResponseBody
     @RequestMapping(value = "/updateProductBoard", method = RequestMethod.POST)
 //    public String updateProductBoard(BoardDto board) throws Exception {
-    public String updateProductBoard(@RequestBody BoardDto board) throws Exception {
-        yuriBoardService.updateProductBoard(board);
+    public String updateProductBoard(@RequestParam("boardNum") int boardNum, @RequestParam("boardTitle")String boardTitle, @RequestParam("boardContents")String boardContents) throws Exception {
+        yuriBoardService.updateProductBoard(boardNum, boardTitle, boardContents);
 
         return "redirect:/productWrite";
     }

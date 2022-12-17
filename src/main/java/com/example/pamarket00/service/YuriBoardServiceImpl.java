@@ -42,8 +42,8 @@ public class YuriBoardServiceImpl implements YuriBoardService{
 
 //    게시글 수정
     @Override
-    public void updateProductBoard(BoardDto board) throws Exception {
-        yuriBoardMapper.updateProductBoard(board);
+    public void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception {
+        yuriBoardMapper.updateProductBoard(boardNum,boardTitle,boardContents);
     }
 
 //    게시글 삭제
