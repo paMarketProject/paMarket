@@ -39,12 +39,6 @@ public class MyPageServiceImpl implements MyPageService{
     }
 
     @Override
-    public UserDto userInfo() throws Exception {
-        UserDto userInfo = myPageMapper.userInfo();
-        return userInfo;
-    }
-
-    @Override
     public void UpdateUserInfo(UserDto userInfo) throws Exception {
         myPageMapper.UpdateUserInfo(userInfo);
     }
@@ -64,7 +58,5 @@ public class MyPageServiceImpl implements MyPageService{
         UserDto userDto = myPageMapper.loginCheck(userId, userPw);
         return userDto;
     }
-
-
 
 }

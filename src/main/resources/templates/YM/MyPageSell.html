@@ -63,7 +63,7 @@
                 <div class="col mb-5" th:if="${#lists.size(sellList.getList())} > 0" th:each="list : ${sellList.getList()}">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top mx-auto margin" id="pro-img" th:src="${list.boardImagePath}" alt="..." />
+                        <img class="card-img-top mx-auto" id="pro-img" th:src="${list.filePath}" alt="..." />
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">

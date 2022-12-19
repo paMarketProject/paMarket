@@ -10,8 +10,6 @@
             $('#btn-login').on('click',function (){
                 let userId = $("#userId").val();
                 let userPw = $("#userPw").val();
-                console.log(userId);
-                console.log(userPw);
                 $.ajax({
                     type: "post",
                     url : "/loginCheck",
@@ -22,7 +20,7 @@
                         }
                         else {
                             alert(data.userId + "님 반갑습니다.");
-                            location.href="/MyPage";
+                            location.href="/MyPageUserInfo";
                         }
                     },
                     error: function () {

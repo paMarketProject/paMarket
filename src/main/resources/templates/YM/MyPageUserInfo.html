@@ -60,21 +60,21 @@
     </nav>
     <br>
     <div class="col-sm-6 mx-auto"><br><br>
-      <form class="border rounded-3 p-4" id="update-section" method="get">
+      <form class="border rounded-3 p-4" id="update-section" method="post">
         <h3 class="text-center">회원정보 수정</h3><br><br>
         <div class="d-grid gap-2">
           <label for="userName">이름</label>
-          <input type="text" class="form-control" id="userName" name="userName" disabled th:value="${userInfo.userName}">
+          <input type="text" class="form-control" id="userName" name="userName" readonly th:value="${session.user.userName}">
           <label for="userId">아이디</label>
-          <input type="text" class="form-control" id="userId" name="userId" disabled th:value="${userInfo.userId}">
+          <input type="text" class="form-control" id="userId" name="userId" readonly th:value="${session.user.userId}">
           <label for="userPw">비밀번호</label>
-          <input type="password" class="form-control" id="userPw" name="userPw" th:value="${userInfo.userPw}">
+          <input type="password" class="form-control" id="userPw" name="userPw" th:value="${session.user.userPw}">
           <label for="userTel">전화번호</label>
-          <input type="text" class="form-control" id="userTel" name="userTel" th:value="${userInfo.userTel}">
+          <input type="text" class="form-control" id="userTel" name="userTel" th:value="${session.user.userTel}">
           <label for="userEmail">이메일</label>
-          <input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${userInfo.userEmail}">
+          <input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${session.user.userEmail}">
           <label for="userAdd2">주소</label>
-          <input type="text" class="form-control" id="userAdd2" name="userAdd2" th:value="${userInfo.userAdd2}">
+          <input type="text" class="form-control" id="userAdd2" name="userAdd2" th:value="${session.user.userAdd2}">
           <div class="d-grid gap-2">
             <button class="btn btn-success" type="button" id="btn-update">회원정보 수정</button>
             <button class="btn btn-secondary" type="button" id="btn-back">뒤로가기</button>

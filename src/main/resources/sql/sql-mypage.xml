@@ -7,18 +7,20 @@
         SELECT board.boardImagePath, board.boardTitle, Kategory.KategoryName as KategoryName, board.boardDate, board.boardHitCnt
         FROM board
         JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
-        WHERE boardUserId = 'ㅊㅊㅊ'
+        WHERE boardUserId = 'aaa'
     ]]>
     </select>
 
     <select id="MyPageSellList" resultType="com.example.pamarket00.dto.MyPageSellDto">
         <![CDATA[
         SELECT board.boardTitle,location.locationName as locationName,board.boardProPrice,
-               state.stateName as stateName, board.boardImagePath,Kategory.KategoryName as KategoryName
+               state.stateName as stateName, board.boardImagePath,Kategory.KategoryName as KategoryName,
+               file.filePath as filePath
         FROM board
-        JOIN location location ON boardUserCheck = location.locationNum
-        JOIN State State ON boardProState = State.stateNum
-        JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
+        JOIN location ON boardUserCheck = location.locationNum
+        JOIN State ON boardProState = State.stateNum
+        JOIN Kategory ON boardKategory = Kategory.KategoryNum
+        JOIN file ON boardNum = file.fileBoardNum
         WHERE boardUserId = 'ㅊㅊㅊ'
         ]]>
     </select>
@@ -32,19 +34,11 @@
         ]]>
     </select>
 
-    <select id="userInfo" resultType="com.example.pamarket00.dto.UserDto">
-        <![CDATA[
-            SELECT userId, userName, userPw, userTel, userEmail, userAdd2
-            FROM user
-            WHERE userId = 'test1'
-        ]]>
-    </select>
-
     <update id="UpdateUserInfo" parameterType="com.example.pamarket00.dto.UserDto">
         <![CDATA[
             UPDATE user
             SET userPw = #{userPw}, userTel = #{userTel}, userEmail = #{userEmail}, userAdd2 = #{userAdd2}
-            WHERE userId = 'test1'
+            WHERE userId = #{userId}
         ]]>
     </update>
 

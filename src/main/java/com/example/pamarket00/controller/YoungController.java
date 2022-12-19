@@ -59,16 +59,11 @@ public class YoungController {
     }
 
     @RequestMapping(value = "/MyPageUserInfo", method = RequestMethod.GET)
-    public ModelAndView MyPageUserInfo() throws Exception{
-        ModelAndView mv = new ModelAndView("YM/MyPageUserInfo");
-
-        UserDto userInfo = myPageService.userInfo();
-        mv.addObject("userInfo",userInfo);
-
-        return mv;
+    public String MyPageUserInfo() throws Exception{
+        return "YM/MyPageUserInfo";
     }
 
-    @RequestMapping("YM/UpdateUserInfo")
+    @RequestMapping(value = "YM/UpdateUserInfo", method = RequestMethod.POST)
     public String UpdateUserInfo(UserDto userInfo) throws Exception{
         myPageService.UpdateUserInfo(userInfo);
         return "redirect:/MyPage";
@@ -102,11 +97,11 @@ public class YoungController {
         UserDto userDto = myPageService.loginCheck(userId, userPw);
 
 
-        if (session.getAttribute("userId") != null) {
-            session.removeAttribute("userId");
+        if (session.getAttribute("user") != null) {
+            session.removeAttribute("user");
         }
 
-        session.setAttribute("userId", userDto);
+        session.setAttribute("user", userDto);
 
         if (userDto == null) {
             return 0;

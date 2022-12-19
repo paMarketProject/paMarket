@@ -16,10 +16,6 @@ public interface MyPageMapper {
 
     List<BoardDto> MyPageBuyList() throws Exception;
 
-
-    public UserDto userInfo() throws Exception;
-
-
     void UpdateUserInfo(UserDto userInfo) throws Exception;
 
     void insertUserInfo(UserDto userDto) throws Exception;
