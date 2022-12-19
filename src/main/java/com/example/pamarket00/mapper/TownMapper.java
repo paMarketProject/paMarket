@@ -2,7 +2,9 @@ package com.example.pamarket00.mapper;
 
 import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 @Mapper
@@ -17,4 +19,7 @@ public interface TownMapper {
 
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 
+    public void commentDelete(int commentNum) throws Exception;
+
+    Page<TownDto> selectBoardListPage();
 }

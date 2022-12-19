@@ -21,6 +21,8 @@ package com.example.pamarket00.service;//package com.example.newboard.service;
 import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.mapper.TownMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -52,6 +54,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void commentDelete(int commentBoardNum, int commentNum) throws Exception{
+        TownMapper.commentDelete(commentNum);
+    }
+
+    @Override
     public void insertComment( String commentUserId, String commentContents, int commentBoardNum) throws Exception {
         CommentDto comment = new CommentDto();
         comment.setCommentBoardNum(commentBoardNum);
@@ -59,6 +66,12 @@ public class BoardServiceImpl implements BoardService {
         comment.setCommentContents(commentContents);
 
         TownMapper.insertComment(comment);
+    }
+
+    @Override
+    public Page<TownDto> selectBoardList(int pageNo){
+        PageHelper.startPage(pageNo,15);
+        return TownMapper.selectBoardListPage();
     }
 
 }

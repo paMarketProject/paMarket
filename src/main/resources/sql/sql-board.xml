@@ -5,9 +5,9 @@
 <mapper namespace="com.example.pamarket00.mapper.TownMapper">
     <insert id="insertBoard" parameterType="com.example.pamarket00.dto.TownDto">
         INSERT INTO board
-            (boardKategory, boardTitle, boardContents, boardDate)
+            (kategory, boardTitle, boardContents, boardDate)
         VALUES
-            (#{boardKategory}, #{boardTitle}, #{boardContents}, NOW())
+            (#{kategory}, #{boardTitle}, #{boardContents}, NOW())
     </insert>
 
     <insert id="insertComment" parameterType="com.example.pamarket00.dto.CommentDto">
@@ -21,7 +21,21 @@
     <select id="selectBoardList" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardNum, boardTitle, boardUserId,
-            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardHitCnt
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardHitCnt,kategory
+        FROM
+            board LIMIT20
+        WHERE
+            deleted_yn = 'N'
+        ORDER BY
+            boardNum DESC
+    </select>
+
+
+
+    <select id="selectBoardListPage" resultType="com.example.pamarket00.dto.TownDto">
+        SELECT
+            boardNum, boardTitle, boardUserId,
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardHitCnt,kategory
         FROM
             board
         WHERE
@@ -42,6 +56,13 @@
         ORDER BY
             commentNum ASC
     </select>
+    
+    <update id="commentDelete" parameterType="com.example.pamarket00.dto.CommentDto">
+        UPDATE comment
+        SET commentDeleted_yn = '0'
+        WHERE commentNum = #{commentNum}
+
+    </update>
 
 
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">

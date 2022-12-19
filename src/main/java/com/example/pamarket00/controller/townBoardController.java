@@ -4,6 +4,7 @@ package com.example.pamarket00.controller;
 import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.service.BoardService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,10 @@ public class townBoardController {
     }
 
     @RequestMapping(value = "/board/town", method = RequestMethod.GET)
-    public ModelAndView openBoardList() throws Exception {
+    public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("townboard/boardList");
 
-        List<TownDto> boardList = boardService.selectBoardList();
+        PageInfo<TownDto> boardList = new PageInfo<>(boardService.selectBoardList(pageNum),5);
         mv.addObject("boardList", boardList);
 
         return mv;
@@ -77,6 +78,16 @@ public class townBoardController {
         List<CommentDto> commentList = boardService.selectCommentList(commentBoardNum);
 
         return commentList;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/board/town/comment/delete", method = RequestMethod.POST)
+    public String commentDelete(
+            @RequestParam("commentNum") int commentNum,
+            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+        boardService.commentDelete(commentBoardNum, commentNum);
+        return "redirect:/board/town/{commentBoardNum}";
     }
 
 //    @ResponseBody

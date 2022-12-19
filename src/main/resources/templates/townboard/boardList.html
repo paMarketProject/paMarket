@@ -117,8 +117,8 @@
 
 
                             <tbody>
-                            <tr th:if="${#lists.size(boardList)} > 0" th:each="item : ${boardList}">
-                                <td th:text="${item.boardNum}" style="text-align: center">분류</td>
+                            <tr th:if="${#lists.size(boardList.getList())} > 0" th:each="item : ${boardList.getList()}">
+                                <td th:text="${item.kategory}" style="text-align: center">분류</td>
                                 <td>
                                     <a href="/board/town/" th:attrappend="href=${item.boardNum}" th:text="${item.boardTitle}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none">제목</a>
                                 </td>
@@ -126,7 +126,7 @@
                                 <td th:text="${item.boardDate}" style="text-align: center">날짜</td>
                                 <td th:text="${item.boardHitCnt}" style="text-align: center">조회수</td>
                             </tr>
-                            <tr th:unless="${#lists.size(boardList)} > 0">
+                            <tr th:unless="${#lists.size(boardList.getList())} > 0">
                                 <td th:cols="5">조회된 내용이 없습니다.</td>
                             </tr>
                             </tbody>
@@ -138,17 +138,21 @@
                         <span style="float: left">
                             <a class="btn btn-success" href="http://localhost:8080/board/town/write" role="button" style="background-color: rgba(0,204,0,0.6)">글쓰기</a>
                         </span>
-                        <ul class="pagination justify-content-end mb-0">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </ul>
+
+                        <nav>
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item" th:classappend="${boardList.getPrePage()==0}?'disabled'">
+                                    <a class="page-link" th:href="@{/board/town(htmlNum=${boardList.getPrePage()})}">&laquo</a>
+                                </li>
+                                <li class="page-item" th:each="page:${#numbers.sequence(boardList.getNavigateFirstPage(), boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()}?'active'">
+                                    <a class="page-link" th:text="${page}" th:href="@{/board/town(pageNum=${page})}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${boardList.getNextPage()==0}? 'disabled'">
+                                    <a class="page-link" th:href="@{/board/town(pageNum=${boardList.getNextPage()})}">&raquo</a>
+                                </li>
+                            </ul>
+                        </nav>
+
                     </div>
                 </div>
             </div>
