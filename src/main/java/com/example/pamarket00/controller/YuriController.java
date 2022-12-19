@@ -24,6 +24,11 @@ public class YuriController {
     FileUtils fileUtils;
 //    게시글 목록 페이지
 
+    @RequestMapping("/map")
+    public String index() throws Exception {
+        return "yuri/mapTest";
+    }
+
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
     public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("yuri/boardList");

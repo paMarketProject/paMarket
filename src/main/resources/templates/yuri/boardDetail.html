@@ -200,8 +200,15 @@
             <div class="my-3 mt-4 ms-5">
                 <img src="/YuriImage/heart.png" height="50px" id="heartImage">
                 <div class="ms-5">
-                <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>
-                <button class="btn btn-success" type="button">채팅하기</button>
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-light" type="button">채팅하기</button>
+                        </div>
+<!--                <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>-->
+<!--                <button class="btn btn-success" type="button">채팅하기</button>-->
                 </div>
             </div>
             </div>
