@@ -77,11 +77,6 @@
 <!--    검색버튼 눌렀을 때-->
     <script>
     $(document).ready(function() {
-        $('#btn-save').on('click', function () {
-            history.back();
-        });
-
-
         const frm = $('#frm')
         $('#search').on('click', function() {
 
@@ -89,8 +84,18 @@
 
         });
 
-        $('#')
+        $('#btn-final-save').on('click', function () {
+            frm.submit()
+            insertXY()
+        })
 
+        // $('#')
+        //키보드 엔터 쳐도 막 넘어가지 않게 처리
+        $("#keyword").on("keydown", () => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            }
+        })
 
     });
 
@@ -100,7 +105,8 @@
 <!--    저장하기 버튼 누르면 알림 + 모양변환-->
     <script>
         // $(document).ready(function() {
-        //     $("#btn-xy").on('click', function () {
+        //     $("#btn-final-save").on('click', function () {
+        //
         //         history.back();
         //     });
         // });
@@ -112,7 +118,7 @@
         <p class="mt-3 p-3" id="kTitle">중고거래 글쓰기</p>
     </div>
     <hr>
-    <form action="/insertProductBoard" method="post" enctype="multipart/form-data">
+    <form action="/insertProductBoard" method="post" enctype="multipart/form-data" id="frm">
     <img src="/YuriImage/camera.png" alt="Logo" width="60" height="60" class="ms-3">
     <div class="my-3">
         <input type="file" class="form-control" id="files" name="files" multiple>
@@ -224,7 +230,7 @@
                 //선택된 마커를 담을 변수
                 selectedMarker = null;
 
-               var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                     mapOption = {
                         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
                         level: 3 // 지도의 확대 레벨
@@ -298,6 +304,20 @@
                             marker = addMarker(placePosition, i),
                             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                            // 마커 위에 인포윈도우를 표시합니다
+                            // infowindow.open(map, marker);
+                            // alert("눌러짐")
+
+
+                            if (!confirm("이곳으로 정하시겠습니까?")) {
+                                alert("다시 선택해주세요");  //아니오
+                            } else {
+                                alert(placePosition); //예
+                            }
+                        });
+
+
 
 
 
@@ -359,6 +379,32 @@
 
                     }
 
+                    function insertXY() {
+                        // 특수문자 ()제거하기
+                        let removeBracket = placePosition.replace(/[^(1-9)]/gi, "");
+
+
+                        //,를 기준으로 값 자르기
+                        let splitComma = removeBracket.split(',');
+                        let beforeComma = splitComma[0];
+                        let afterComma = splitComma[1];
+
+                        // alert(beforeComma)
+                        // alert(afterComma)
+
+                        console.log(beforeComma)
+                        console.log(afterComma)
+
+                        $.ajax({
+                            url:"/insertProductBoard",
+                            type:'post',
+                            data:{
+                                "mapX" : "beforeComma",
+                                "mapY" : "afterComma"
+                            }
+                        })
+                    }
+
                    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
                     listEl.appendChild(fragment);
                     menuEl.scrollTop = 0;
@@ -415,11 +461,11 @@
                     //
 
                     var iwContent =
-                            '<form " >'
+
                             '<div style="padding:30px;">이곳으로 정하시겠습니까?' +
                             ' <button type="button" class="btn btn-outline-secondary" id="btn-save" name="btn-save">저장하기</button>' +
                             '</div>' ,
-                            '</form>',
+
 
                     // var iwContent =
                         // '<form onsubmit="choosePlace();" >'
@@ -435,10 +481,27 @@
                     });
 
                     // 마커에 클릭이벤트를 등록합니다 잠시 주석처리
-                    kakao.maps.event.addListener(marker, 'click', function() {
-                        // 마커 위에 인포윈도우를 표시합니다
-                        infowindow.open(map, marker);
-                    });
+                    // kakao.maps.event.addListener(marker, 'click', function() {
+                    //     // 마커 위에 인포윈도우를 표시합니다
+                    //     // infowindow.open(map, marker);
+                    //     // alert("눌러짐")
+                    //
+                    //     var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+                    //         marker = addMarker(placePosition, i),
+                    //         itemEl = getListItem(i, places[i]);
+                    //
+                    //     if (!confirm("확인(예) 또는 취소(아니오)를 선택해주세요.")) {
+                    //         alert(placePosition);
+                    //     } else {
+                    //         alert("확인(예)을 누르셨습니다.");
+                    //     }
+                    // });
+
+
+
+                    // kakao.maps.event.addListener('#btn-save', 'click', function () {
+                    //     alert('버튼 눌러짐')
+                    // })
 
 
 
@@ -558,7 +621,7 @@
 
 <!--                삽입-->
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-success" type="submit">저장</button>
+                    <button class="btn btn-success" type="button" id="btn-final-save">저장</button>
                 </div>
             <div class="container mt-5 p-5">
                 <hr>
