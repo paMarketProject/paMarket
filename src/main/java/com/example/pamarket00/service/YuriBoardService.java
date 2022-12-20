@@ -11,12 +11,15 @@ import java.util.List;
 
 public interface YuriBoardService {
 //    List<ProductBoardDto> selectProductBoardList() throws Exception;
-    Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception;
+//    Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception;
+    Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception;
     void insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;
 //    insertProductBoard(board,multipart)
 
-    void updateProductBoard(BoardDto board) throws Exception;
+//    게시글 수정
+    void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception;
 
+//    게시글 삭제
     void deleteProductBoard(int boardNum) throws Exception;
     FileDto selectProductBoardFileInfo(int fileNum, int boardNum) throws Exception;
 

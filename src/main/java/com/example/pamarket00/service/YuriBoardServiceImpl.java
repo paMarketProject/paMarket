@@ -21,18 +21,9 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     private YuriBoardMapper yuriBoardMapper;
     @Autowired
     private FileUtils fileUtils;
-
-//    @Override
-//    public List<ProductBoardDto> selectProductBoardList() throws Exception{
-////        List<ProductBoardDto> list = null;
-////        list = yuriBoardMapper.selectProductBoardList();
-////        return list;
-//        return yuriBoardMapper.selectProductBoardList();
-//
-//    }
     @Override
-    public Page<ProductBoardDto> selectProductBoardList(int pageNo) throws Exception {
-        PageHelper.startPage(pageNo, 5);
+    public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 8);
         return yuriBoardMapper.selectProductBoardListPage();
     }
 
@@ -40,20 +31,20 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Override
     public void insertProductBoard (BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception{
         yuriBoardMapper.insertProductBoard(board);
-
         List<FileDto> fileList = fileUtils.parseFileInfo(board.getBoardNum(),uploadFiles);
-//uploadFiles였는데
 
         if(CollectionUtils.isEmpty(fileList) == false){
             yuriBoardMapper.insertProductBoardFileList(fileList);
         }
     }
 
+//    게시글 수정
     @Override
-    public void updateProductBoard(BoardDto board) throws Exception {
-        yuriBoardMapper.updateProductBoard(board);
+    public void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception {
+        yuriBoardMapper.updateProductBoard(boardNum,boardTitle,boardContents);
     }
 
+//    게시글 삭제
     @Override
     public void deleteProductBoard(int boardNum) throws Exception {
         yuriBoardMapper.deleteProductBoard(boardNum);

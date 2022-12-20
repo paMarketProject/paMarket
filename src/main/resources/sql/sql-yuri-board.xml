@@ -3,9 +3,6 @@
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
     <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-
--- 중복값 제거 성공!!!ㅡㅜㅜㅜㅠㅠ
---
 select board.boardTitle, board.boardProPrice, location.locationName,
        kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
        board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
@@ -40,7 +37,7 @@ ORDER BY board.boardNum
                 ON board.boardProState = state.stateNum
             WHERE board.boardUserId = 'ㅊㅊㅊ'
             AND board.deleted_yn='N'
-            ORDER BY board.boardNum
+            ORDER BY board.boardNum desc
         ]]>
     </select>
 
@@ -63,14 +60,20 @@ ORDER BY board.boardNum
         </foreach>
     </insert>
 
+    <!--    좌표값 입력하기-->
+    <insert id="insertMarkerXY" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{BoardNum}, #{mapX}, #{mapY});
+        ]]>
+    </insert>
+
+
 <!--    파일리스트 가져오기-->
     <select id="selectProductBoardFileList" resultType="com.example.pamarket00.dto.FileDto">
         <![CDATA[
         SELECT * FROM file where fileBoardNum = #{boardNum}
     ]]>
     </select>
-
-
 
 
 <!--    상세페이지 가져오기-->
@@ -101,6 +104,24 @@ ORDER BY board.boardNum
         WHERE boardNum = #{boardNum}
         ]]>
     </update>
+
+<!--    게시글 수정-->
+    <update id="updateProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardContents}
+        where boardNum = #{boardNum}
+]]>
+    </update>
+
+<!--    게시글 삭제-->
+    <update id="deleteProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
+        <![CDATA[
+        UPDATE board set deleted_yn = 'Y'
+        WHERE boardNum = #{boardNum}
+]]>
+    </update>
+
+
 
 
 </mapper>

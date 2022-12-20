@@ -8,15 +8,12 @@ import com.example.pamarket00.service.YuriBoardService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-
 
 @Controller
 public class YuriController {
@@ -27,15 +24,19 @@ public class YuriController {
     FileUtils fileUtils;
 //    게시글 목록 페이지
 
+    @RequestMapping("/map")
+    public String index() throws Exception {
+        return "yuri/mapTest";
+    }
+
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
     public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
-//    public ModelAndView openProductList(@RequestParam(required = false, defaultValue = "1") int pageNum)throws Exception{
         ModelAndView mv = new ModelAndView("yuri/boardList");
 
 //        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
 //        mv.addObject("dataList", dataList);
 
-        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),10);
+        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),20);
         mv.addObject("dataList", dataList);
 
         return mv;
@@ -53,12 +54,24 @@ public class YuriController {
         return "redirect:/productWrite";
     }
 
-    @RequestMapping("/updateProductBoard")
-    public String updateProductBoard(BoardDto board) throws Exception {
-        yuriBoardService.updateProductBoard(board);
+//    게시글 수정
+    @ResponseBody
+    @RequestMapping(value = "/updateProductBoard", method = RequestMethod.POST)
+//    public String updateProductBoard(BoardDto board) throws Exception {
+    public String updateProductBoard(@RequestParam("boardNum") int boardNum, @RequestParam("boardTitle")String boardTitle, @RequestParam("boardContents")String boardContents) throws Exception {
+        yuriBoardService.updateProductBoard(boardNum, boardTitle, boardContents);
 
         return "redirect:/productWrite";
+    }
 
+
+//      게시글 삭제
+
+    @RequestMapping("/deleteProductBoard")
+    @ResponseBody
+    public String deleteProductBoard(@RequestParam("boardNum") int boardNum) throws Exception {
+        yuriBoardService.deleteProductBoard(boardNum);
+        return "redirect:yuri/productList";
     }
 
 //    상세페이지
