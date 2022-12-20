@@ -25,6 +25,6 @@ public class BoardDto {
     int boardLike;
     int boardHitCnt;
     int mapBoardNum;
-    int mapX;
-    int mapY;
+    double mapX;
+    double mapY;
 }

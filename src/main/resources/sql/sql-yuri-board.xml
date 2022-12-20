@@ -81,7 +81,8 @@ ORDER BY board.boardNum
         <![CDATA[
         SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
                         kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath
+                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath,
+                        map.mapX,map.mapY
         FROM board board
                  JOIN location location
                       ON location.locationNum = board.boardUserCheck
@@ -93,9 +94,12 @@ ORDER BY board.boardNum
                       ON board.boardProState = state.stateNum
                 JOIN user user
                     ON board.boardUserId = user.userId
+                JOIN map map
+                    on board.boardNum = map.mapBoardNum
         WHERE boardNum = #{boardNum} AND board.deleted_yn='N'
 ]]>
     </select>
+
 
 <!--    조회수 증가-->
     <update id="updateProductHitCount" parameterType="com.example.pamarket00.dto.ProductBoardDto">
