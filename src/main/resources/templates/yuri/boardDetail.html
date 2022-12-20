@@ -129,10 +129,10 @@
             <input type="text" class="form-control" id="kategory" name="kategory" placeholder="" th:value="|${board.kategoryName}&emsp; ${board.boardDate}|"
                     style="border: none; background: transparent; font-size: 15px; color: #4d5154">
         </div>
-      <div class="mt-4 p-2">
+        <div class="mt-4 p-2">
         <!--                    <label class="form-label" for="contents">글내용 : </label>-->
-        <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
-                  th:text="${board.boardContents}"  style="border: none; background: transparent;"></textarea>
+           <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
+                    th:text="${board.boardContents}"  style="border: none; background: transparent;"></textarea>
       </div>
             <div class="mt-4 p-2">
 <!--                <label class="form-label" for="hitCnt">조회수 :</label>-->
@@ -178,13 +178,14 @@
 
             // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
             infowindow.open(map, marker);
+
         </script>
+
 </body>
         <hr>
     </div>
         </div>
     </div>
-
             <div class="col-sm d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-warning me-2" id="edit">수정</button>
                 <button type="button" class="btn btn-outline-danger" id="delete">삭제</button>
