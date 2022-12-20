@@ -71,6 +71,13 @@
     </update>
 
 
+    <update id="boardUpdate" parameterType="com.example.pamarket00.dto.TownDto">
+        UPDATE board
+        SET boardTitle = #{boardTitle}, boardContents = #{boardContents}, boardDate = NOW()
+        WHERE boardNum = #{boardNum}
+    </update>
+
+
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardNum, boardTitle,

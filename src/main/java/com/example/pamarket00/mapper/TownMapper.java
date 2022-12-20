@@ -22,4 +22,8 @@ public interface TownMapper {
     public void commentDelete(int commentNum) throws Exception;
 
     Page<TownDto> selectBoardListPage();
+
+    public void boardDelete(int boardNum) throws Exception;
+
+    public void boardUpdate(TownDto boardUpdate) throws Exception;
 }

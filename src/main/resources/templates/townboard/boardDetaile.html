@@ -34,7 +34,6 @@
                 const pageNum = [[${board.boardNum}]];
                 /*]]>*/
                 const commentBoardNum = pageNum;
-                // const commentBoardNum = 30;
                 const commentContents = $("#commentContents").val();
                 const commentNum = $("#commentNum").val();
                 // const commentUserId = $("#commentUserId").val()
@@ -99,6 +98,7 @@
                     data: datas,
                     success: function (data){
                         alert('댓글을 삭제하였습니다.')
+                        location.reload()
                     },
                     error: function (request, status, error){
                         alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -106,7 +106,57 @@
                 })
             });
 
-            $('')
+
+            $('#boardDelete').on('click', function (){
+                /*<![CDATA[*/
+                const boardNum = [[${board.boardNum}]];
+                /*]]>*/
+                const datas = {"boardNum": boardNum};
+
+                $.ajax({
+                    url:"/board/town/delete",
+                    type: "post",
+                    data: datas,
+                    success: function (data){
+                        alert('게시글을 삭제하였습니다.')
+                        frm.action = "/board/town"
+                        frm.submit();
+
+                    },
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            })
+
+            $('#boardUpdate').on('click', function(){
+                /*<![CDATA[*/
+                const boardNum = [[${board.boardNum}]];
+                /*]]>*/
+
+                const boardTitle = $("#boardTitle").val();
+                const boardContents = $("#boardContents").val();
+                const pageNum = [[${board.boardNum}]];
+                /*]]>*/
+                const datas = {"boardNum": boardNum, "boardTitle":boardTitle, "boardContents":boardContents};
+
+                $.ajax({
+                    url:"/board/town/update",
+                    type:"post",
+                    data: datas,
+                    success: function (data){
+                        alert('게시글을 수정하였습니다')
+                        frm.action = "/board/town"
+                        frm.submit();
+
+
+                    },
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+
+            })
         });
 
         // $("#commentDelete").on("click", function(){
@@ -153,7 +203,7 @@
                     <a class="nav-link" style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" style="padding-left: 50px" href="#">동네생활</a>
+                    <a class="nav-link active" style="padding-left: 50px" href="/board/town">동네생활</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="padding-left: 50px" href="#">채팅</a>
@@ -181,6 +231,8 @@
 <div class="container" style="margin-top: 30px">
     <hr>
         <div class="col-md-10">
+            <form id="frm">
+
             <table class="table table-condensed">
                 <thead>
                 <tr>
@@ -224,15 +276,19 @@
                                style="background-color: rgba(0,204,0,0.6)">목록</a>
                         </span>
                         <span style='float:right'>
-                            <a class="btn btn-success" href="#" role="button"
-                               style="background-color: rgba(0,204,0,0.6)">수정</a>
-                            <a class="btn btn-success" id="" href="#" role="button"
-                               style="background-color: rgba(0,204,0,0.6)">삭제</a>
+                            <button class="btn btn-success" type="button" id="boardUpdate" name="boardUpdate"
+                               style="background-color: rgba(0,204,0,0.6)">수정</button>
+
+                            <button class="btn btn-success" id="boardDelete"  name="boardDelete" type="button"
+                               style="background-color: rgba(0,204,0,0.6)">삭제</button>
                         </span>
                     </td>
                 </tr>
                 </thead>
+
             </table>
+            </form>
+
         </div>
 
 <!--댓글 시작-->
