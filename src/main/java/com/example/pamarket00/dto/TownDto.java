@@ -6,10 +6,14 @@ public class TownDto {
     private int boardNum;
     private String boardTitle;
     private String boardUserId;
-    private int boardKategory;
+    private String boardKategory;
     private String boardContents;
     private String boardDate;
     private int boardHitCnt;
+    private String kategory;
+
+
+
 
 
 }

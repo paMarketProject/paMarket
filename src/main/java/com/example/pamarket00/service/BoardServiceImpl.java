@@ -18,8 +18,11 @@ package com.example.pamarket00.service;//package com.example.newboard.service;
 //        return boardMapper.selectBoardList();
 //    }
 //}
+import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.mapper.TownMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -43,6 +46,32 @@ public class BoardServiceImpl implements BoardService {
     public TownDto selectBoardDetail(int boardNum) throws Exception {
         TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
         return townBoard;
+    }
+
+    @Override
+    public List<CommentDto> selectCommentList(int boardNum) throws Exception {
+        return TownMapper.selectCommentList(boardNum);
+    }
+
+    @Override
+    public void commentDelete(int commentBoardNum, int commentNum) throws Exception{
+        TownMapper.commentDelete(commentNum);
+    }
+
+    @Override
+    public void insertComment( String commentUserId, String commentContents, int commentBoardNum) throws Exception {
+        CommentDto comment = new CommentDto();
+        comment.setCommentBoardNum(commentBoardNum);
+        comment.setCommentUserId(commentUserId);
+        comment.setCommentContents(commentContents);
+
+        TownMapper.insertComment(comment);
+    }
+
+    @Override
+    public Page<TownDto> selectBoardList(int pageNo){
+        PageHelper.startPage(pageNo,15);
+        return TownMapper.selectBoardListPage();
     }
 
 }

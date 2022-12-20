@@ -1,14 +1,17 @@
 package com.example.pamarket00.dto;
-
 import lombok.Data;
 
 @Data
 public class CommentDto {
-    int commentId;
-    int commentType;
-    String commentUserId;
-    String commentContents;
-    String commentDate;
-    String commentDeleted_yn;
-    int commentBoardId;
+
+    private int commentNum;
+    private String commentUserId;
+    private String commentContents;
+    private String commentDate;
+    private int commentDeleted_yn;
+    private int commentBoardNum;
+    private int commentType;
+
+
+
 }

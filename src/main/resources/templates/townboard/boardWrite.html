@@ -28,12 +28,12 @@
     <script>
         $(document).ready(function (){
 
-            $("#boardKategory").on("change", function (){
-                const selectValue = $("#boardKategory option:selected").val();
-                const datas = {areaName: selectValue};
+            $("#kategory").on("change", function (){
+                const kategory = $("#kategory option:selected").val();
+                const datas = {areaName: kategory};
 
                 $.ajax({
-                    url:"/ajax/selectbox",
+                    url:"/board/town/write",
                     type: "post",
                     data: datas,
                     success: function (data){
@@ -71,10 +71,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: large">
                 <li class="nav-item">
-                    <a class="nav-link active" style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
+                    <a class="nav-link " style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="padding-left: 50px" href="#">동네생활</a>
+                    <a class="nav-link active" style="padding-left: 50px" href="#">동네생활</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="padding-left: 50px" href="#">채팅</a>
@@ -106,13 +106,14 @@
         <div class="col-md-10">
             <table class="table table-condensed">
                 <div class="col-sm" style="width: 60px; margin-left: 8px">
-                    <select class="form-control me-3" id="boardKategory" name="boardKategory">
-                        <option value="20" selected>분류</option>
-                        <option value="21">질문</option>
-                        <option value="22">소식</option>
-                        <option value="23">맛집</option>
-                        <option value="24">일상</option>
-                        <option value="25">취미</option>
+                    <select class="form-control me-3" id="kategory" name="kategory">
+                        <option value="분류" selected>분류</option>
+                        <option value="질문">질문</option>
+                        <option value="소식">소식</option>
+                        <option value="맛집">맛집</option>
+                        <option value="일상">일상</option>
+                        <option value="취미">취미</option>
+                        <option value="자유">자유</option>
                     </select>
                 </div>
                 <td colspan="2">

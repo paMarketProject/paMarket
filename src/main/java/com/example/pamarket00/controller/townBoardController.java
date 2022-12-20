@@ -1,14 +1,13 @@
 package com.example.pamarket00.controller;
 
 
+import com.example.pamarket00.dto.CommentDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.service.BoardService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -46,10 +45,10 @@ public class townBoardController {
     }
 
     @RequestMapping(value = "/board/town", method = RequestMethod.GET)
-    public ModelAndView openBoardList() throws Exception {
+    public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("townboard/boardList");
 
-        List<TownDto> boardList = boardService.selectBoardList();
+        PageInfo<TownDto> boardList = new PageInfo<>(boardService.selectBoardList(pageNum),5);
         mv.addObject("boardList", boardList);
 
         return mv;
@@ -60,9 +59,55 @@ public class townBoardController {
         ModelAndView mv = new ModelAndView("townboard/boardDetaile");
 
         TownDto board = boardService.selectBoardDetail(boardNum);
+        List<CommentDto> commentList = boardService.selectCommentList(boardNum);
         mv.addObject("board", board);
-
+        mv.addObject("commentList", commentList);
 
         return mv;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/board/town/replywrite" , method = RequestMethod.POST)
+    public Object commentWrite(
+            @RequestParam("commentContents") String commentContents,
+            @RequestParam("commentUserId") String commentUserId,
+            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+
+
+        boardService.insertComment(commentUserId, commentContents, commentBoardNum);
+        List<CommentDto> commentList = boardService.selectCommentList(commentBoardNum);
+
+        return commentList;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/board/town/comment/delete", method = RequestMethod.POST)
+    public String commentDelete(
+            @RequestParam("commentNum") int commentNum,
+            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+        boardService.commentDelete(commentBoardNum, commentNum);
+        return "redirect:/board/town/{commentBoardNum}";
+    }
+
+//    @ResponseBody
+//    @RequestMapping(value = "/board/town/rereplywrite" , method = RequestMethod.POST)
+//    public Object cocommentWrite(
+//            @RequestParam("commentContents") String commentContents,
+//            @RequestParam("commentUserId") String commentUserId,
+//            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+//
+//        List<CommentDto> commentList = boardService.selectCommentList(commentBoardNum);
+//        boardService.insertComment(commentUserId, commentContents, commentBoardNum);
+//        CommentDto cocoment = boardService.selectCocoment(commentNum);
+//        cocoment.setCommentContents(">> " + cocoment.getCommentContents());
+//        commentList.
+//
+//
+//        return commentList;
+//    }
+
+
+
+
 }
