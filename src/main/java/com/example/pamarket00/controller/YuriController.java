@@ -24,9 +24,9 @@ public class YuriController {
     FileUtils fileUtils;
 //    게시글 목록 페이지
 
-    @RequestMapping("/map")
+    @RequestMapping("/chatting")
     public String index() throws Exception {
-        return "yuri/mapTest";
+        return "yuri/chatting";
     }
 
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
