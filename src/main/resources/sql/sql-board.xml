@@ -64,6 +64,12 @@
 
     </update>
 
+    <update id="boardDelete" parameterType="com.example.pamarket00.dto.TownDto">
+        UPDATE board
+        SET deleted_yn = 'Y'
+        WHERE boardNum = #{boardNum}
+    </update>
+
 
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
