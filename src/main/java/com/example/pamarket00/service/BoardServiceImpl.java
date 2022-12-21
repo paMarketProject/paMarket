@@ -44,7 +44,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public TownDto selectBoardDetail(int boardNum) throws Exception {
+        TownMapper.updateTownBoardHitCount(boardNum);
         TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
+
         return townBoard;
     }
 
@@ -72,6 +74,25 @@ public class BoardServiceImpl implements BoardService {
     public Page<TownDto> selectBoardList(int pageNo){
         PageHelper.startPage(pageNo,15);
         return TownMapper.selectBoardListPage();
+    }
+
+    @Override
+    public void boardDelete(int boardNum) throws Exception {
+        TownMapper.boardDelete(boardNum);
+    }
+
+
+
+
+    @Override
+    public void boardUpdate(String boardTitle, String boardContents, int boardNum) throws Exception {
+        TownDto boardUpdate = new TownDto();
+        boardUpdate.setBoardTitle(boardTitle);
+        boardUpdate.setBoardContents(boardContents);
+        boardUpdate.setBoardNum(boardNum);
+
+
+        TownMapper.boardUpdate(boardUpdate);
     }
 
 }

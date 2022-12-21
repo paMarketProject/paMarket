@@ -5,9 +5,9 @@
 <mapper namespace="com.example.pamarket00.mapper.TownMapper">
     <insert id="insertBoard" parameterType="com.example.pamarket00.dto.TownDto">
         INSERT INTO board
-            (kategory, boardTitle, boardContents, boardDate)
+            (kategory, boardTitle, boardContents, boardDate, boardType)
         VALUES
-            (#{kategory}, #{boardTitle}, #{boardContents}, NOW())
+            (#{kategory}, #{boardTitle}, #{boardContents}, NOW(), 'T')
     </insert>
 
     <insert id="insertComment" parameterType="com.example.pamarket00.dto.CommentDto">
@@ -25,7 +25,7 @@
         FROM
             board LIMIT20
         WHERE
-            deleted_yn = 'N'
+            deleted_yn = 'N' and boardType = 'T'
         ORDER BY
             boardNum DESC
     </select>
@@ -39,7 +39,7 @@
         FROM
             board
         WHERE
-            deleted_yn = 'N'
+            deleted_yn = 'N' AND boardType = 'T'
         ORDER BY
             boardNum DESC
     </select>
@@ -71,6 +71,13 @@
     </update>
 
 
+    <update id="boardUpdate" parameterType="com.example.pamarket00.dto.TownDto">
+        UPDATE board
+        SET boardTitle = #{boardTitle}, boardContents = #{boardContents}, boardDate = NOW()
+        WHERE boardNum = #{boardNum}
+    </update>
+
+
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
             boardNum, boardTitle,
@@ -81,4 +88,12 @@
         WHERE
             boardNum = #{boardNum}
     </select>
+
+
+    <update id="updateTownBoardHitCount" parameterType="com.example.pamarket00.dto.TownDto">
+        <![CDATA[
+        UPDATE board SET boardHitCnt = boardHitCnt + 1
+        WHERE boardNum = #{boardNum}
+        ]]>
+    </update>
 </mapper>

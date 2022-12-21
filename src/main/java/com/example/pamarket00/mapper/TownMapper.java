@@ -1,9 +1,11 @@
 package com.example.pamarket00.mapper;
 
 import com.example.pamarket00.dto.CommentDto;
+import com.example.pamarket00.dto.ProductBoardDto;
 import com.example.pamarket00.dto.TownDto;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +24,12 @@ public interface TownMapper {
     public void commentDelete(int commentNum) throws Exception;
 
     Page<TownDto> selectBoardListPage();
+
+    public void boardDelete(int boardNum) throws Exception;
+
+    public void boardUpdate(TownDto boardUpdate) throws Exception;
+
+
+
+    void updateTownBoardHitCount(int boardNum);
 }

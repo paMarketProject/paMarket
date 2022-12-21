@@ -90,6 +90,25 @@ public class townBoardController {
         return "redirect:/board/town/{commentBoardNum}";
     }
 
+    @ResponseBody
+    @RequestMapping(value =  "/board/town/delete", method = RequestMethod.POST)
+    public String boardDelete(
+            @RequestParam("boardNum") int boardNum) throws Exception {
+        boardService.boardDelete(boardNum);
+        return "redirect:/board/town";
+    }
+
+    @ResponseBody
+    @RequestMapping(value =  "/board/town/update", method = RequestMethod.POST)
+    public String boardUpdate(
+            @RequestParam("boardTitle") String boardTitle,
+            @RequestParam("boardContents") String boardContents,
+            @RequestParam("boardNum") int boardNum) throws Exception {
+        boardService.boardUpdate(boardTitle,boardContents,boardNum);
+        return "redirect:/board/town";
+    }
+
+
 //    @ResponseBody
 //    @RequestMapping(value = "/board/town/rereplywrite" , method = RequestMethod.POST)
 //    public Object cocommentWrite(

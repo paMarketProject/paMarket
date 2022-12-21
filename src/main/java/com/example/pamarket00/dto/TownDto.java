@@ -11,6 +11,7 @@ public class TownDto {
     private String boardDate;
     private int boardHitCnt;
     private String kategory;
+    private String boardType;
 
 
 
