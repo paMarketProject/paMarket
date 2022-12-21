@@ -15,7 +15,7 @@ FROM board
               ON kategory.kategoryNum = board.boardKategory
          JOIN state state
               ON board.boardProState = state.stateNum
-WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
+WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N' and board.boardType='p'
 ORDER BY board.boardNum
 
         ]]>
@@ -36,16 +36,16 @@ ORDER BY board.boardNum
             JOIN state state
                 ON board.boardProState = state.stateNum
             WHERE board.boardUserId = 'ㅊㅊㅊ'
-            AND board.deleted_yn='N'
+            AND board.deleted_yn='N' and board.boardType='p'
             ORDER BY board.boardNum desc
         ]]>
     </select>
 
     <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
         <![CDATA[
-        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
-        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice})
-    ]]>
+        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice,boardType)
+        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice},'p')
+        ]]>
     </insert>
 
 <!--    파일테이블에 입력하기-->
@@ -61,9 +61,9 @@ ORDER BY board.boardNum
     </insert>
 
     <!--    좌표값 입력하기-->
-    <insert id="insertMarkerXY" parameterType="com.example.pamarket00.dto.BoardDto">
+    <insert id="insertMapBoard" parameterType="com.example.pamarket00.dto.BoardDto">
         <![CDATA[
-        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{BoardNum}, #{mapX}, #{mapY});
+        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{boardNum}, #{mapX}, #{mapY});
         ]]>
     </insert>
 
@@ -84,20 +84,20 @@ ORDER BY board.boardNum
                         board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath,
                         map.mapX,map.mapY
         FROM board board
-                 JOIN location location
-                      ON location.locationNum = board.boardUserCheck
-                 JOIN kategory kategory
-                      ON kategory.kategoryNum = board.boardKategory
-                 JOIN file file
-                      ON file.fileBoardNum = board.boardNum
-                 JOIN state state
-                      ON board.boardProState = state.stateNum
-                JOIN user user
-                    ON board.boardUserId = user.userId
-                JOIN map map
-                    on board.boardNum = map.mapBoardNum
+                    JOIN location location
+                        ON location.locationNum = board.boardUserCheck
+                    JOIN kategory kategory
+                        ON kategory.kategoryNum = board.boardKategory
+                    JOIN file file
+                        ON file.fileBoardNum = board.boardNum
+                    JOIN state state
+                        ON board.boardProState = state.stateNum
+                    JOIN user user
+        ON board.boardUserId = user.userId
+            JOIN map map
+            on board.boardNum = map.mapBoardNum
         WHERE boardNum = #{boardNum} AND board.deleted_yn='N'
-]]>
+        ]]>
     </select>
 
 

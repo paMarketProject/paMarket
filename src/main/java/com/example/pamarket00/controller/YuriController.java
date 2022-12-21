@@ -49,7 +49,6 @@ public class YuriController {
     }
 
     @RequestMapping(value = "/insertProductBoard", method = RequestMethod.POST)
-    @ResponseBody
     public String insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception {
         yuriBoardService.insertProductBoard(board, multipart);
         return "redirect:/productWrite";

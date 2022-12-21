@@ -23,4 +23,5 @@ public class ProductBoardDto {
     int mapBoardNum;
     double mapX;
     double mapY;
+    String boardType;
 }
