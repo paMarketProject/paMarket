@@ -18,17 +18,17 @@ public class MyPageServiceImpl implements MyPageService{
 
 
     @Override
-    public Page<MyPageMainDto> MyPageList(int pageNum) throws Exception {
+    public Page<MyPageMainDto> MyPageList(int pageNum, String userId) throws Exception {
 
         PageHelper.startPage(pageNum,10);
-        return myPageMapper.MyPageList();
+        return myPageMapper.MyPageList(userId);
     }
 
     @Override
-    public Page<MyPageSellDto> MyPageSellList(int pageNum) throws Exception{
+    public Page<MyPageSellDto> MyPageSellList(int pageNum,String userId) throws Exception{
 
         PageHelper.startPage(pageNum,8);
-        return myPageMapper.MyPageSellList();
+        return myPageMapper.MyPageSellList(userId);
     }
 
     @Override
@@ -58,5 +58,11 @@ public class MyPageServiceImpl implements MyPageService{
         UserDto userDto = myPageMapper.loginCheck(userId, userPw);
         return userDto;
     }
+
+    @Override
+    public UserDto newSession(UserDto userDto) throws Exception {
+        return myPageMapper.newSession(userDto);
+    }
+
 
 }

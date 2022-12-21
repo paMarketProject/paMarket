@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 @Mapper
 public interface MyPageMapper {
-    Page<MyPageMainDto> MyPageList() throws Exception;
+    Page<MyPageMainDto> MyPageList(String userId) throws Exception;
 
-    Page<MyPageSellDto> MyPageSellList() throws Exception;
+    Page<MyPageSellDto> MyPageSellList(String userId) throws Exception;
 
     List<BoardDto> MyPageBuyList() throws Exception;
 
@@ -23,4 +23,6 @@ public interface MyPageMapper {
     int idCheck(String userId) throws Exception;
 
     UserDto loginCheck(String userId, String userPw) throws Exception;
+
+    UserDto newSession(UserDto userDto) throws Exception;
 }

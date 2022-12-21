@@ -9,7 +9,6 @@ import com.example.pamarket00.service.MyPageService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,20 +23,30 @@ public class YoungController {
     private MyPageService myPageService;
 
     @RequestMapping(value = "/MyPage",method = RequestMethod.GET)
-    public ModelAndView MyPage(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception{
+    public ModelAndView MyPage(@RequestParam(required = false, defaultValue = "1") int pageNum, HttpServletRequest request) throws Exception{
         ModelAndView mv = new ModelAndView("YM/MyPage");
 
-        PageInfo<MyPageMainDto> boardList = new PageInfo<>(myPageService.MyPageList(pageNum),20);
+
+        HttpSession session = request.getSession();
+        UserDto user = (UserDto) session.getAttribute("user");
+        session.setMaxInactiveInterval(1800);
+
+        PageInfo<MyPageMainDto> boardList = new PageInfo<>(myPageService.MyPageList(pageNum,user.getUserId()),20);
         mv.addObject("boardList",boardList);
 
         return mv;
     }
 
     @RequestMapping(value = "/MyPageSell", method = RequestMethod.GET)
-    public ModelAndView MyPageSell(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception{
+    public ModelAndView MyPageSell(@RequestParam(required = false, defaultValue = "1") int pageNum, HttpServletRequest request) throws Exception{
        ModelAndView mv = new ModelAndView("YM/MyPageSell");
 
-       PageInfo<MyPageSellDto> sellList = new PageInfo<>(myPageService.MyPageSellList(pageNum),20);
+       HttpSession session = request.getSession();
+       UserDto user = (UserDto) session.getAttribute("user");
+       session.setMaxInactiveInterval(1800);
+
+
+       PageInfo<MyPageSellDto> sellList = new PageInfo<>(myPageService.MyPageSellList(pageNum,user.getUserId()),20);
        mv.addObject("sellList",sellList);
 
        return mv;
@@ -63,9 +72,15 @@ public class YoungController {
         return "YM/MyPageUserInfo";
     }
 
-    @RequestMapping(value = "YM/UpdateUserInfo", method = RequestMethod.POST)
-    public String UpdateUserInfo(UserDto userInfo) throws Exception{
+    @RequestMapping(value = "/YM/UpdateUserInfo")
+    public String UpdateUserInfo(UserDto userInfo, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
         myPageService.UpdateUserInfo(userInfo);
+
+        if(session.getAttribute("user") != null){
+            UserDto user = myPageService.newSession(userInfo);
+            session.setAttribute("user",user);
+        }
         return "redirect:/MyPage";
     }
 

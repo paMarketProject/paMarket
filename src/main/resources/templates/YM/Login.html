@@ -20,7 +20,7 @@
                         }
                         else {
                             alert(data.userId + "님 반갑습니다.");
-                            location.href="/MyPageUserInfo";
+                            location.href="/MyPage";
                         }
                     },
                     error: function () {
@@ -41,9 +41,7 @@
         }
     </style>
 
-    <div th:fragment="header">
-        <div th:insert="~{header.html::header}"></div>
-    </div>
+
 
 </head>
 <body>

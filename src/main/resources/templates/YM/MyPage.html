@@ -9,9 +9,6 @@
     <script>
 
     </script>
-    <div th:fragment="header">
-        <div th:insert="~{header.html::header}"></div>
-    </div>
 </head>
 <style>
     #boardImg{
@@ -33,8 +30,13 @@
     }
 
 </style>
+<script>
+
+</script>
 
 <body>
+<div th:insert="~{LoginHeader.html::header}"></div>
+
 <div class="container mb-5">
     <div class="row mt-4">
         <nav class="navbar navbar-expand-lg">

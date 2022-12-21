@@ -8,11 +8,17 @@
     <script>
 
     </script>
-  <div th:fragment="header">
-    <div th:insert="~{header.html::header}"></div>
-  </div>
 </head>
+
 <body>
+
+<div th:if="${session.user == null}">
+<div th:insert="~{header.html::header}"></div>
+</div>
+<div th:if="${session.user != null}">
+  <div th:insert="~{LoginHeader.html::header}"></div>
+</div>
+
 <div class="container mb-5">
   <div class="row mt-4">
     <nav class="navbar navbar-expand-lg">
