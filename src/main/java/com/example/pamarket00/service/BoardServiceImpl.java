@@ -44,7 +44,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public TownDto selectBoardDetail(int boardNum) throws Exception {
+        TownMapper.updateTownBoardHitCount(boardNum);
         TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
+
         return townBoard;
     }
 
