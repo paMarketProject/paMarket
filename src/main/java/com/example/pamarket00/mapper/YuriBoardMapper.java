@@ -17,6 +17,8 @@ public interface YuriBoardMapper {
 
     void insertProductBoard(BoardDto board) throws Exception;
 
+    void insertMapBoard(BoardDto board) throws Exception;
+
     void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception;
 
     void deleteProductBoard(int boardNum) throws Exception;
