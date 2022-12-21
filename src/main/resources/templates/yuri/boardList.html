@@ -15,7 +15,6 @@
         hr{
             background-color : pink;
         }
-
         .pagination > .active > a,
         .pagination > .active > span,
         .pagination > .active > a:hover,
@@ -30,19 +29,46 @@
         }
     </style>
 
-<!--헤더-->
-    <div th:fragment="header">
-        <div th:insert="~{header.html::header}"></div>
-    </div>
+    <script>
+        $(document).ready(function (){
+            let userId = $('#userId').val()
+            $('#btn-write').on('click',function (){
+               if(userId == null){
+                   alert('로그인이 필요한 서비스 입니다.')
+                   location.href='/login'
+               }
+               else {
+                   location.href='/productWrite'
+               }
+            });
+
+            $('#btn-state').on('click',function (){
+                alert('로그인이 필요한 서비스 입니다.')
+                location.href='/login'
+            });
+        });
+
+
+
+    </script>
 </head>
 <body>
+<!-- 헤더 -->
+<div th:if="${session.user == null}">
+    <div th:insert="~{header.html::header}"></div>
+</div>
+<div th:if="${session.user != null}">
+    <div th:insert="~{LoginHeader.html::header}"></div>
+</div>
+<div th:if="${session.user != null}">
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.userId}">
+</div>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div class="col mb-5" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
             <div class="card h-100">
-                <img class="card-img-top mx-auto my-auto" th:src="${list.filePath}" alt="..." />
-<!--                @{${list.filePath}}-->
+                <img class="card-img-top" th:src="@{${list.filePath}}" alt="..." />
                 <div class="card-body p-4">
                     <div class="text-center">
                         <h5 class="fw-bolder" th:text="${list.boardTitle}"></h5>
@@ -61,27 +87,39 @@
                     </div>
                 </div>
                 <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" th:text="${list.stateName}"></a></div>
+                <div th:if="${session.user != null}">
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-success mt-auto" href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" th:text="${list.stateName}"></a></div>
 <!--                    <button class="btn btn-outline-success mt-auto text-center"><a href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" style="text-decoration-line: none; color: black">보러가기</a></button>-->
+                    </div>
                 </div>
+                <div th:if="${session.user == null}">
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <button class="btn btn-outline-dark mt-auto" id="btn-state" type="button" th:text="${list.stateName}"></button>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
         </div>
 
 <!--글쓰기버튼-->
-        <form action="/productWrite" method="post">
-            <button class="btn btn-outline-success" type="submit">글쓰기</button>
+        <form method="post">
+            <button class="btn btn-outline-success" type="button" id="btn-write">글쓰기</button>
         </form>
 
     </div>
-
+    </div>
 </section>
 <!--페이지 번호-->
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${dataList.getPrePage()==0}?'disabled'">
-            <a class="page-link" th:href="@{/productList(pageNum=${dataList.getPrePage()})}">&laquo;</a>
+            <a class="page-link" th:href="@{/productList(productList=${dataList.getPrePage()})}"><</a>
         </li>
         <li class="page-item" th:each="page : ${#numbers.sequence(dataList.getNavigateFirstPage(), dataList.getNavigateLastPage())}"
             th:classappend="${page==dataList.getPageNum()}?'active'">
@@ -89,7 +127,7 @@
         </li>
         <li class="page-item" th:classappend="${dataList.getNextPage()==0}?'disabled'">
             <!--              getNextPage()로 다음 페이지가 있는지 확인 하고 없다면 disabled-->
-            <a class="page-link" th:href="@{/productList(pageNum=${dataList.getNextPage()})}">&raquo;</a>
+            <a class="page-link" th:href="@{/productList(pageNum=${dataList.getNextPage()})}">></a>
             <!--              pageNum 이름을 바꾸고 싶으면 controller에서 @RequestParam에 value=""로 넣어줘야 한다.-->
         </li>
     </ul>

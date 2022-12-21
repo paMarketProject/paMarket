@@ -49,58 +49,79 @@
     }
     </style>
     <script>
-        $(document).ready(function() {
-            $("#edit").on("click", function() {
+        $(document).ready(function (){
+            $('#edit').on('click',function (){
+                const boardUserId = $('#boardUserId').val();
+                const userId = $('#userId').val();
                 const boardNum = $("#boardNum").val();
                 const boardTitle = $("#boardTitle").val();
                 const boardContents = $("#boardContents").val();
 
-                $.ajax({
-                    url:"/updateProductBoard",
-                    type : "POST",
-                    data : {boardNum : boardNum,
+                if(userId == boardUserId){
+                    $.ajax({
+                        url:"/updateProductBoard",
+                        type : "POST",
+                        data : {boardNum : boardNum,
                             boardTitle : boardTitle,
                             boardContents : boardContents
-                    },
-                    success : function(data) {
-                        alert("수정되었습니다")
-                    },
-                    error : function (){
-                        alert("통신오류")
-                    }
-                })
+                        },
+                        success : function(data) {
+                            alert("수정되었습니다")
+                            location.href='productList';
+                        },
+                        error : function (){
+                            alert("통신오류");
+                        }
+                    });
+                }
+                else{
+                    alert('수정 권한이 없습니다.')
+                }
             });
             $("#delete").on("click", function() {
                 const boardNum = $("#boardNum").val();
-
-                $.ajax({
-                    url:"/deleteProductBoard",
-                    type : "POST",
-                    data : {boardNum : boardNum},
-                    success : function(data) {
-                        alert("삭제되었습니다")
-                    },
-                    error : function (){
-                        alert("통신오류")
-                    }
-                })
+                const boardUserId = $('#boardUserId').val();
+                const userId = $('#userId').val();
+                console.log(userId)
+                console.log(boardUserId)
+                if(userId == boardUserId){
+                    $.ajax({
+                        url:"/deleteProductBoard",
+                        type : "POST",
+                        data : {boardNum : boardNum},
+                        success : function(data) {
+                            alert("삭제되었습니다");
+                            location.href='/productList'
+                        },
+                        error : function (){
+                            alert("통신오류");
+                        }
+                    });
+                }
+                else{
+                    alert('삭제 권한이 없습니다.')
+                }
             });
-        })
+        });
+
 
 
     </script>
-
-
-  <!--헤더-->
-    <div th:fragment="header">
-    <div th:insert="~{header.html::header}"></div>
-    </div>
 </head>
 
 <body>
+<!-- 헤더 -->
+<div th:if="${session.user == null}">
+    <div th:insert="~{header.html::header}"></div>
+</div>
+<div th:if="${session.user != null}">
+    <div th:insert="~{LoginHeader.html::header}"></div>
+</div>
+
 <div class="container">
     <form id="frm" method="post">
     <!--    글쓰기 부분-->
+        <input type="hidden" id="userId" name="boardUserId" th:value="${session.user.userId}">
     <div class="row">
     <div class=" mx-auto">
       <div class="my-3 mt-4 p-4">
@@ -112,8 +133,10 @@
           <div id="useruser" class="mt-5">
         <img src="/YuriImage/user.png" alt="Logo" width="80" height="80" class="ms-5" id="userImage">
                 <p align="right" class="me-5"> <img src="/YuriImage/tem2.png" width="80" height="80" style=""></p>
-            <input type="text" class="form-control" id="user" name="user" placeholder="" th:value="|id : ${board.boardUserId}&emsp; ${board.locationName}&emsp; ${board.userManner}/5.0|"
-                    style="border: none; background: transparent; font-size: 15px; color: #4d5154; font-weight: bold">
+            <input type="text" class="form-control" id="user" name="user"
+                   th:value="|&emsp; ${board.locationName}&emsp; ${board.userManner}/5.0|"
+                    style="border: none; background: transparent; font-size: 15px; color: #4d5154; font-weight: bold" readonly>
+              <input type="text" id="boardUserId" name="boardUserId" th:value="${board.boardUserId}" readonly>
           </div>
           <br><br>
 
@@ -126,7 +149,7 @@
 
 <!--          카테고리명-->
         <div class="p-2">
-            <input type="text" class="form-control" id="kategory" name="kategory" placeholder="" th:value="|${board.kategoryName}&emsp; ${board.boardDate}|"
+            <input type="text" class="form-control" id="kategory" name="kategory" placeholder="" th:value="|${board.kategoryName}&emsp; ${board.boardDate}|" readonly
                     style="border: none; background: transparent; font-size: 15px; color: #4d5154">
         </div>
         <div class="mt-4 p-2">
@@ -143,7 +166,8 @@
       </div>
     <div class="my-3">
         <hr>
-        <p>지도넣는 위치</p>
+<!--        <p>지도넣는 위치</p>-->
+        <p class="fw-bold fs-4"> 만날장소
         <div id="map" style="width:100%;height:550px;"></div>
 
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bc9a41328d11782e12d6ff10ea00364d"></script>

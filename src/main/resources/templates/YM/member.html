@@ -9,7 +9,7 @@
         function IdCheck(){
             let userId = $("#userId").val()
             $.ajax({
-                url:"/IdCheck",
+                url:"/idCheck",
                 Type:"POST",
                 dataType : "JSON",
                 data : {
@@ -63,7 +63,7 @@
           }
 
           else{
-          frm.action = "YM/Join";
+          frm.action = "join";
           frm.submit();
           alert('회원가입을 축하드립니다.')
           }
@@ -115,7 +115,6 @@
         </div>
       </form>
     </div>
-
   </div>
 </div>
 

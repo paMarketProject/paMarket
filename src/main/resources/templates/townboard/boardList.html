@@ -50,48 +50,14 @@
 </head>
 
 <body>
-<div class="container" style="padding-top: 30px">
 
+<!-- 헤더 -->
+<div th:if="${session.user == null}">
+    <div th:insert="~{header.html::header}"></div>
 </div>
-
-<nav class="navbar navbar-expand-lg bg-light col-md-8 offset-md-2 "   >
-    <div class="container-fluid " style="background-color: rgba(66,177,100,0.6); padding-top: 15px; padding-bottom: 15px" >
-        <a class="navbar-brand col-md-2"  href="#" style="font-size: 33px; padding-left: 50px"><img src="/image/logo.png" alt="Logo" width="50" height="50" style="padding-right:10px     " class="d-inline-block align-text-top">대파마켓</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: large">
-                <li class="nav-item">
-                    <a class="nav-link" style="padding-left: 50px" aria-current="page" href="#">중고거래</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" style="padding-left: 50px" href="#" >동네생활</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="padding-left: 50px" href="#">채팅</a>
-                </li>
-
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        접속하기
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">로그인</a></li>
-                        <li><a class="dropdown-item" href="#">회원가입</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-
+<div th:if="${session.user != null}">
+    <div th:insert="~{LoginHeader.html::header}"></div>
+</div>
 
 <div class="container" style="margin-top: 50px">
     <div class="row">
@@ -120,7 +86,7 @@
                             <tr th:if="${#lists.size(boardList.getList())} > 0" th:each="item : ${boardList.getList()}">
                                 <td th:text="${item.kategory}" style="text-align: center">분류</td>
                                 <td style="text-align: center">
-                                    <a href="/board/town/" th:attrappend="href=${item.boardNum}" th:text="${item.boardTitle}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none">제목</a>
+                                    <a href="/boardTown" th:attrappend="href=${item.boardNum}" th:text="${item.boardTitle}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none">제목</a>
                                 </td>
                                 <td th:text="${item.boardUserId}" style="text-align: center">글쓴이</td>
                                 <td th:text="${item.boardDate}" style="text-align: center">날짜</td>
@@ -136,19 +102,19 @@
 
                     <div class="pt-3">
                         <span style="float: left">
-                            <a class="btn btn-success" href="http://localhost:8080/board/town/write" role="button" style="background-color: rgba(0,204,0,0.6)">글쓰기</a>
+                            <a class="btn btn-success" href="/boardTownWrite" role="button" style="background-color: rgba(0,204,0,0.6)">글쓰기</a>
                         </span>
 
                         <nav>
                             <ul class="pagination justify-content-end">
                                 <li class="page-item" th:classappend="${boardList.getPrePage()==0}?'disabled'">
-                                    <a class="page-link" th:href="@{/board/town(htmlNum=${boardList.getPrePage()})}">&laquo</a>
+                                    <a class="page-link" th:href="@{/boardTown(htmlNum=${boardList.getPrePage()})}">&laquo</a>
                                 </li>
                                 <li class="page-item" th:each="page:${#numbers.sequence(boardList.getNavigateFirstPage(), boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()}?'active'">
-                                    <a class="page-link" th:text="${page}" th:href="@{/board/town(pageNum=${page})}"></a>
+                                    <a class="page-link" th:text="${page}" th:href="@{/boardTown(pageNum=${page})}"></a>
                                 </li>
                                 <li class="page-item" th:classappend="${boardList.getNextPage()==0}? 'disabled'">
-                                    <a class="page-link" th:href="@{/board/town(pageNum=${boardList.getNextPage()})}">&raquo</a>
+                                    <a class="page-link" th:href="@{/boardTown(pageNum=${boardList.getNextPage()})}">&raquo</a>
                                 </li>
                             </ul>
                         </nav>
