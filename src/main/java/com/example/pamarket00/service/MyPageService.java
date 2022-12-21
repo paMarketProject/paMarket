@@ -4,16 +4,14 @@ import com.example.pamarket00.dto.MyPageMainDto;
 import com.example.pamarket00.dto.MyPageSellDto;
 import com.example.pamarket00.dto.UserDto;
 import com.github.pagehelper.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import java.util.List;
 public interface MyPageService {
 
-    Page<MyPageMainDto> MyPageList(int pageNum) throws Exception;
+    Page<MyPageMainDto> MyPageList(int pageNum, String userId) throws Exception;
 
-    Page<MyPageSellDto> MyPageSellList(int pageNum) throws Exception;
+    Page<MyPageSellDto> MyPageSellList(int pageNum,String userId) throws Exception;
 
     List<BoardDto> MyPageBuyList() throws Exception;
 
@@ -27,4 +25,5 @@ public interface MyPageService {
 
     UserDto loginCheck(String userId, String userPw) throws Exception;
 
+    UserDto newSession(UserDto userDto) throws Exception;
 }
