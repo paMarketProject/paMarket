@@ -13,6 +13,9 @@ import java.util.List;
 public interface TownMapper {
     public void insertBoard(TownDto boadrDto) throws Exception;
 
+    public void insertReviewBoard(TownDto board) throws Exception;
+
+
     public List<TownDto> selectBoardList() throws Exception;
 
     public List<TownDto> selectReviewList() throws Exception;

@@ -149,4 +149,18 @@ public class YoungController {
     }
 
 
+    @RequestMapping(value = "/ReviewWrite", method = RequestMethod.GET)
+    public String ReviewWrite() throws Exception{
+        return "townboard/boardReviewWrite";
+    }
+
+    @RequestMapping(value = "/ReviewWrite", method = RequestMethod.POST)
+    public String insertReviewBoard(TownDto board) throws Exception {
+        boardService.insertReviewBoard(board);
+
+        return "redirect:/boardTown";
+    }
+
+
+
 }

@@ -15,6 +15,8 @@ public interface BoardService {
 
     public void insertBoard(TownDto board) throws Exception;
 
+    public void insertReviewBoard(TownDto board) throws Exception;
+
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 
     public Page<TownDto> selectReviewList(int pageNum) throws Exception;
@@ -32,5 +34,6 @@ public interface BoardService {
 
 
     void boardUpdate(String boardTitle, String boardContents, int boardNum) throws Exception;
+
 
 }

@@ -51,6 +51,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void insertReviewBoard(TownDto board) throws Exception {
+        TownMapper.insertReviewBoard(board);
+    }
+
+    @Override
     public TownDto selectBoardDetail(int boardNum) throws Exception {
         TownMapper.updateTownBoardHitCount(boardNum);
         TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
@@ -90,7 +95,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Page<TownDto> selectReviewList(int pageNo) throws Exception {
-        PageHelper.startPage(pageNo,15);
+        PageHelper.startPage(pageNo,10);
         return TownMapper.selectReviewListPage();
     }
 
