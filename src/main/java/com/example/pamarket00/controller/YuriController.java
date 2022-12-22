@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -86,14 +88,38 @@ public class YuriController {
         return mv;
     }
 
+//    @RequestMapping("/locationCheck")
+//    public ModelAndView yurilocationCheck(@RequestParam(value = "userId") String userId) throws Exception {
+//        ModelAndView mv = new ModelAndView("yuri/locationCheck");
+//        UserDto user = yuriBoardService.selectLocationInfo(userId);
+//        mv.addObject("user", user);
+//
+//        return mv;
+//    }
+
     @RequestMapping("/locationCheck")
-    public ModelAndView yurilocationCheck(@RequestParam(value = "userId") String userId) throws Exception {
+    public ModelAndView locationCheck(@RequestParam(value = "userId") String userId, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        UserDto user = (UserDto) session.getAttribute("user");
         ModelAndView mv = new ModelAndView("yuri/locationCheck");
-        UserDto user = yuriBoardService.selectLocationInfo(userId);
+
+//        UserDto user = yuriBoardService.selectLocationInfo(userId);
         mv.addObject("user", user);
 
         return mv;
     }
+
+//    @RequestMapping("/locationCheck")
+//    public ModelAndView locationCheck(HttpSession session, @RequestParam String userId) throws Exception{
+//        session.setAttribute("userId", userId);
+//
+//        UserDto user = yuriBoardService.selectLocationInfo(userId);
+//        ModelAndView mv = new ModelAndView("yuri/locationCheck");
+//        mv.addObject("user", user);
+//
+//        return mv;
+//    }
 }
+
 
 
