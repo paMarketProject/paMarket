@@ -1,39 +1,22 @@
 package com.example.pamarket00.controller;
 
-import com.example.pamarket00.service.NotificationService;
-import com.example.pamarket00.dto.Message;
-import com.example.pamarket00.dto.ResponseMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.pamarket00.model.ChatMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.util.HtmlUtils;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-
-@Controller
+@RestController
+@RequiredArgsConstructor
 public class MessageController {
-    @Autowired
-    private NotificationService notificationService;
 
-    @MessageMapping("/message")
-    @SendTo("/topic/messages")
-    public ResponseMessage getMessage(final Message message) throws InterruptedException {
-        Thread.sleep(1000);
-        notificationService.sendGlobalNotification();
-        return new ResponseMessage(HtmlUtils.htmlEscape(message.getMessageContent()));
-    }
+    private final SimpMessageSendingOperations sendingOperations;
 
-    @MessageMapping("/private-message")
-    @SendToUser("/topic/private-messages")
-    public ResponseMessage getPrivateMessage(final Message message,
-                                             final Principal principal) throws InterruptedException {
-        Thread.sleep(1000);
-        notificationService.sendPrivateNotification(principal.getName());
-        return new ResponseMessage(HtmlUtils.htmlEscape(
-                "Sending private message to user " + principal.getName() + ": "
-                        + message.getMessageContent())
-        );
+    @MessageMapping("/chat/message")
+    public void enter(ChatMessage message) {
+        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
+            message.setMessage(message.getSender()+"님이 입장하였습니다.");
+        }
+        sendingOperations.convertAndSend("/topic/chat/room/"+message.getRoomId(),message);
     }
 }
