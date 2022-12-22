@@ -1,10 +1,8 @@
 package com.example.pamarket00.controller;
 
 
-import com.example.pamarket00.dto.BoardDto;
-import com.example.pamarket00.dto.MyPageMainDto;
-import com.example.pamarket00.dto.MyPageSellDto;
-import com.example.pamarket00.dto.UserDto;
+import com.example.pamarket00.dto.*;
+import com.example.pamarket00.service.BoardService;
 import com.example.pamarket00.service.MyPageService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,9 @@ import java.util.List;
 public class YoungController {
     @Autowired
     private MyPageService myPageService;
+
+    @Autowired
+    private BoardService boardService;
 
     @RequestMapping(value = "/myPage",method = RequestMethod.GET)
     public ModelAndView MyPage(@RequestParam(required = false, defaultValue = "1") int pageNum, HttpServletRequest request) throws Exception{
@@ -134,6 +135,17 @@ public class YoungController {
         session.removeAttribute("user");
 
         return "redirect:productList";
+    }
+
+// seob이 추가한 부분. 타운컨트롤러에서 가져 옴
+    @RequestMapping(value = "/myPageReview", method = RequestMethod.GET)
+    public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
+        ModelAndView mv = new ModelAndView("YM/myPageReview");
+
+        PageInfo<TownDto> boardList = new PageInfo<>(boardService.selectReviewList(pageNum),5);
+        mv.addObject("boardList", boardList);
+
+        return mv;
     }
 
 

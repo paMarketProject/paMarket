@@ -11,9 +11,14 @@ import java.util.List;
 public interface BoardService {
     public List<TownDto> selectBoardList() throws Exception;
 
+    List<TownDto> selectReviewList() throws Exception;
+
     public void insertBoard(TownDto board) throws Exception;
 
     public TownDto selectBoardDetail(int boardNum) throws Exception;
+
+    public Page<TownDto> selectReviewList(int pageNum) throws Exception;
+
 
     List<CommentDto> selectCommentList(int boardNum) throws Exception;
 
@@ -27,4 +32,5 @@ public interface BoardService {
 
 
     void boardUpdate(String boardTitle, String boardContents, int boardNum) throws Exception;
+
 }
