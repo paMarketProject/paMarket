@@ -20,4 +20,8 @@ public class ProductBoardDto {
     private String boardDate;
     private int userManner;
     private List<FileDto> fileList;
+    int mapBoardNum;
+    double mapX;
+    double mapY;
+    String boardType;
 }

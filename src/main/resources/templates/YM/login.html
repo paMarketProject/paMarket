@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function (){
             $('#btn-login').on('click',function (){
@@ -20,7 +21,7 @@
                         }
                         else {
                             alert(data.userId + "님 반갑습니다.");
-                            location.href="/MyPageUserInfo";
+                            location.href="/productList";
                         }
                     },
                     error: function () {
@@ -41,12 +42,12 @@
         }
     </style>
 
-    <div th:fragment="header">
-        <div th:insert="~{header.html::header}"></div>
-    </div>
+
 
 </head>
 <body>
+<div th:insert="~{header.html::header}"></div>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-6 mx-auto">

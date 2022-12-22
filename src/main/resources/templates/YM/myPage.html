@@ -9,9 +9,6 @@
     <script>
 
     </script>
-    <div th:fragment="header">
-        <div th:insert="~{header.html::header}"></div>
-    </div>
 </head>
 <style>
     #boardImg{
@@ -33,28 +30,33 @@
     }
 
 </style>
+<script>
+
+</script>
 
 <body>
+<div th:insert="~{LoginHeader.html::header}"></div>
+
 <div class="container mb-5">
     <div class="row mt-4">
         <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand text-success fs-3 me-5" href="MyPage">MyPage</a>
+                <a class="navbar-brand text-success fs-3 me-5" href="myPage">MyPage</a>
                 <div class="collapse navbar-collapse justify-content-start">
                     <ul class="navbar-nav fs-5">
                         <li class="nav-item">
-                            <a class="nav-link text-success" href="MyPage">작성한 글 목록</a>
+                            <a class="nav-link text-success" href="myPage">작성한 글 목록</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="MyPageSell">판매내역</a>
+                            <a class="nav-link" href="myPageSell">판매내역</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="MyPageBuy">구매내역</a>
+                            <a class="nav-link" href="myPageBuy">구매내역</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="MyPageReview">거래후기</a>
+                            <a class="nav-link" href="myPageReview">거래후기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="MyPageUserInfo">개인정보 수정</a>
+                            <a class="nav-link" href="myPageUserInfo">개인정보 수정</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">지역인증</a>
@@ -92,14 +94,14 @@
                         <nav>
                             <ul class="pagination justify-content-center">
                                 <li class="page-item rounded-5" th:class="${boardList.getPrePage() == 0}? 'disabled'">
-                                    <a class="page-link" th:href="@{/MyPage(pageNum=${boardList.getPrePage()})}"><</a>
+                                    <a class="page-link" th:href="@{/myPage(pageNum=${boardList.getPrePage()})}"><</a>
                                 </li>
                                 <li class="page-item" th:each="page : ${#numbers.sequence(boardList.getNavigateFirstPage(),
                                 boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()}? 'active'">
-                                   <a class="page-link" th:text="${page}" th:href="@{/MyPage(pageNum=${page})}"></a>
+                                   <a class="page-link" th:text="${page}" th:href="@{/myPage(pageNum=${page})}"></a>
                                 </li>
                                 <li class="page-item" th:classappend="${boardList.getNextPage() == 0 }? 'disabled'">
-                                    <a class="page-link" th:href="@{/MyPage(pageNum=${boardList.getNextPage()})}">></a>
+                                    <a class="page-link" th:href="@{/myPage(pageNum=${boardList.getNextPage()})}">></a>
                                 </li>
                             </ul>
                         </nav>

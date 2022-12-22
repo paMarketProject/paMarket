@@ -7,7 +7,6 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.io.File;
 import java.util.List;
 @Mapper
 public interface YuriBoardMapper {
@@ -16,6 +15,8 @@ public interface YuriBoardMapper {
     Page<ProductBoardDto> selectProductBoardListPage();
 
     void insertProductBoard(BoardDto board) throws Exception;
+
+    void insertMapBoard(BoardDto board) throws Exception;
 
     void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception;
 

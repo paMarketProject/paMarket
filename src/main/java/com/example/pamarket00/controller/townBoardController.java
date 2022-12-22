@@ -32,19 +32,19 @@ public class townBoardController {
 //        return "townboard/boardDetaile";
 //    }
 
-    @RequestMapping(value = "/board/town/write", method = RequestMethod.GET)
+    @RequestMapping(value = "/boardTownWrite", method = RequestMethod.GET)
     public String boardTownWrite() throws Exception{
         return "townboard/boardWrite";
     }
 
-    @RequestMapping(value = "/board/town/write", method = RequestMethod.POST)
+    @RequestMapping(value = "/boardTownWrite", method = RequestMethod.POST)
     public String insertBoard(TownDto board) throws Exception {
         boardService.insertBoard(board);
 
-        return "redirect:/board/town";
+        return "redirect:/boardTown";
     }
 
-    @RequestMapping(value = "/board/town", method = RequestMethod.GET)
+    @RequestMapping(value = "/boardTown", method = RequestMethod.GET)
     public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("townboard/boardList");
 
@@ -54,7 +54,7 @@ public class townBoardController {
         return mv;
     }
 
-    @RequestMapping(value = "/board/town/{boardNum}", method = RequestMethod.GET)
+    @RequestMapping(value = "/boardTown{boardNum}", method = RequestMethod.GET)
     public ModelAndView openBoardDetail(@PathVariable("boardNum") int boardNum) throws Exception {
         ModelAndView mv = new ModelAndView("townboard/boardDetaile");
 
@@ -67,7 +67,7 @@ public class townBoardController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/board/town/replywrite" , method = RequestMethod.POST)
+    @RequestMapping(value = "/boardTownReplyWrite" , method = RequestMethod.POST)
     public Object commentWrite(
             @RequestParam("commentContents") String commentContents,
             @RequestParam("commentUserId") String commentUserId,
@@ -82,30 +82,30 @@ public class townBoardController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/board/town/comment/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/boardTownCommentDelete", method = RequestMethod.POST)
     public String commentDelete(
             @RequestParam("commentNum") int commentNum,
             @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
         boardService.commentDelete(commentBoardNum, commentNum);
-        return "redirect:/board/town/{commentBoardNum}";
+        return "redirect:/boardTown{commentBoardNum}";
     }
 
     @ResponseBody
-    @RequestMapping(value =  "/board/town/delete", method = RequestMethod.POST)
+    @RequestMapping(value =  "/boardTownDelete", method = RequestMethod.POST)
     public String boardDelete(
             @RequestParam("boardNum") int boardNum) throws Exception {
         boardService.boardDelete(boardNum);
-        return "redirect:/board/town";
+        return "redirect:/boardTown";
     }
 
     @ResponseBody
-    @RequestMapping(value =  "/board/town/update", method = RequestMethod.POST)
+    @RequestMapping(value =  "/boardTownUpdate", method = RequestMethod.POST)
     public String boardUpdate(
             @RequestParam("boardTitle") String boardTitle,
             @RequestParam("boardContents") String boardContents,
             @RequestParam("boardNum") int boardNum) throws Exception {
         boardService.boardUpdate(boardTitle,boardContents,boardNum);
-        return "redirect:/board/town";
+        return "redirect:/boardTown";
     }
 
 

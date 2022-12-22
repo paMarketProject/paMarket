@@ -1,6 +1,7 @@
 package com.example.pamarket00.service;
 
 import com.example.pamarket00.common.FileUtils;
+import com.example.pamarket00.common.XyUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
@@ -21,6 +22,9 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     private YuriBoardMapper yuriBoardMapper;
     @Autowired
     private FileUtils fileUtils;
+
+    @Autowired
+    private XyUtils xyUtils;
     @Override
     public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
         PageHelper.startPage(pageNum, 8);
@@ -31,6 +35,9 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Override
     public void insertProductBoard (BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception{
         yuriBoardMapper.insertProductBoard(board);
+//        board = xyUtils.parseXyInfo(board.getBoardNum(), board.getMapX(), board.getMapY());
+        yuriBoardMapper.insertMapBoard(board);
+//        yuriBoardMapper.insert
         List<FileDto> fileList = fileUtils.parseFileInfo(board.getBoardNum(),uploadFiles);
 
         if(CollectionUtils.isEmpty(fileList) == false){

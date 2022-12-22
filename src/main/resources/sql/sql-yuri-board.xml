@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pamarket00.mapper.YuriBoardMapper">
-    <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">
-        <![CDATA[
-select board.boardTitle, board.boardProPrice, location.locationName,
-       kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-       board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum
-FROM board
-         JOIN file file
-                   ON board.boardNum = file.fileBoardNum
-         JOIN location location
-              ON location.locationNum = board.boardUserCheck
-         JOIN kategory kategory
-              ON kategory.kategoryNum = board.boardKategory
-         JOIN state state
-              ON board.boardProState = state.stateNum
-WHERE board.boardUserId = 'ㅊㅊㅊ' AND board.deleted_yn='N'
-ORDER BY board.boardNum
+<!--    <select id="selectProductBoardList" resultType="com.example.pamarket00.dto.ProductBoardDto">-->
+<!--        <![CDATA[-->
+<!--select board.boardTitle, board.boardProPrice, location.locationName,-->
+<!--       kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,-->
+<!--       board.boardContents,board.boardUserId, board.boardNum, file.filePath,file.fileBoardNum-->
+<!--FROM board-->
+<!--         JOIN file file-->
+<!--                   ON board.boardNum = file.fileBoardNum-->
+<!--         JOIN location location-->
+<!--              ON location.locationNum = board.boardUserCheck-->
+<!--         JOIN kategory kategory-->
+<!--              ON kategory.kategoryNum = board.boardKategory-->
+<!--         JOIN state state-->
+<!--              ON board.boardProState = state.stateNum-->
+<!--WHERE board.deleted_yn='N' and board.boardType='p'-->
+<!--ORDER BY board.boardNum-->
 
-        ]]>
-    </select>
+<!--        ]]>-->
+<!--    </select>-->
 
     <select id="selectProductBoardListPage" parameterType="hashmap"  resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
@@ -35,17 +35,16 @@ ORDER BY board.boardNum
                 ON kategory.kategoryNum = board.boardKategory
             JOIN state state
                 ON board.boardProState = state.stateNum
-            WHERE board.boardUserId = 'ㅊㅊㅊ'
-            AND board.deleted_yn='N'
+            WHERE board.deleted_yn='N' and board.boardType='p'
             ORDER BY board.boardNum desc
         ]]>
     </select>
 
     <insert id="insertProductBoard" parameterType="com.example.pamarket00.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardNum">
         <![CDATA[
-        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice)
-        values(#{boardTitle},#{boardKategory},'ㅊㅊㅊ',#{boardContents},now(),#{boardProPrice})
-    ]]>
+        insert into board (boardTitle, boardKategory, boardUserId, boardContents, boardDate, boardProPrice, boardType)
+        values(#{boardTitle},#{boardKategory},#{boardUserId},#{boardContents},now(),#{boardProPrice},'p')
+        ]]>
     </insert>
 
 <!--    파일테이블에 입력하기-->
@@ -61,9 +60,9 @@ ORDER BY board.boardNum
     </insert>
 
     <!--    좌표값 입력하기-->
-    <insert id="insertMarkerXY" parameterType="com.example.pamarket00.dto.BoardDto">
+    <insert id="insertMapBoard" parameterType="com.example.pamarket00.dto.BoardDto">
         <![CDATA[
-        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{BoardNum}, #{mapX}, #{mapY});
+        INSERT into map (mapBoardNum, mapX, mapY) VALUES (#{boardNum}, #{mapX}, #{mapY});
         ]]>
     </insert>
 
@@ -81,21 +80,25 @@ ORDER BY board.boardNum
         <![CDATA[
         SELECT DISTINCT board.boardTitle, board.boardProPrice, location.locationName,
                         kategory.kategoryName, state.stateName, board.boardHitCnt,board.boardLike,
-                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath
+                        board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath,
+                        map.mapX,map.mapY
         FROM board board
-                 JOIN location location
-                      ON location.locationNum = board.boardUserCheck
-                 JOIN kategory kategory
-                      ON kategory.kategoryNum = board.boardKategory
-                 JOIN file file
-                      ON file.fileBoardNum = board.boardNum
-                 JOIN state state
-                      ON board.boardProState = state.stateNum
-                JOIN user user
-                    ON board.boardUserId = user.userId
+                    JOIN location location
+                        ON location.locationNum = board.boardUserCheck
+                    JOIN kategory kategory
+                        ON kategory.kategoryNum = board.boardKategory
+                    JOIN file file
+                        ON file.fileBoardNum = board.boardNum
+                    JOIN state state
+                        ON board.boardProState = state.stateNum
+                    JOIN user user
+        ON board.boardUserId = user.userId
+            JOIN map map
+            on board.boardNum = map.mapBoardNum
         WHERE boardNum = #{boardNum} AND board.deleted_yn='N'
-]]>
+        ]]>
     </select>
+
 
 <!--    조회수 증가-->
     <update id="updateProductHitCount" parameterType="com.example.pamarket00.dto.ProductBoardDto">
@@ -120,8 +123,5 @@ ORDER BY board.boardNum
         WHERE boardNum = #{boardNum}
 ]]>
     </update>
-
-
-
 
 </mapper>
