@@ -15,6 +15,9 @@ public interface TownMapper {
 
     public List<TownDto> selectBoardList() throws Exception;
 
+    public List<TownDto> selectReviewList() throws Exception;
+
+
     public List<CommentDto> selectCommentList(int boardNum) throws Exception;
 
     public void insertComment(CommentDto comment) throws Exception;
@@ -25,6 +28,10 @@ public interface TownMapper {
 
     Page<TownDto> selectBoardListPage();
 
+    Page<TownDto> selectReviewListPage();
+
+
+
     public void boardDelete(int boardNum) throws Exception;
 
     public void boardUpdate(TownDto boardUpdate) throws Exception;
@@ -32,4 +39,5 @@ public interface TownMapper {
 
 
     void updateTownBoardHitCount(int boardNum);
+
 }

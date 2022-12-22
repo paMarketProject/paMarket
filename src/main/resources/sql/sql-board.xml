@@ -31,6 +31,19 @@
     </select>
 
 
+    <select id="selectReviewList" resultType="com.example.pamarket00.dto.TownDto">
+        SELECT
+            boardNum, boardTitle, boardUserId,
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardProPoint
+        FROM
+            board LIMIT20
+        WHERE
+            deleted_yn = 'N' and boardType = 'R'
+        ORDER BY
+            boardNum DESC
+    </select>
+
+
 
     <select id="selectBoardListPage" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
@@ -40,6 +53,20 @@
             board
         WHERE
             deleted_yn = 'N' AND boardType = 'T'
+        ORDER BY
+            boardNum DESC
+    </select>
+
+
+
+    <select id="selectReviewListPage" resultType="com.example.pamarket00.dto.TownDto">
+        SELECT
+            boardNum, boardTitle, boardUserId,
+            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardProPoint
+        FROM
+            board
+        WHERE
+            deleted_yn = 'N' AND boardType = 'R'
         ORDER BY
             boardNum DESC
     </select>

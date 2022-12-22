@@ -92,8 +92,8 @@
                                 <td th:text="${item.boardDate}" style="text-align: center">날짜</td>
                                 <td th:text="${item.boardHitCnt}" style="text-align: center">조회수</td>
                             </tr>
-                            <tr th:unless="${#lists.size(boardList.getList())} > 0">
-                                <td th:cols="5">조회된 내용이 없습니다.</td>
+                            <tr>
+                                <td colspan=5 th:unless="${#lists.size(boardList.getList())} > 0" >조회된 내용이 없습니다.</td>
                             </tr>
                             </tbody>
                         </table>

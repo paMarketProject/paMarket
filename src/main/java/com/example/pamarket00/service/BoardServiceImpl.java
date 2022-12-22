@@ -37,6 +37,14 @@ public class BoardServiceImpl implements BoardService {
         return TownMapper.selectBoardList();
     }
 
+
+    @Override
+    public List<TownDto> selectReviewList() throws Exception {
+        return TownMapper.selectReviewList();
+    }
+
+
+
     @Override
     public void insertBoard(TownDto board) throws Exception {
         TownMapper.insertBoard(board);
@@ -49,6 +57,9 @@ public class BoardServiceImpl implements BoardService {
 
         return townBoard;
     }
+
+
+
 
     @Override
     public List<CommentDto> selectCommentList(int boardNum) throws Exception {
@@ -74,6 +85,13 @@ public class BoardServiceImpl implements BoardService {
     public Page<TownDto> selectBoardList(int pageNo){
         PageHelper.startPage(pageNo,15);
         return TownMapper.selectBoardListPage();
+    }
+
+
+    @Override
+    public Page<TownDto> selectReviewList(int pageNo) throws Exception {
+        PageHelper.startPage(pageNo,15);
+        return TownMapper.selectReviewListPage();
     }
 
     @Override
