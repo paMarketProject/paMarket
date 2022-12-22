@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="widh=device-width" , initial-scale="1">
@@ -67,7 +67,7 @@
 </div>
 
 <form class="container" action="/boardTownWrite" method="post">
-
+<input type="hidden" id="boardUserId" name="boardUserName" th:value="${session.user.userId}">
     <hr/>
     <div class="row" style="padding-left: 10%">
         <div class="col-md-10">
