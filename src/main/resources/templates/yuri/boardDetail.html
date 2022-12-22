@@ -56,6 +56,7 @@
                 const boardNum = $("#boardNum").val();
                 const boardTitle = $("#boardTitle").val();
                 const boardContents = $("#boardContents").val();
+                const boardProState = $("#boardProState").val();
 
                 if(userId == boardUserId){
                     $.ajax({
@@ -63,7 +64,8 @@
                         type : "POST",
                         data : {boardNum : boardNum,
                             boardTitle : boardTitle,
-                            boardContents : boardContents
+                            boardContents : boardContents,
+                            boardProState : boardProState
                         },
                         success : function(data) {
                             alert("수정되었습니다")
@@ -136,8 +138,10 @@
             <input type="text" class="form-control" id="user" name="user"
                    th:value="|&emsp; ${board.locationName}&emsp; ${board.userManner}/5.0|"
                     style="border: none; background: transparent; font-size: 15px; color: #4d5154; font-weight: bold" readonly>
-              <input type="text" id="boardUserId" name="boardUserId" th:value="${board.boardUserId}" readonly>
+              <input type="text" id="boardUserId" name="boardUserId" th:value="${board.boardUserId}" style="border: none; background: transparent;" readonly>
+
           </div>
+
           <br><br>
 
 <!--          제목-->
@@ -152,6 +156,13 @@
             <input type="text" class="form-control" id="kategory" name="kategory" placeholder="" th:value="|${board.kategoryName}&emsp; ${board.boardDate}|" readonly
                     style="border: none; background: transparent; font-size: 15px; color: #4d5154">
         </div>
+            <div class="my-3 mt-4 col-sm" >
+                <select class="form-control" id="boardProState" name="boardProState" style="width: 100px; margin-left: 8px">
+                    <option value="0" selected >판매중<br> &#9660;</option>
+                    <option value="1">예약중</option>
+                    <option value="2">거래완료</option>
+                </select>
+            </div>
         <div class="mt-4 p-2">
         <!--                    <label class="form-label" for="contents">글내용 : </label>-->
            <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
@@ -238,6 +249,8 @@
                         </div>
                         <div class="col-4">
                             <button class="btn btn-light" type="button">채팅하기</button>
+                            <button class="btn btn-light" type="button">구매하기</button>
+                            <button class="btn btn-light" type="button">후기작성하기</button>
                         </div>
 <!--                <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>-->
 <!--                <button class="btn btn-success" type="button">채팅하기</button>-->

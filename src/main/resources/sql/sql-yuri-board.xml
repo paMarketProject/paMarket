@@ -111,7 +111,7 @@
 <!--    게시글 수정-->
     <update id="updateProductBoard" parameterType="com.example.pamarket00.dto.BoardDto">
         <![CDATA[
-        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardContents}
+        UPDATE board set boardTitle=#{boardTitle},boardContents = #{boardContents},boardProState = #{boardProState}
         where boardNum = #{boardNum}
 ]]>
     </update>

@@ -17,7 +17,7 @@ public interface YuriBoardService {
 //    insertProductBoard(board,multipart)
 
 //    게시글 수정
-    void updateProductBoard(int boardNum, String boardTitle, String boardContents) throws Exception;
+    void updateProductBoard(int boardNum, String boardTitle, String boardContents, int boardProState) throws Exception;
 
 //    게시글 삭제
     void deleteProductBoard(int boardNum) throws Exception;

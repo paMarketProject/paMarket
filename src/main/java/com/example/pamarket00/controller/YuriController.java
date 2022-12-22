@@ -36,7 +36,7 @@ public class YuriController {
 //        PageInfo <ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum),3);
 //        mv.addObject("dataList", dataList);
 
-        PageInfo<ProductBoardDto> dataList = new PageInfo<> (yuriBoardService.selectProductBoardList(pageNum),20);
+        PageInfo<ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.selectProductBoardList(pageNum), 20);
         mv.addObject("dataList", dataList);
 
         return mv;
@@ -55,12 +55,12 @@ public class YuriController {
     }
 
 
-//    게시글 수정
+    //    게시글 수정
     @ResponseBody
     @RequestMapping(value = "/updateProductBoard", method = RequestMethod.POST)
 //    public String updateProductBoard(BoardDto board) throws Exception {
-    public String updateProductBoard(@RequestParam("boardNum") int boardNum, @RequestParam("boardTitle")String boardTitle, @RequestParam("boardContents")String boardContents) throws Exception {
-        yuriBoardService.updateProductBoard(boardNum, boardTitle, boardContents);
+    public String updateProductBoard(@RequestParam("boardNum") int boardNum, @RequestParam("boardTitle") String boardTitle, @RequestParam("boardContents") String boardContents, @RequestParam("boardProState") int boardProState) throws Exception {
+        yuriBoardService.updateProductBoard(boardNum, boardTitle, boardContents, boardProState);
 
         return "redirect:/productWrite";
     }
@@ -75,14 +75,19 @@ public class YuriController {
         return "redirect:yuri/productList";
     }
 
-//    상세페이지
+    //    상세페이지
     @RequestMapping("/productDetail")
-    public ModelAndView openProductBoardDetail(@RequestParam(value = "boardNum")int boardNum) throws Exception {
+    public ModelAndView openProductBoardDetail(@RequestParam(value = "boardNum") int boardNum) throws Exception {
         ModelAndView mv = new ModelAndView("yuri/boardDetail");
         ProductBoardDto board = yuriBoardService.selectProductBoardDetail(boardNum);
-        mv.addObject("board",board);
+        mv.addObject("board", board);
 
         return mv;
+    }
+
+    @RequestMapping("/locationCheck")
+    public String yurilocationCheck() throws Exception {
+        return "yuri/locationCheck";
     }
 }
 
