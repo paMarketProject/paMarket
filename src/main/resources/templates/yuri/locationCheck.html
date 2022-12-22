@@ -6,9 +6,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-<h3>지역인증페이지</h3>
 <!--헤더영역-->
 <div th:if="${session.user == null}">
     <div th:insert="~{header.html::header}"></div>
@@ -16,7 +22,15 @@
 <div th:if="${session.user != null}">
     <div th:insert="~{LoginHeader.html::header}"></div>
 </div>
+<!--세션 아이디값 가져오기-->
+<input type="text" th:value="${session.user.userId}" name="userId" id="userId">
+<div class="container">
+    <div class="row">
+        <p class="fs-1 mt-5 p-5 fw-bold">지역인증</p>
+        <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
+                    th:text="${user.userAdd2}"></textarea>
+    </div>
+</div>
 
-<h2>동네인증하기</h2>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.example.pamarket00.common.XyUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.example.pamarket00.dto.UserDto;
 import com.example.pamarket00.mapper.YuriBoardMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -23,8 +24,8 @@ public class YuriBoardServiceImpl implements YuriBoardService{
     @Autowired
     private FileUtils fileUtils;
 
-    @Autowired
-    private XyUtils xyUtils;
+//    @Autowired
+//    private XyUtils xyUtils;
     @Override
     public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
         PageHelper.startPage(pageNum, 8);
@@ -70,5 +71,10 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         board.setFileList(fileList);
 
         return board;
+    }
+
+    @Override
+    public UserDto selectLocationInfo (String userId) throws Exception{
+        return yuriBoardMapper.selectLocationInfo(userId);
     }
 }

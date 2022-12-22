@@ -124,4 +124,10 @@
 ]]>
     </update>
 
+    <select id="selectLocationInfo" parameterType="com.example.pamarket00.dto.UserDto">
+        <![CDATA[
+        select userAdd2 from user where userId = #{userId}
+]]>
+    </select>
+
 </mapper>

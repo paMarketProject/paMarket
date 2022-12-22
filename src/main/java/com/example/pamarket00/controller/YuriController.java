@@ -4,6 +4,7 @@ package com.example.pamarket00.controller;
 import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.example.pamarket00.dto.UserDto;
 import com.example.pamarket00.service.YuriBoardService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +87,12 @@ public class YuriController {
     }
 
     @RequestMapping("/locationCheck")
-    public String yurilocationCheck() throws Exception {
-        return "yuri/locationCheck";
+    public ModelAndView yurilocationCheck(@RequestParam(value = "userId") String userId) throws Exception {
+        ModelAndView mv = new ModelAndView("yuri/locationCheck");
+        UserDto user = yuriBoardService.selectLocationInfo(userId);
+        mv.addObject("user", user);
+
+        return mv;
     }
 }
 
