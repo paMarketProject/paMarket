@@ -13,9 +13,6 @@ public class TownDto {
     private String kategory;
     private String boardType;
     private String boardProPoint;
-
-
-
-
+    private String userId;
 
 }

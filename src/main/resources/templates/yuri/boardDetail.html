@@ -7,20 +7,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
-    #kTitle{
-        color: #00FF80;
-        font-weight: bold;
-        font-size: 20px;
-    }
     #userImage{
         float: left;
     }
-    #useruser{
-        border: 1px solid #befadc;
-        /*opacity:0.1;*/
-        border-radius: 30px;
-        height: 130px;
-    }
+    /*#useruser{*/
+    /*    border: 1px solid #befadc;*/
+    /*    !*opacity:0.1;*!*/
+    /*    border-radius: 30px;*/
+    /*    height: 130px;*/
+    /*}*/
 
     #footer {
         position: fixed;
@@ -32,10 +27,6 @@
         height: 5rem;
     }
 
-    #price{
-        color: white;
-        font-size: 30px;
-    }
 
     #heartImage{
         float: left;
@@ -47,11 +38,19 @@
         margin: auto;
         display: block;
     }
+
+    #detailImg{
+        width: 70%;
+        height: 70%;
+    }
+    #userImage{
+        width:8%
+    }
     </style>
     <script>
         $(document).ready(function (){
             $('#edit').on('click',function (){
-                const boardUserId = $('#boardUserId').val();
+                const boardUserId = $('#boardUserId').text();
                 const userId = $('#userId').val();
                 const boardNum = $("#boardNum").val();
                 const boardTitle = $("#boardTitle").val();
@@ -82,7 +81,7 @@
             });
             $("#delete").on("click", function() {
                 const boardNum = $("#boardNum").val();
-                const boardUserId = $('#boardUserId').val();
+                const boardUserId = $('#boardUserId').text();
                 const userId = $('#userId').val();
                 console.log(userId)
                 console.log(boardUserId)
@@ -106,8 +105,6 @@
             });
         });
 
-
-
     </script>
 </head>
 
@@ -129,24 +126,26 @@
       <div class="my-3 mt-4 p-4">
         <div class="row">
             <input type="hidden" id="boardNum" name="boardNum" th:value="${board.boardNum}">
-                <img class="card-img-top" id="detailImg"  th:src="${board.filePath}" alt="..." />
+                <img class="card-img-top" id="detailImg"  th:src="${board.filePath}" alt="..." style="opacity: 1;">
 <!--          </div>-->
             <br><br>
-          <div id="useruser" class="mt-5">
-        <img src="/YuriImage/user.png" alt="Logo" width="80" height="80" class="ms-5" id="userImage">
-                <p align="right" class="me-5"> <img src="/YuriImage/tem2.png" width="80" height="80" style=""></p>
-            <input type="text" class="form-control" id="user" name="user"
+          <div id="useruser" class="">
+            <img src="/YuriImage/user.png" alt="Logo" class="ms-1 me-4" id="userImage">
+              <p class="fs-4 fw-bold" th:text="${board.boardUserId}" id="boardUserId" name="boardUserId"></p>
+              <p class="" th:text="${board.locationName}"></p>
+<!--                <p align="right" class="me-5">  <img src="/YuriImage/tem2.png" width="80" height="80" style=""></p>-->
+              <div id="user" name="user"
                    th:value="|&emsp; ${board.locationName}&emsp; ${board.userManner}/5.0|"
                     style="border: none; background: transparent; font-size: 15px; color: #4d5154; font-weight: bold" readonly>
-              <input type="text" id="boardUserId" name="boardUserId" th:value="${board.boardUserId}" style="border: none; background: transparent;" readonly>
-
           </div>
 
           <br><br>
+              </div>
+          <br><hr>
 
 <!--          제목-->
-        <div class="mt-4 p-2">
-        <!--                    <label class="form-label" for="title" >글제목  </label>-->
+        <div class="container">
+        <!--                    <label class="form-label" for="title" >글제목</label>-->
                 <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목" th:value="${board.boardTitle}"
                 style="border: none; background: transparent; font-size: 40px; font-weight: bold">
             </div>
@@ -165,27 +164,27 @@
             </div>
         <div class="mt-4 p-2">
         <!--                    <label class="form-label" for="contents">글내용 : </label>-->
-           <textarea class="form-control" id="boardContents" name="boardContents" rows="20"
+           <textarea class="form-control" id="boardContents" name="boardContents" rows="10"
                     th:text="${board.boardContents}"  style="border: none; background: transparent;"></textarea>
       </div>
             <div class="mt-4 p-2">
 <!--                <label class="form-label" for="hitCnt">조회수 :</label>-->
-                <p class="form-control" id="hitCnt" name="hitCnt"
-                            th:text="'조회수 : '+${board.boardHitCnt}"  style="border: none; background: transparent;"></p>
+                <p class="form-control" id="hitCnt" name="hitCnt" th:text="'조회수 : '+${board.boardHitCnt}"  style="border: none; background: transparent;"></p>
             </div>
         </div>
       </div>
     <div class="my-3">
         <hr>
 <!--        <p>지도넣는 위치</p>-->
-        <p class="fw-bold fs-4"> 만날장소
-        <div id="map" style="width:100%;height:550px;"></div>
-
+        <p class="fw-bold fs-4 mb-5"> 거래장소
+        <div>
+        <div class="" id="map" style="width:70%;height:550px;"></div>
+        </div>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bc9a41328d11782e12d6ff10ea00364d"></script>
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var mapX = /*[[ ${board.mapX} ]]*/;
-            var mapY = /*[[ ${board.mapY} ]]*/;
+            var mapX = [[ ${board.mapX} ]];
+            var mapY = [[ ${board.mapY} ]];
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
                     center: new kakao.maps.LatLng(mapX, mapY), // 지도의 중심좌표
@@ -226,11 +225,15 @@
 
         <hr>
     </div>
+    </form>
+    </div>
         </div>
     </div>
-            <div class="col-sm d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-warning me-2" id="edit">수정</button>
-                <button type="button" class="btn btn-outline-danger" id="delete">삭제</button>
+        <div class="container">
+                    <div class="col-sm d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-warning me-2" id="edit">수정</button>
+                        <button type="button" class="btn btn-outline-danger" id="delete">삭제</button>
+                </div>
         </div>
     </form>
         <div class="container mt-5 p-5">

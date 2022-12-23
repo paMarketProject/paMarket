@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="widh=device-width" , initial-scale="1">
+    <meta name="viewport" content="widh=device-width", initial-scale="1">
     <link rel="stylesheet" href="/css/bootstrap.css ">
     <title>대파마켓</title>
 
@@ -67,7 +67,7 @@
 </div>
 
 <form class="container" action="/boardTownWrite" method="post">
-<input type="hidden" id="boardUserId" name="boardUserName" th:value="${session.user.userId}">
+<input type="hidden" id="boardUserId" name="boardUserId" th:value="${session.user.userId}">
     <hr/>
     <div class="row" style="padding-left: 10%">
         <div class="col-md-10">
@@ -84,7 +84,7 @@
                     </select>
                 </div>
                 <td colspan="2">
-                    <input type="text"  class="form-control col-lg-12" id="boardTitle" name="boardTitle" style="width:100%" placeholder="제목"  >
+                    <input type="text"  class="form-control col-lg-12" id="boardTitle" name="boardTitle" style="width:100%" placeholder="제목">
                 </td>
                 <tbody>
                 <tr>

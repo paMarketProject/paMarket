@@ -7,25 +7,58 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        #title{
-            color: #00FF80;
-            font-size: large;
-            font-weight: bold;
-        }
         hr{
             background-color : pink;
         }
-        .pagination > .active > a,
-        .pagination > .active > span,
-        .pagination > .active > a:hover,
-        .pagination > .active > span:hover,
-        .pagination > .active > a:focus,
-        .pagination > .active > span:focus {
-            background: #5bbebb;
-            border-color: #5bbebb;
-        }
+
         .page-link{
             color: #999;
+        }
+
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+            box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+        }
+
+        /*    페이지네이션 색*/
+        .page-link {
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #146c43;
+            font-weight:bold;
+            background-color: #f1f1f1;
+            border-color: #ccc;
+
+        }
+
+        .page-link:focus, .page-link:hover {
+            color: #146c43;
+            background-color: #fafafa;
+            border-color: #ccc;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 300px;
+        }
+        .thumbnail img{
+            width: 100%;
+            height: 100%;
+        }
+        .list_box .card{
+            border: 1px solid darkseagreen;
+            box-shadow: rgba(0,0,0,0.1) 5px 5px 25px;
+        }
+        body{
+            background:#f3f3f3;
+            margin-top:20px;
         }
     </style>
 
@@ -42,9 +75,9 @@
                }
             });
 
-            $('#btn-state').on('click',function (){
-                alert('로그인이 필요한 서비스 입니다.')
-                location.href='/login'
+            $('.btn-state').on('click',function (){
+                    alert('로그인이 필요한 서비스 입니다.')
+                    location.href = '/login';
             });
         });
 
@@ -66,37 +99,35 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
-            <div class="card h-100">
+            <div class="col mb-5 list_box" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
+                <div class="card h-100">
+                    <div class="thumbnail">
                 <img class="card-img-top" th:src="@{${list.filePath}}" alt="..." />
-                <div class="card-body p-4">
+                    </div>
+                        <div class="card-body p-4">
                     <div class="text-center">
-                        <h5 class="fw-bolder" th:text="${list.boardTitle}"></h5>
+                        <h5 class="fw-bolder fs-4" th:text="${list.boardTitle}"></h5>
                         <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
                         </div>
                         <span class="text-muted text-decoration-line-through"></span>
                         <span></span><br>
-                        <span th:text="${list.boardProPrice}"></span><br>
-                        <span th:text="${list.locationName}"></span><br>
-                        <span th:text="${list.kategoryName}"></span>
+                        <span th:text="${list.kategoryName}"></span><br>
+                        <span th:text="${list.locationName}"></span><br><br>
+                        <span th:text="가격 +' : ' +${list.boardProPrice}+'원'" class="fs-4"></span>
                     </div>
                 </div>
                 <!-- Product actions-->
                 <div th:if="${session.user != null}">
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-success mt-auto" href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" th:text="${list.stateName}"></a></div>
+                        <div class="text-center">
+                            <a class="btn btn-outline-success mt-auto" href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" th:text="${list.stateName}"></a></div>
 <!--                    <button class="btn btn-outline-success mt-auto text-center"><a href="/productDetail?boardNum=" th:attrappend="href=${list.boardNum}" style="text-decoration-line: none; color: black">보러가기</a></button>-->
                     </div>
                 </div>
                 <div th:if="${session.user == null}">
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <button class="btn btn-outline-dark mt-auto" id="btn-state" type="button" th:text="${list.stateName}"></button>
+                            <button class="btn btn-outline-dark mt-auto btn-state" type="button" th:text="${list.stateName}"></button>
                         </div>
                     </div>
                 </div>
