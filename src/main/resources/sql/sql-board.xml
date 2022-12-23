@@ -5,9 +5,9 @@
 <mapper namespace="com.example.pamarket00.mapper.TownMapper">
     <insert id="insertBoard" parameterType="com.example.pamarket00.dto.TownDto">
         INSERT INTO board
-            (kategory, boardTitle, boardContents, boardDate, boardType)
+            (boardUserId, kategory, boardTitle, boardContents, boardDate, boardType)
         VALUES
-            (#{kategory}, #{boardTitle}, #{boardContents}, NOW(), 'T')
+            (#{boardUserId}, #{kategory}, #{boardTitle}, #{boardContents}, NOW(), 'T')
     </insert>
 
     <insert id="insertComment" parameterType="com.example.pamarket00.dto.CommentDto">

@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class MyPageMainDto {
-    private String boardImagePath;
+    private String boardUserId;
     private String boardTitle;
-    private String KategoryName;
+    private String kategory;
     private String boardDate;
     private int boardHitCnt;
+    private int boardNum;
 }

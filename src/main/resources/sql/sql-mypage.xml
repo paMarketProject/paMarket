@@ -4,10 +4,9 @@
 
     <select id="MyPageList" parameterType="String" resultType="com.example.pamarket00.dto.MyPageMainDto">
     <![CDATA[
-        SELECT board.boardImagePath, board.boardTitle, Kategory.KategoryName as KategoryName, board.boardDate, board.boardHitCnt
+        SELECT kategory,boarduserId, boardTitle, boardDate, boardHitCnt,boardNum
         FROM board
-        JOIN Kategory Kategory ON boardKategory = Kategory.KategoryNum
-        WHERE boardUserId = #{userId}
+        WHERE boardUserId = #{userId} AND boardType = 'T' AND deleted_yn = 'N'
     ]]>
     </select>
 
@@ -15,13 +14,13 @@
         <![CDATA[
         SELECT board.boardTitle,location.locationName as locationName,board.boardProPrice,
                state.stateName as stateName, board.boardImagePath,Kategory.KategoryName as KategoryName,
-               file.filePath as filePath
+               file.filePath as filePath, board.boardNum
         FROM board
         JOIN location ON boardUserCheck = location.locationNum
         JOIN State ON boardProState = State.stateNum
         JOIN Kategory ON boardKategory = Kategory.KategoryNum
         JOIN file ON boardNum = file.fileBoardNum
-        WHERE boardUserId = #{userId}
+        WHERE boardUserId = #{userId} AND boardType = 'P' AND deleted_yn = 'N'
         ]]>
     </select>
 
@@ -30,7 +29,7 @@
              SELECT boardNum, boardImagePath, boardKategory, boardTitle, boardDate, boardProPrice,
                boardUserCheck, boardProState
              FROM board
-             WHERE boardUserId = 'aaa' AND boardType='P'
+             WHERE boardUserId = 'aaa' AND boardType='D' AND deleted_yn = 'N'
         ]]>
     </select>
 

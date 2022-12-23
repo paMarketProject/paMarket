@@ -12,5 +12,6 @@ public class MyPageSellDto {
     private String boardImagePath;
     private String KategoryName;
     private String filePath;
+    private int boardNum;
 
 }
