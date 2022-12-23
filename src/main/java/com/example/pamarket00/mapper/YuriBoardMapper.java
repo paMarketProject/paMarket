@@ -34,5 +34,6 @@ public interface YuriBoardMapper {
     void updateProductHitCount(int boardNum) throws Exception;
     ProductBoardDto selectProductBoardDetail(@Param("boardNum") int boardNum) throws Exception;
 
-    UserDto selectLocationInfo(@Param("userId") String userId) throws Exception;
+//      지역인증
+    void locationBtnCheck(String userId, int userCheck);
 }

@@ -73,8 +73,13 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         return board;
     }
 
+//    @Override
+//    public UserDto selectLocationInfo () throws Exception{
+//        return yuriBoardMapper.selectLocationInfo();
+//    }
+
     @Override
-    public UserDto selectLocationInfo (String userId) throws Exception{
-        return yuriBoardMapper.selectLocationInfo(userId);
+    public void locationBtnCheck(String userId, int userCheck){
+        yuriBoardMapper.locationBtnCheck(userId, userCheck);
     }
 }

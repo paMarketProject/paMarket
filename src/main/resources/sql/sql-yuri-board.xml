@@ -124,11 +124,10 @@
 ]]>
     </update>
 
-<!--    지역인증 정보 가져오기-->
-    <select id="selectLocationInfo" resultType="com.example.pamarket00.dto.UserDto">
+<!--지역인증 업데이트하기-->
+    <update id="locationBtnCheck" parameterType="com.example.pamarket00.dto.UserDto">
         <![CDATA[
-        select userAdd2 from user where userId = #{userId}
+        UPDATE user set userCheck = #{userCheck} where userId = #{userId}
 ]]>
-    </select>
-
+    </update>
 </mapper>

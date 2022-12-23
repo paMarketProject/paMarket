@@ -88,37 +88,18 @@ public class YuriController {
         return mv;
     }
 
-//    @RequestMapping("/locationCheck")
-//    public ModelAndView yurilocationCheck(@RequestParam(value = "userId") String userId) throws Exception {
-//        ModelAndView mv = new ModelAndView("yuri/locationCheck");
-//        UserDto user = yuriBoardService.selectLocationInfo(userId);
-//        mv.addObject("user", user);
-//
-//        return mv;
-//    }
-
     @RequestMapping("/locationCheck")
-    public ModelAndView locationCheck(@RequestParam(value = "userId") String userId, HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
-        UserDto user = (UserDto) session.getAttribute("user");
-        ModelAndView mv = new ModelAndView("yuri/locationCheck");
-
-//        UserDto user = yuriBoardService.selectLocationInfo(userId);
-        mv.addObject("user", user);
-
-        return mv;
+    public String locationCheck() throws Exception {
+        return "yuri/locationCheck";
     }
 
-//    @RequestMapping("/locationCheck")
-//    public ModelAndView locationCheck(HttpSession session, @RequestParam String userId) throws Exception{
-//        session.setAttribute("userId", userId);
-//
-//        UserDto user = yuriBoardService.selectLocationInfo(userId);
-//        ModelAndView mv = new ModelAndView("yuri/locationCheck");
-//        mv.addObject("user", user);
-//
-//        return mv;
-//    }
+//    지역인증하기
+    @ResponseBody
+    @RequestMapping(value = "/locationBtnCheck",method = RequestMethod.POST)
+    public String locationBtnCheck(@RequestParam(value = "userId") String userId, @RequestParam(value = "userCheck") int userCheck) throws Exception {
+        yuriBoardService.locationBtnCheck(userId, userCheck);
+        return "redirect:/myPage";
+    }
 }
 
 

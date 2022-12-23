@@ -11,10 +11,41 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
+        }
+        #border{
+            border: 4px dashed #bcbcbc;
+            height: fit-content;
+            margin-bottom: 50px;
+            margin-top:20px;
+            padding: 30px;
+            width: fit-content;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('#btn-locationCheck').on('click', function() {
+                const userId = $("#userId").val();
+                const userCheck = $("#userCheck").val();
+                $.ajax({
+                    url : '/locationBtnCheck',
+                    type : 'POST',
+                    data : {"userId" : userId,
+                        "userCheck" : userCheck},
+                    success : function(data) {
+                        alert("동네인증이 성공했습니다")
+
+                    },
+                    error : function (){
+                        alert("통신실패")
+                    }
+                })
+            });
+        });
+    </script>
 </head>
 <body>
+<form id="frm" method="post">
 <!--헤더영역-->
 <div th:if="${session.user == null}">
     <div th:insert="~{header.html::header}"></div>
@@ -23,15 +54,54 @@
     <div th:insert="~{LoginHeader.html::header}"></div>
 </div>
 <!--세션 아이디값 가져오기-->
-<input type="text" th:value="${session.user.userId}" name="userId" id="userId">
+<input type="hidden" th:value="${session.user.userId}" name="userId" id="userId">
 <div class="container">
     <div class="row">
-        <p class="fs-1 mt-5 p-5 fw-bold">지역인증</p>
-        <textarea class="form-control" id="userAdd2" name="userAdd2" rows="20"
-                    th:text="${user.userAdd2}"></textarea>
+        <p class="fs-1 mt-5 p-3 mb-2 fw-bold">동네 인증하기</p>
+        <div id="border">
+        <input type="text" class="form-control" id="userAdd2" name="userAdd2" th:value="'현재 주소가 '+${session.user.userAdd2}+'로 저장되어있어요'" style="border: none; background: transparent;">
+        <hr>
+        <br>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        왜 동네인증을 해야하나요?
+                    </button>
+                </h2>
 
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body ">
+                        대파마켓은 우리 동네 이웃과 교류할 수 있는 서비스예요. 그래서 동네 이웃임을 확인하기 위해 동네인증을 필수로 해주셔야 해요
+                    </div>
+                </div>
+
+        <div>
+            <div class="my-3 mt-4 col-sm">
+                <select class="form-control" id="userCheck" name="userCheck" style="width: 1300px; margin-left: 5px">
+                    <option value="0" selected >내 동네 선택하기<br> &#9660;</option>
+                    <option value="1">부산진구</option>
+                    <option value="2">해운대구</option>
+                    <option value="3">동구</option>
+                    <option value="4">서구</option>
+                    <option value="5">남구</option>
+                    <option value="6">북구</option>
+                    <option value="7">중구</option>
+                    <option value="8">영도구</option>
+                    <option value="9">동래구</option>
+                    <option value="10">사하구</option>
+                    <option value="11">금정구</option>
+                    <option value="12">강서구</option>
+                    <option value="13">연제구</option>
+                    <option value="14">수영구</option>
+                    <option value="15">사상구</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-outline-success mt-3" type="button" id="btn-locationCheck">동네인증 완료하기</button>
+    </div>
     </div>
 </div>
-
+</form>
 </body>
 </html>

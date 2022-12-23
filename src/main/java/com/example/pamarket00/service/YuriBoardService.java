@@ -31,7 +31,7 @@ public interface YuriBoardService {
 
     ProductBoardDto selectProductBoardDetail(int boardNum) throws Exception;
     
-//    동네인증 페이지 값 가져오기
-    UserDto selectLocationInfo (String userId) throws Exception;
+//    동네인증 업데이트
+    void locationBtnCheck(String userId, int userCheck) throws Exception;
     
 }
