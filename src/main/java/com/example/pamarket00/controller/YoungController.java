@@ -40,17 +40,17 @@ public class YoungController {
 
     @RequestMapping(value = "/myPageSell", method = RequestMethod.GET)
     public ModelAndView MyPageSell(@RequestParam(required = false, defaultValue = "1") int pageNum, HttpServletRequest request) throws Exception{
-       ModelAndView mv = new ModelAndView("YM/myPageSell");
+        ModelAndView mv = new ModelAndView("YM/myPageSell");
 
-       HttpSession session = request.getSession();
-       UserDto user = (UserDto) session.getAttribute("user");
-       session.setMaxInactiveInterval(1800);
+        HttpSession session = request.getSession();
+        UserDto user = (UserDto) session.getAttribute("user");
+        session.setMaxInactiveInterval(1800);
 
 
-       PageInfo<MyPageSellDto> sellList = new PageInfo<>(myPageService.MyPageSellList(pageNum,user.getUserId()),20);
-       mv.addObject("sellList",sellList);
+        PageInfo<MyPageSellDto> sellList = new PageInfo<>(myPageService.MyPageSellList(pageNum,user.getUserId()),20);
+        mv.addObject("sellList",sellList);
 
-       return mv;
+        return mv;
     }
 
     @RequestMapping("/myPageBuy")
@@ -99,8 +99,8 @@ public class YoungController {
     @ResponseBody
     @RequestMapping("idCheck")
     public int IdCheck(String userId) throws Exception{
-         int result = myPageService.IdCheck(userId);
-         return result;
+        int result = myPageService.IdCheck(userId);
+        return result;
     }
 
     @RequestMapping("login")
@@ -137,7 +137,7 @@ public class YoungController {
         return "redirect:productList";
     }
 
-// seob이 추가한 부분. 타운컨트롤러에서 가져 옴
+    // seob이 추가한 부분. 타운컨트롤러에서 가져 옴
     @RequestMapping(value = "/myPageReview", method = RequestMethod.GET)
     public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("YM/myPageReview");

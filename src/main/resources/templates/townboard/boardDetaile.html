@@ -51,17 +51,22 @@
                         if (data.length > 0) {
                             $("#comment--group").empty();
 
+
+
                             for (let i = 0; i < data.length; i++) {
                                 let comments = '';
                                 comments = '<li id="comment--1" class="list-group-item d-flex justify-content-between">';
-                                comments += '<div name="commentContents">' + data[i].commentContents + '</div>';
+
+                                comments += '<div name= "commentContents">';
+                                comments += '<div type="text" className="form-control-plaintext">' + data[i].commentContents+ '</div>';
+                                comments += '</div>';
                                 comments += '<div>';
                                 comments += '<div class="d-flex">';
                                 comments += '<div class="text-muted commentNum" style="display: none">'+data[i].commentNum+'</div>';
                                 comments += '<div class="text-muted commentUserId" style="margin-right: 8px" name="commentUserId">' + data[i].commentUserId + ' &nbsp;</div>';
                                 comments += '<div class="text-muted">' + data[i].commentDate + '&nbsp;</div>';
                                 comments += '<button class="badge btn-reply" type="button" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글 </button>'
-                                comments += '<button class="badge btn-reply" type="button" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>'
+                                comments += '<button class="badge commentUpdate" type="button" name="commentUpdate" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>'
                                 comments += '<button class="badge commentDelete" type="button" name="commentDelete" style="background-color: rgba(0,204,0,0.6)">삭제</button>'
                                 comments += '</div>'
                                 comments += '</div>'
@@ -89,8 +94,7 @@
                 const pageNum = [[${board.boardNum}]];
                 /*]]>*/
                 const commentBoardNum = pageNum;
-                const commentDeleted_yn = 0;
-                const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum, "commentDeleted_yn" : commentDeleted_yn};
+                const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum};
 
                 $.ajax({
                     url:"/boardTownCommentDelete",
@@ -105,6 +109,36 @@
                     }
                 })
             });
+
+
+            // 댓글 수정
+            $('.commentUpdate').on('click', function() {
+                const commentNum = $(this).parent().children('div.commentNum').text();
+                const commentContents = $(this).parent().parent().parent().find('input.form-control-plaintext').val();
+                alert(commentContents);
+                /*<![CDATA[*/
+                const pageNum = [[${board.boardNum}]];
+                /*]]>*/
+                const commentBoardNum = pageNum;
+
+                const datas = {"commentBoardNum" :commentBoardNum,"commentContents": commentContents, "commentNum":commentNum};
+
+                $.ajax({
+                    url:"/commentUpdate",
+                    type: "post",
+                    data: datas,
+                    success: function (data){
+                        alert('댓글을 수정했습니다.')
+                        location.reload()
+                    },
+
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            });
+
+
 
 
             $('#boardDelete').on('click', function (){
@@ -159,17 +193,7 @@
             })
         });
 
-        // $("#commentDelete").on("click", function(){
-        //     const pageNum = [[${board.boardNum}]];
-        //     /*]]>*/
-        //     const commentBoardNum = pageNum;
-        //     const commentNum = $("#commentNum").text();
-        //     const commentDeleted_yn = 0;
-        //     const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum, "commentDeleted_yn" : commentDeleted_yn};
-        //
-        //
-        //
-        // })
+
 
 
 

@@ -12,7 +12,6 @@
     </insert>
 
 
-
     <insert id="insertReviewBoard" parameterType="com.example.pamarket00.dto.TownDto">
         INSERT INTO board
             (boardProPoint, boardTitle,  boardDate, boardType)
@@ -99,7 +98,12 @@
         UPDATE comment
         SET commentDeleted_yn = '0'
         WHERE commentNum = #{commentNum}
+    </update>
 
+    <update id="commentUpdate" parameterType="com.example.pamarket00.dto.CommentDto">
+        UPDATE comment
+        SET commentContents = #{commentContents}, commentDate = NOW()
+        WHERE commentNum = #{commentNum}
     </update>
 
     <update id="boardDelete" parameterType="com.example.pamarket00.dto.TownDto">
@@ -114,7 +118,6 @@
         SET boardTitle = #{boardTitle}, boardContents = #{boardContents}, boardDate = NOW()
         WHERE boardNum = #{boardNum}
     </update>
-
 
     <select id="selectBoardDetail" parameterType="int" resultType="com.example.pamarket00.dto.TownDto">
         SELECT
