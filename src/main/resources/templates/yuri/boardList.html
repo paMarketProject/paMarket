@@ -53,14 +53,16 @@
                 if(searchField != null){
                     $.ajax({
                         url:'/search',
-                        type: 'post',
+                        type: 'get',
                         data :{
                             searchField : searchField
                         }
                     });
                 }
+                else {
+                    alert('다시 입력해주세요')
+                }
             })
-
         });
 
 
