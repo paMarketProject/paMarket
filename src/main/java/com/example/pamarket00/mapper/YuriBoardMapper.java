@@ -15,6 +15,9 @@ public interface YuriBoardMapper {
 
     Page<ProductBoardDto> selectProductBoardListPage();
 
+//    검색한 값 조회
+    Page<ProductBoardDto> search();
+
     void insertProductBoard(BoardDto board) throws Exception;
 
     void insertMapBoard(BoardDto board) throws Exception;

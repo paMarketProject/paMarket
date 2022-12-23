@@ -45,6 +45,18 @@ public class YuriController {
         return mv;
     }
 
+    //    검색기능 진행 중
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ModelAndView search(@RequestParam(required = false, defaultValue = "1")int pageNum) throws Exception {
+        ModelAndView mv = new ModelAndView("yuri/search");
+
+        PageInfo<ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.search(pageNum));
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+
+
+
     // 게시물 등록 view 페이지
     @RequestMapping("/productWrite")
     public String yuriBoardWrite() throws Exception {
@@ -100,6 +112,8 @@ public class YuriController {
         yuriBoardService.locationBtnCheck(userId, userCheck);
         return "redirect:/myPage";
     }
+
+
 }
 
 

@@ -17,6 +17,8 @@ public interface YuriBoardService {
     
     
     Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception;
+
+    Page<ProductBoardDto> search(int pageNum) throws Exception;
     
 //    글, 사진, 좌표 삽입
     void insertProductBoard(BoardDto board, MultipartHttpServletRequest multipart) throws Exception;

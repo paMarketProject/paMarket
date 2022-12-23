@@ -32,6 +32,13 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         return yuriBoardMapper.selectProductBoardListPage();
     }
 
+//    검색한 값 조회
+    @Override
+    public Page<ProductBoardDto> search(int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 8);
+        return yuriBoardMapper.search();
+    }
+
 //    게시물저장
     @Override
     public void insertProductBoard (BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception{
@@ -78,6 +85,7 @@ public class YuriBoardServiceImpl implements YuriBoardService{
 //        return yuriBoardMapper.selectLocationInfo();
 //    }
 
+//    지역인증
     @Override
     public void locationBtnCheck(String userId, int userCheck){
         yuriBoardMapper.locationBtnCheck(userId, userCheck);
