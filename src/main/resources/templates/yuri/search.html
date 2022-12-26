@@ -27,6 +27,11 @@
         .page-link{
             color: #999;
         }
+
+        #search{
+            float: right;
+            margin-right:280px;
+        }
     </style>
 
     <script>
@@ -51,6 +56,7 @@
 
 
     </script>
+
 </head>
 <body>
 <!-- 헤더 -->
@@ -66,7 +72,7 @@
 
 <!--검색창-->
 <div class="container mt-4 me-3">
-    <div class="row">
+    <div class="row" id="search">
         <form method="post" name="search" action="/search">
             <table class="pull-right">
                 <tr>
@@ -124,10 +130,10 @@
                 </div>
             </div>
         </div>
-        <!--글쓰기버튼-->
-        <form method="post">
-            <button class="btn btn-outline-success" type="button" id="btn-write">글쓰기</button>
-        </form>
+<!--        &lt;!&ndash;글쓰기버튼&ndash;&gt;-->
+<!--        <form method="post">-->
+<!--            <button class="btn btn-outline-success" type="button" id="btn-write">글쓰기</button>-->
+<!--        </form>-->
     </div>
     </div>
 </section>

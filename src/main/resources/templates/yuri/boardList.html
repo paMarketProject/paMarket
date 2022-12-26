@@ -27,45 +27,30 @@
         .page-link{
             color: #999;
         }
+        #search{
+            float: right;
+            margin-right:280px;
+        }
     </style>
 
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             let userId = $('#userId').val()
             let searchField = $('#searchField').val()
-            $('#btn-write').on('click',function (){
-                if(userId == null){
+            $('#btn-write').on('click', function () {
+                if (userId == null) {
                     alert('로그인이 필요한 서비스 입니다.')
-                    location.href='/login'
-                }
-                else {
-                    location.href='/productWrite'
+                    location.href = '/login'
+                } else {
+                    location.href = '/productWrite'
                 }
             });
 
-            $('#btn-state').on('click',function (){
+            $('#btn-state').on('click', function () {
                 alert('로그인이 필요한 서비스 입니다.')
-                location.href='/login'
+                location.href = '/login'
             });
-
-        //     $('#btn-search').on('click', function() {
-        //         // alert('검색 눌러짐')
-        //         if(searchField != null){
-        //             $.ajax({
-        //                 url:'/search',
-        //                 type: 'get',
-        //                 data :{
-        //                     searchField : searchField
-        //                 }
-        //             });
-        //         }
-        //         else {
-        //             alert('다시 입력해주세요')
-        //         }
-        //     })
-        // });
-
-
+        });
 
     </script>
 </head>
@@ -83,7 +68,7 @@
 
 <!--검색창-->
 <div class="container mt-4 me-3">
-    <div class="row">
+    <div class="row" id="search">
         <form method="post" name="search" th:action="@{/search}">
             <table class="pull-right">
                 <tr>
