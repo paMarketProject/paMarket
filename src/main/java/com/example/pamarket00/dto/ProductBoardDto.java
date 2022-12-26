@@ -24,4 +24,5 @@ public class ProductBoardDto {
     double mapX;
     double mapY;
     String boardType;
+    String searchText;
 }

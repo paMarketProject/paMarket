@@ -40,6 +40,7 @@
         ]]>
     </select>
 
+<!--    검색기능-->
     <select id="search" parameterType="hashmap"  resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
         SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, state.stateName,
@@ -54,7 +55,7 @@
                       ON kategory.kategoryNum = board.boardKategory
                  JOIN state state
                       ON board.boardProState = state.stateNum
-        WHERE board.deleted_yn='N' and board.boardType='p'
+        WHERE board.deleted_yn='N' and board.boardType='p' and boardTitle REGEXP #{searchText}
         ORDER BY board.boardNum desc
         ]]>
     </select>

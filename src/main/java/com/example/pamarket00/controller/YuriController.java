@@ -47,13 +47,20 @@ public class YuriController {
 
     //    검색기능 진행 중
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ModelAndView search(@RequestParam(required = false, defaultValue = "1")int pageNum) throws Exception {
+    public ModelAndView search(@RequestParam(required = false, defaultValue = "1")int pageNum, @RequestParam("searchText")String searchText) throws Exception {
         ModelAndView mv = new ModelAndView("yuri/search");
 
-        PageInfo<ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.search(pageNum));
+        PageInfo<ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.search(pageNum,searchText));
         mv.addObject("dataList", dataList);
         return mv;
     }
+
+//    @RequestMapping(value = "/search",method = RequestMethod.POST)
+//    public String search(@RequestParam(value="searchText") String searchText) {
+//
+//        return "search.html";
+//    }
+
 
 
 

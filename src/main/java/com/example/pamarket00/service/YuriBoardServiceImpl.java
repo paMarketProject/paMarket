@@ -18,13 +18,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.util.List;
 
 @Service
-public class YuriBoardServiceImpl implements YuriBoardService{
+public class YuriBoardServiceImpl implements YuriBoardService {
     @Autowired
     private YuriBoardMapper yuriBoardMapper;
     @Autowired
     private FileUtils fileUtils;
 
-//    @Autowired
+    //    @Autowired
 //    private XyUtils xyUtils;
     @Override
     public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
@@ -32,12 +32,14 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         return yuriBoardMapper.selectProductBoardListPage();
     }
 
-//    검색한 값 조회
+    //    검색한 값 조회
     @Override
-    public Page<ProductBoardDto> search(int pageNum) throws Exception {
+    public Page<ProductBoardDto> search(int pageNum, String searchText) throws Exception {
         PageHelper.startPage(pageNum, 8);
-        return yuriBoardMapper.search();
+        return yuriBoardMapper.search(searchText);
     }
+
+
 
 //    게시물저장
     @Override
