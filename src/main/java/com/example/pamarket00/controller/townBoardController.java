@@ -91,12 +91,26 @@ public class townBoardController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/commentUpdate", method = RequestMethod.POST)
+    public String commentUpdate(
+            @RequestParam("commentNum") int commentNum,
+            @RequestParam("commentContents") String commentContents,
+            @RequestParam("commentBoardNum") int commentBoardNum) throws Exception {
+        boardService.commentUpdate(commentBoardNum, commentContents, commentNum);
+        return "redirect:/boardTown{commentBoardNum}";
+    }
+
+
+    @ResponseBody
     @RequestMapping(value =  "/boardTownDelete", method = RequestMethod.POST)
     public String boardDelete(
             @RequestParam("boardNum") int boardNum) throws Exception {
         boardService.boardDelete(boardNum);
         return "redirect:/boardTown";
     }
+
+
+
 
     @ResponseBody
     @RequestMapping(value =  "/boardTownUpdate", method = RequestMethod.POST)

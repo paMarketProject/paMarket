@@ -30,6 +30,11 @@ public interface TownMapper {
 
     public void commentDelete(int commentNum) throws Exception;
 
+    public void commentUpdate(String commentContents, int commentNum);
+
+
+
+
     Page<TownDto> selectBoardListPage();
 
     Page<ReviewDto> selectReviewListPage() throws Exception;

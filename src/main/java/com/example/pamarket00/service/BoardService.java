@@ -29,6 +29,9 @@ public interface BoardService {
 
     public void commentDelete(int commentBoardNum, int commentNum) throws Exception;
 
+    public void commentUpdate(int commentBoardNum, String commentContents, int commentNum) throws Exception;
+
+
     Page<TownDto> selectBoardList(int pageNo);
 
     public void boardDelete(int boardNum) throws Exception;
