@@ -26,4 +26,6 @@ public interface MyPageService {
     UserDto loginCheck(String userId, String userPw) throws Exception;
 
     UserDto newSession(UserDto userDto) throws Exception;
+
+
 }

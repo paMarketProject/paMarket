@@ -46,6 +46,11 @@
     #userImage{
         width:8%
     }
+
+    .content_Img img{
+        max-width: 40%;
+        max-height: 40%;
+    }
     </style>
     <script>
         $(document).ready(function (){
@@ -124,12 +129,13 @@
     <div class="row">
     <div class=" mx-auto">
       <div class="my-3 mt-4 p-4">
-        <div class="row">
+        <div>
             <input type="hidden" id="boardNum" name="boardNum" th:value="${board.boardNum}">
+            <div class="content_Img">
                 <img class="card-img-top" id="detailImg"  th:src="${board.filePath}" alt="..." style="opacity: 1;">
-<!--          </div>-->
+          </div>
             <br><br>
-          <div id="useruser" class="">
+          <div id="useruser">
             <img src="/YuriImage/user.png" alt="Logo" class="ms-1 me-4" id="userImage">
               <p class="fs-4 fw-bold" th:text="${board.boardUserId}" id="boardUserId" name="boardUserId"></p>
               <p class="" th:text="${board.locationName}"></p>
@@ -253,7 +259,7 @@
                         <div class="col-4">
                             <button class="btn btn-light" type="button">채팅하기</button>
                             <button class="btn btn-light" type="button">구매하기</button>
-                            <a  class="btn btn-light" href="/ReviewWrite" role="button">후기작성하기</a>
+                            <a class="btn btn-light" href="/Review?boardUserId=" th:attrappend="href=${board.boardUserId}" role="button">후기작성하기</a>
                         </div>
 <!--                <p class="ms-4" th:text="${board.boardProPrice} + '원'" style="color: white; font-size: 30px"></p>-->
 <!--                <button class="btn btn-success" type="button">채팅하기</button>-->

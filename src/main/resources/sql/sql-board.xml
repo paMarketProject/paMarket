@@ -11,15 +11,14 @@
             (#{boardUserId}, #{kategory}, #{boardTitle}, #{boardContents}, NOW(), 'T')
     </insert>
 
-
-
-    <insert id="insertReviewBoard" parameterType="com.example.pamarket00.dto.TownDto">
-        INSERT INTO board
-            (boardProPoint, boardTitle,  boardDate, boardType)
-        VALUES
-            (#{boardProPoint}, #{boardTitle},  NOW(), 'R')
+    <insert id="insertReviewBoard" parameterType="com.example.pamarket00.dto.ReviewDto">
+        <![CDATA[
+            INSERT INTO review
+                (reviewToUserId, reviewFromUserId, reviewDate, reviewContents, reviewScore)
+            VALUES
+                (#{reviewToUserId},#{reviewFromUserId},NOW(),#{reviewContents},#{reviewScore})
+        ]]>
     </insert>
-
 
     <insert id="insertComment" parameterType="com.example.pamarket00.dto.CommentDto">
         INSERT INTO comment
@@ -42,16 +41,16 @@
     </select>
 
 
-    <select id="selectReviewList" resultType="com.example.pamarket00.dto.TownDto">
+    <select id="selectReviewList" resultType="com.example.pamarket00.dto.ReviewDto">
         SELECT
-            boardNum, boardTitle, boardUserId,
-            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardProPoint
+            reviewNum, reviewContents, reviewToUserId,
+            DATE_FORMAT(reviewDate, '%Y.%m.%d %H:%i:%s')AS reviewDate,reviewScore
         FROM
             board LIMIT20
         WHERE
-            deleted_yn = 'N' and boardType = 'R'
+            reviewFromUserId = #{reviewFromUserId}
         ORDER BY
-            boardNum DESC
+            reviewNum DESC
     </select>
 
 
@@ -70,16 +69,18 @@
 
 
 
-    <select id="selectReviewListPage" resultType="com.example.pamarket00.dto.TownDto">
+    <select id="selectReviewListPage" resultType="com.example.pamarket00.dto.ReviewDto">
+        <![CDATA[
         SELECT
-            boardNum, boardTitle, boardUserId,
-            DATE_FORMAT(boardDate, '%Y.%m.%d %H:%i:%s')AS boardDate,boardProPoint
+            reviewNum, reviewContents, reviewToUserId,
+            DATE_FORMAT(reviewDate, '%Y.%m.%d %H:%i:%s')AS reviewDate,reviewScore
         FROM
-            board
+            review LIMIT20
         WHERE
-            deleted_yn = 'N' AND boardType = 'R'
+            reviewFromUserId = #{reviewFromUserId}
         ORDER BY
-            boardNum DESC
+            reviewNum DESC
+        ]]>
     </select>
 
 

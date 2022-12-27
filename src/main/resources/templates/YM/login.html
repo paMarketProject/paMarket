@@ -61,30 +61,42 @@
 
 </head>
 <body>
+
+<div th:if="${session.user == null}">
 <div th:insert="~{header.html::header}"></div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-6 mx-auto">
-            <h1 class="text-center mb-4 fw-bold text-success">로그인</h1><br>
-            <form id="login-section" method="post" class="border rounded-3 p-4"><br>
-                <div class="d-grid gap-3">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="userId" name="userId">
-                        <label for="userID">아이디</label>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-6 mx-auto">
+                <h1 class="text-center mb-4 fw-bold text-success">로그인</h1><br>
+                <form id="login-section" method="post" class="border rounded-3 p-4"><br>
+                    <div class="d-grid gap-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="userId" name="userId">
+                            <label for="userID">아이디</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="userPw" name="userPw">
+                            <label for="userPw">비밀번호</label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success" type="button" id="btn-login">로그인</button>
+                            <button class="btn btn-secondary" type="button" id="btn-back">뒤로가기</button>
+                       </div>
                     </div>
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="userPw" name="userPw">
-                        <label for="userPw">비밀번호</label>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-success" type="button" id="btn-login">로그인</button>
-                        <button class="btn btn-secondary" type="button" id="btn-back">뒤로가기</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+<div th:if="${session.user != null}">
+
+    <div th:insert="~{LoginHeader.html::header}"></div>
+    <div class="container text-center mt-5">
+        <h2>이미 로그인 하셨습니다.</h2>
+        <a class="btn btn-success mt-5" href="/productList">메인페이지가기</a>
+    </div>
+
 </div>
 </body>
 </html>

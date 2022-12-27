@@ -7,7 +7,7 @@ public class ReviewDto {
     int reviewNum;
     String reviewToUserId;
     String reviewFromUserId;
-    int reviewScore;
+    String reviewScore;
     String reviewDate;
     String reviewContents;
 }

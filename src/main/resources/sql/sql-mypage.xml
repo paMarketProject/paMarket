@@ -68,4 +68,8 @@
         WHERE userId = #{userId}
     </select>
 
+<!--    <insert id="review" parameterType="com.example.pamarket00.dto.ReviewDto">-->
+<!--        INSERT INTO ReviewDto (reviewToUserId, reviewFromUserId, reviewDate, reviewContent,reviewScore)-->
+<!--        VALUES (#{boardUserId}, #{reviewTouserId}, NOW(), #{reviewContent}, #{reviewScore})-->
+<!--    </insert>-->
 </mapper>

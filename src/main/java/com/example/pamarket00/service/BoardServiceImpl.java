@@ -19,6 +19,7 @@ package com.example.pamarket00.service;//package com.example.newboard.service;
 //    }
 //}
 import com.example.pamarket00.dto.CommentDto;
+import com.example.pamarket00.dto.ReviewDto;
 import com.example.pamarket00.dto.TownDto;
 import com.example.pamarket00.mapper.TownMapper;
 import com.github.pagehelper.Page;
@@ -30,35 +31,36 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
-    private TownMapper TownMapper;
+    private TownMapper townMapper;
 
     @Override
     public List<TownDto> selectBoardList() throws Exception {
-        return TownMapper.selectBoardList();
+        return townMapper.selectBoardList();
     }
 
 
     @Override
-    public List<TownDto> selectReviewList() throws Exception {
-        return TownMapper.selectReviewList();
+    public List<ReviewDto> selectReviewList() throws Exception {
+        return townMapper.selectReviewList();
     }
 
 
 
     @Override
     public void insertBoard(TownDto board) throws Exception {
-        TownMapper.insertBoard(board);
+        townMapper.insertBoard(board);
     }
 
     @Override
-    public void insertReviewBoard(TownDto board) throws Exception {
-        TownMapper.insertReviewBoard(board);
+    public void insertReviewBoard(ReviewDto reviewDto,String reviewFromUserId) throws Exception {
+        reviewDto.setReviewFromUserId(reviewFromUserId);
+        townMapper.insertReviewBoard(reviewDto);
     }
 
     @Override
     public TownDto selectBoardDetail(int boardNum) throws Exception {
-        TownMapper.updateTownBoardHitCount(boardNum);
-        TownDto townBoard = TownMapper.selectBoardDetail(boardNum);
+        townMapper.updateTownBoardHitCount(boardNum);
+        TownDto townBoard = townMapper.selectBoardDetail(boardNum);
 
         return townBoard;
     }
@@ -68,12 +70,12 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<CommentDto> selectCommentList(int boardNum) throws Exception {
-        return TownMapper.selectCommentList(boardNum);
+        return townMapper.selectCommentList(boardNum);
     }
 
     @Override
     public void commentDelete(int commentBoardNum, int commentNum) throws Exception{
-        TownMapper.commentDelete(commentNum);
+        townMapper.commentDelete(commentNum);
     }
 
     @Override
@@ -83,25 +85,25 @@ public class BoardServiceImpl implements BoardService {
         comment.setCommentUserId(commentUserId);
         comment.setCommentContents(commentContents);
 
-        TownMapper.insertComment(comment);
+        townMapper.insertComment(comment);
     }
 
     @Override
     public Page<TownDto> selectBoardList(int pageNo){
         PageHelper.startPage(pageNo,15);
-        return TownMapper.selectBoardListPage();
+        return townMapper.selectBoardListPage();
     }
 
 
     @Override
-    public Page<TownDto> selectReviewList(int pageNo) throws Exception {
+    public Page<ReviewDto> selectReviewList(int pageNo) throws Exception {
         PageHelper.startPage(pageNo,10);
-        return TownMapper.selectReviewListPage();
+        return townMapper.selectReviewListPage();
     }
 
     @Override
     public void boardDelete(int boardNum) throws Exception {
-        TownMapper.boardDelete(boardNum);
+        townMapper.boardDelete(boardNum);
     }
 
 
@@ -115,7 +117,7 @@ public class BoardServiceImpl implements BoardService {
         boardUpdate.setBoardNum(boardNum);
 
 
-        TownMapper.boardUpdate(boardUpdate);
+        townMapper.boardUpdate(boardUpdate);
     }
 
 }

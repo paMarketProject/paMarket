@@ -15,18 +15,6 @@
       margin-top:20px;
       color: #616f80;
     }
-    .card {
-      border: none;
-      margin-bottom: 24px;
-      -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-      box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-    }
-
-    .avatar-xs {
-      height: 2.3rem;
-      width: 2.3rem;
-    }
-
     /*    페이지네이션 색*/
     .page-link {
       color: #000;
@@ -62,6 +50,7 @@
 <body>
 <div th:insert="~{LoginHeader.html::header}"></div>
 
+<input type="hidden" id="reviewFromUserId" name="reviewFromUserId" th:value="session.user.userId">
 <div class="container mb-5">
   <div class="row mt-4">
     <nav class="navbar navbar-expand-lg">
@@ -96,7 +85,7 @@
           <table class="table project-table table-bordered table-hover table-striped table-success">
             <thead>
             <tr>
-              <th style="text-align: center; width: 55%">제목</th>
+              <th style="text-align: center; width: 55%">받은 평가</th>
               <th style="text-align: center; width: 20%">아이디</th>
               <th style="text-align: center; width: 15%">날짜</th>
               <th style="text-align: center; width: 10%">평점</th>
@@ -104,16 +93,16 @@
             </thead>
 
             <tbody>
-            <tr th:if="${#lists.size(boardList.getList())} > 0" th:each="item : ${boardList.getList()}">
+            <tr th:if="${#lists.size(reviewBoard.getList())} > 0" th:each="item : ${reviewBoard.getList()}">
               <td style="text-align: center">
-                <a href="/boardTown" th:attrappend="href=${item.boardNum}" th:text="${item.boardTitle}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none">제목</a>
+                <a href="/boardTown" th:attrappend="href=${item.reviewNum}" th:text="${item.reviewContents}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none"></a>
               </td>
-              <td th:text="${item.boardUserId}" style="text-align: center">아이디</td>
-              <td th:text="${item.boardDate}" style="text-align: center">날짜</td>
-              <td th:text="${item.boardProPoint}" style="text-align: center">평점</td>
+              <td th:text="${item.reviewToUserId}" style="text-align: center"></td>
+              <td th:text="${item.reviewDate}" style="text-align: center"></td>
+              <td th:text="${item.reviewScore}" style="text-align: center"></td>
             </tr>
 
-            <tr th:unless="${#lists.size(boardList.getList())} > 0">
+            <tr th:unless="${#lists.size(reviewBoard.getList())} > 0">
               <td th:colspan="4">조회된 내용이 없습니다.</td>
             </tr>
             </tbody>
@@ -122,21 +111,18 @@
           <div class="pt-3">
             <nav>
               <ul class="pagination justify-content-end">
-                <li class="page-item" th:classappend="${boardList.getPrePage()==0}?'disabled'">
-                  <a class="page-link" th:href="@{/myPageReview(htmlNum=${boardList.getPrePage()})}">&laquo</a>
+                <li class="page-item" th:classappend="${reviewBoard.getPrePage()==0}?'disabled'">
+                  <a class="page-link" th:href="@{/myPageReview(htmlNum=${reviewBoard.getPrePage()})}">&laquo</a>
                 </li>
-                <li class="page-item" th:each="page:${#numbers.sequence(boardList.getNavigateFirstPage(), boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()}?'active'">
+                <li class="page-item" th:each="page:${#numbers.sequence(reviewBoard.getNavigateFirstPage(), reviewBoard.getNavigateLastPage())}" th:classappend="${page == reviewBoard.getPageNum()}?'active'">
                   <a class="page-link" th:text="${page}" th:href="@{/myPageReview(pageNum=${page})}"></a>
                 </li>
-                <li class="page-item" th:classappend="${boardList.getNextPage()==0}? 'disabled'">
-                  <a class="page-link" th:href="@{/myPageReview(pageNum=${boardList.getNextPage()})}">&raquo</a>
+                <li class="page-item" th:classappend="${reviewBoard.getNextPage()==0}? 'disabled'">
+                  <a class="page-link" th:href="@{/myPageReview(pageNum=${reviewBoard.getNextPage()})}">&raquo</a>
                 </li>
               </ul>
             </nav>
           </div>
-
-
-
         </div>
       </div>
     </div>

@@ -6,27 +6,29 @@
     <link rel="stylesheet" href="/css/bootstrap.css ">
     <title>대파마켓</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+
     <style>
         body {
             background: #f3f3f3;
             margin-top: 20px;
             color: #616f80;
         }
-
-        .card {
-            border: none;
-            margin-bottom: 24px;
-            -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
-            box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
-        }
-
-        .avatar-xs {
-            height: 2.3rem;
-            width: 2.3rem;
-        }
     </style>
+
     <script>
         $(document).ready(function (){
+
+            $('#aa').on('click',function (){
+                console.log(reviewFromUserId);
+                console.log(reviewToUserId);
+            });
 
             $("#boardProPoint").on("change", function (){
                 const boardProPoint = $("#boardProPoint option:selected").val();
@@ -48,10 +50,8 @@
                     error: function (){
                         alert("ajax통신 중 오류가 발생했습니다.")
                     }
-                })
-
-            })
-
+                });
+            });
         })
     </script>
 
@@ -67,14 +67,16 @@
 </div>
 
 <form class="container" action="/ReviewWrite" method="post">
-<input type="hidden" id="boardUserId" name="boardUserName" th:value="${session.user.userId}">
-    <hr/>
+    <input type="hidden" id="reviewToUserId" name="reviewToUserId" th:value="${session.user.userId}">
+    <input type="hidden" id="reviewFromUserId" name="reviewFromUserId" th:value="${reviewFromUserId}">
+
+    <hr>
     <div class="row" style="padding-left: 10%">
         <div class="col-md-10">
             <table class="table table-condensed">
                 <div class="col-sm" style="width: 60px; margin-left: 8px">
-                    <select class="form-control me-3" id="boardProPoint" name="boardProPoint">
-                        <option value="평점" selected>평점</option>
+                    <select class="form-control me-3" id="reviewScore" name="reviewScore" style="width: 120px;">
+                        <option value="평점" class="text-center" selected>--- 평점 ---</option>
                         <option value="★★★★★">★★★★★</option>
                         <option value="★★★★☆">★★★★☆</option>
                         <option value="★★★☆☆">★★★☆☆</option>
@@ -84,7 +86,7 @@
                     </select>
                 </div>
                 <td colspan="2">
-                    <input type="text"  class="form-control col-lg-12" id="boardTitle" name="boardTitle" style="width:100%" placeholder="제목"  >
+                    <input type="text"  class="form-control col-lg-12" id="reviewContents" name="reviewContents" style="width:100%" placeholder="후기를 입력하세요."  >
                 </td>
 <!--                <tbody>-->
 <!--                <tr>-->
@@ -103,7 +105,7 @@
                             <a class="btn btn-success" href="/myPageReview" role="button" style="background-color: rgba(0,204,0,0.6)">목록</a>
                         </span>
                         <span style='float:right'>
-                            <button type="submit" class="btn btn-secondary btn-sm " style="background-color: rgba(0,204,0,0.6)" >완료</button>
+                            <button type="submit" class="btn btn-secondary btn-sm" style="background-color: rgba(0,204,0,0.6)">완료</button>
                         </span>
                     </td>
                 </tr>
@@ -116,13 +118,7 @@
 
 
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
