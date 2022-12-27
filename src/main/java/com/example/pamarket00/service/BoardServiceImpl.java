@@ -39,12 +39,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
 
-    @Override
-    public List<ReviewDto> selectReviewList() throws Exception {
-        return townMapper.selectReviewList();
-    }
-
-
 
     @Override
     public void insertBoard(TownDto board) throws Exception {

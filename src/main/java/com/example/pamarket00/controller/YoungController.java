@@ -142,8 +142,8 @@ public class YoungController {
     public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
         ModelAndView mv = new ModelAndView("YM/myPageReview");
 
-        PageInfo<ReviewDto> reviewBoard = new PageInfo<>(boardService.selectReviewList(pageNum),5);
-        mv.addObject("reviewBoard", reviewBoard);
+        PageInfo<ReviewDto> reviewBoard = new PageInfo<>(boardService.selectReviewList(pageNum),20);
+        mv.addObject("reviewBoard",reviewBoard);
 
         return mv;
     }
@@ -151,6 +151,7 @@ public class YoungController {
     @RequestMapping(value = "/Review", method = RequestMethod.GET)
     public ModelAndView ReviewBoard(@RequestParam("boardUserId") String reviewFromUserId) throws Exception{
         ModelAndView mv = new ModelAndView("townboard/boardReviewWrite");
+
 
         mv.addObject("reviewFromUserId", reviewFromUserId);
 

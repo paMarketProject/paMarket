@@ -41,19 +41,6 @@
     </select>
 
 
-    <select id="selectReviewList" resultType="com.example.pamarket00.dto.ReviewDto">
-        SELECT
-            reviewNum, reviewContents, reviewToUserId,
-            DATE_FORMAT(reviewDate, '%Y.%m.%d %H:%i:%s')AS reviewDate,reviewScore
-        FROM
-            board LIMIT20
-        WHERE
-            reviewFromUserId = #{reviewFromUserId}
-        ORDER BY
-            reviewNum DESC
-    </select>
-
-
 
     <select id="selectBoardListPage" resultType="com.example.pamarket00.dto.TownDto">
         SELECT

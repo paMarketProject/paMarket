@@ -49,8 +49,6 @@
 
 <body>
 <div th:insert="~{LoginHeader.html::header}"></div>
-
-<input type="hidden" id="reviewFromUserId" name="reviewFromUserId" th:value="session.user.userId">
 <div class="container mb-5">
   <div class="row mt-4">
     <nav class="navbar navbar-expand-lg">
@@ -92,7 +90,9 @@
             </tr>
             </thead>
 
+            <input type="hidden" id="reviewFromUserId" name="reviewFromUserId" th:value="${session.user.userId}">
             <tbody>
+            <p th:text="${#lists.size(reviewBoard.getList())}"></p>
             <tr th:if="${#lists.size(reviewBoard.getList())} > 0" th:each="item : ${reviewBoard.getList()}">
               <td style="text-align: center">
                 <a href="/boardTown" th:attrappend="href=${item.reviewNum}" th:text="${item.reviewContents}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none"></a>

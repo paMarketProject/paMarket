@@ -12,8 +12,6 @@ import java.util.List;
 public interface BoardService {
     public List<TownDto> selectBoardList() throws Exception;
 
-    List<ReviewDto> selectReviewList() throws Exception;
-
     public void insertBoard(TownDto board) throws Exception;
 
     public void insertReviewBoard(ReviewDto reviewDto,String reviewFromUserId) throws Exception;
