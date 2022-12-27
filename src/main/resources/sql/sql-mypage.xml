@@ -21,6 +21,7 @@
         JOIN Kategory ON boardKategory = Kategory.KategoryNum
         JOIN file ON boardNum = file.fileBoardNum
         WHERE boardUserId = #{userId} AND boardType = 'P' AND deleted_yn = 'N'
+        ORDER BY DESC
         ]]>
     </select>
 

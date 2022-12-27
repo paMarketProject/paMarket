@@ -63,10 +63,10 @@ public class YoungController {
         return mv;
     }
 
-    @RequestMapping("/myPageReview")
-    public String MypageReview(){
-        return "YM/myPageReview";
-    }
+//    @RequestMapping("/myPageReview")
+//    public String MypageReview(){
+//        return "YM/myPageReview";
+//    }
 
     @RequestMapping(value = "/myPageUserInfo", method = RequestMethod.GET)
     public String MyPageUserInfo() throws Exception{
