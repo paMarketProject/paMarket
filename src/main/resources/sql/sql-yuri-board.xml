@@ -105,8 +105,6 @@
                         board.boardContents,board.boardUserId, board.boardNum, board.boardDate, user.userManner,file.filePath,
                         map.mapX,map.mapY
         FROM board board
-                    JOIN location location
-                        ON location.locationNum = board.boardUserCheck
                     JOIN kategory kategory
                         ON kategory.kategoryNum = board.boardKategory
                     JOIN file file
@@ -114,7 +112,9 @@
                     JOIN state state
                         ON board.boardProState = state.stateNum
                     JOIN user user
-        ON board.boardUserId = user.userId
+                        ON board.boardUserId = user.userId
+                    JOIN location location
+                        ON location.locationNum = user.userCheck
             JOIN map map
             on board.boardNum = map.mapBoardNum
         WHERE boardNum = #{boardNum} AND board.deleted_yn='N'
