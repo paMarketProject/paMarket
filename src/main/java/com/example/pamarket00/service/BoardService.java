@@ -12,15 +12,13 @@ import java.util.List;
 public interface BoardService {
     public List<TownDto> selectBoardList() throws Exception;
 
-    List<ReviewDto> selectReviewList() throws Exception;
-
     public void insertBoard(TownDto board) throws Exception;
 
     public void insertReviewBoard(ReviewDto reviewDto,String reviewFromUserId) throws Exception;
 
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 
-    public Page<ReviewDto> selectReviewList(int pageNum) throws Exception;
+    public Page<ReviewDto> selectReviewList(int pageNum, String reviewFromUserId) throws Exception;
 
 
     List<CommentDto> selectCommentList(int boardNum) throws Exception;

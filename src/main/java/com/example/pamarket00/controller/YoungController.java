@@ -139,11 +139,14 @@ public class YoungController {
 
     // seob이 추가한 부분. 타운컨트롤러에서 가져 옴
     @RequestMapping(value = "/myPageReview", method = RequestMethod.GET)
-    public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum) throws Exception {
+    public ModelAndView openBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum, HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView("YM/myPageReview");
 
-        PageInfo<ReviewDto> reviewBoard = new PageInfo<>(boardService.selectReviewList(pageNum),5);
-        mv.addObject("reviewBoard", reviewBoard);
+        HttpSession session = request.getSession();
+        UserDto user = (UserDto) session.getAttribute("user");
+
+        PageInfo<ReviewDto> reviewBoard = new PageInfo<>(boardService.selectReviewList(pageNum,user.getUserId()),20);
+        mv.addObject("reviewBoard",reviewBoard);
 
         return mv;
     }
@@ -151,6 +154,7 @@ public class YoungController {
     @RequestMapping(value = "/Review", method = RequestMethod.GET)
     public ModelAndView ReviewBoard(@RequestParam("boardUserId") String reviewFromUserId) throws Exception{
         ModelAndView mv = new ModelAndView("townboard/boardReviewWrite");
+
 
         mv.addObject("reviewFromUserId", reviewFromUserId);
 
