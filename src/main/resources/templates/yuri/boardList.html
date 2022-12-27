@@ -130,8 +130,8 @@
             <div class="col mb-5 list_box" th:if="${#lists.size(dataList.getList())} > 0" th:each="list : ${dataList.getList()}">
                 <div class="card h-100">
                     <div class="thumbnail">
-                        <img class="card-img-top" th:if="${list.filePath != null}" th:src="@{${list.filePath}}"></span>
-                        <img class="card-img-top" th:if="${list.filePath == null}" src="/image/logo.png"></span>
+                        <img class="card-img-top" th:if="${list.filePath != null}" th:src="@{${list.filePath}}">
+                        <img class="card-img-top" th:if="${list.filePath == null}" src="/image/logo.png">
 <!--                <img class="card-img-top" th:if="${session.user != null}" th:src="@{${list.filePath}}" alt="..." />-->
                     </div>
                         <div class="card-body p-4">
