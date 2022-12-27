@@ -55,14 +55,6 @@ public class YuriController {
         return mv;
     }
 
-//    @RequestMapping(value = "/search",method = RequestMethod.POST)
-//    public String search(@RequestParam(value="searchText") String searchText) {
-//
-//        return "search.html";
-//    }
-
-
-
 
     // 게시물 등록 view 페이지
     @RequestMapping("/productWrite")
