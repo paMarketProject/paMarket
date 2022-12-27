@@ -118,6 +118,32 @@
                 }
             });
 
+            $('.commentUpdate').on('click', function() {
+                const commentNum = $(this).parent().children('div.commentNum').text();
+                const commentContents = $(this).parent().parent().parent().find('input.form-control-plaintext').val();
+                alert(commentContents);
+                /*<![CDATA[*/
+                const pageNum = [[${board.boardNum}]];
+                /*]]>*/
+                const commentBoardNum = pageNum;
+
+                const datas = {"commentBoardNum" :commentBoardNum,"commentContents": commentContents, "commentNum":commentNum};
+
+                $.ajax({
+                    url:"/commentUpdate",
+                    type: "post",
+                    data: datas,
+                    success: function (data){
+                        alert('댓글을 수정했습니다.')
+                        location.reload()
+                    },
+
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            });
+
 
             $('#boardDelete').on('click', function (){
                 const userId = $('#userId').val();
