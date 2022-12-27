@@ -21,6 +21,19 @@
             padding: 30px;
             width: fit-content;
         }
+
+        body{
+            background-color: rgba(236,236,241,.44);
+        }
+        .accordion-item{
+            background-color: #f3f3f3;
+        }
+        #userCheck{
+            background-color: #f3f3f3;
+        }
+        #btn-location{
+            background-color: #f3f3f3;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -62,10 +75,10 @@
         <input type="text" class="form-control" id="userAdd2" name="userAdd2" th:value="'현재 주소가 '+${session.user.userAdd2}+'로 저장되어있어요'" style="border: none; background: transparent;">
         <hr>
         <br>
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion accordion-flush" id="aaa">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <button class="accordion-button collapsed" id="btn-location" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                         왜 동네인증을 해야하나요?
                     </button>
                 </h2>
@@ -105,5 +118,6 @@
     </div>
 </div>
 </form>
+<div th:insert="~{footer.html::footer}"></div>
 </body>
 </html>

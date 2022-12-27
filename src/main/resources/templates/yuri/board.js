@@ -54,7 +54,7 @@
 }
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB);
+    ps.keywordSearch(keyword, placesSearchCB);
 }
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -316,9 +316,6 @@
 
     // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
     // ex) console.log(message);
-
-
-
     //     더블클릭했을 때 색상 바뀌게
 
     function addMarker(position, normalOrigin, overOrigin, clickOrigin) {
@@ -377,7 +374,6 @@
     selectedMarker = marker;
 });
 }
-
     // MakrerImage 객체를 생성하여 반환하는 함수입니다
     function createMarkerImage(markerSize, offset, spriteOrigin) {
     var markerImage = new kakao.maps.MarkerImage(
