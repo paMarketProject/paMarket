@@ -5,6 +5,7 @@ import com.example.pamarket00.common.XyUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.example.pamarket00.dto.UserDto;
 import com.example.pamarket00.mapper.YuriBoardMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -17,19 +18,28 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.util.List;
 
 @Service
-public class YuriBoardServiceImpl implements YuriBoardService{
+public class YuriBoardServiceImpl implements YuriBoardService {
     @Autowired
     private YuriBoardMapper yuriBoardMapper;
     @Autowired
     private FileUtils fileUtils;
 
-    @Autowired
-    private XyUtils xyUtils;
+    //    @Autowired
+//    private XyUtils xyUtils;
     @Override
     public Page<ProductBoardDto> selectProductBoardList(int pageNum) throws Exception {
         PageHelper.startPage(pageNum, 8);
         return yuriBoardMapper.selectProductBoardListPage();
     }
+
+    //    검색한 값 조회
+    @Override
+    public Page<ProductBoardDto> search(int pageNum, String searchText) throws Exception {
+        PageHelper.startPage(pageNum, 8);
+        return yuriBoardMapper.search(searchText);
+    }
+
+
 
 //    게시물저장
     @Override
@@ -70,5 +80,16 @@ public class YuriBoardServiceImpl implements YuriBoardService{
         board.setFileList(fileList);
 
         return board;
+    }
+
+//    @Override
+//    public UserDto selectLocationInfo () throws Exception{
+//        return yuriBoardMapper.selectLocationInfo();
+//    }
+
+//    지역인증
+    @Override
+    public void locationBtnCheck(String userId, int userCheck){
+        yuriBoardMapper.locationBtnCheck(userId, userCheck);
     }
 }

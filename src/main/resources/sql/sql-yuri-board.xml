@@ -23,20 +23,42 @@
 
     <select id="selectProductBoardListPage" parameterType="hashmap"  resultType="com.example.pamarket00.dto.ProductBoardDto">
         <![CDATA[
-            SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, state.stateName,
-                   board.boardHitCnt,board.boardLike, board.boardContents,board.boardUserId, board.boardNum, file.filePath,
-                   file.fileBoardNum
-            FROM board
-            LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum) file
-                ON board.boardNum = file.fileBoardNum
-            JOIN location location
-                ON location.locationNum = board.boardUserCheck
-            JOIN kategory kategory
-                ON kategory.kategoryNum = board.boardKategory
-            JOIN state state
-                ON board.boardProState = state.stateNum
+        SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, state.stateName,
+               board.boardHitCnt,board.boardLike, board.boardContents,board.boardUserId, board.boardNum, file.filePath,
+               file.fileBoardNum, user.userCheck
+        FROM board
+                 LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum) file
+                           ON board.boardNum = file.fileBoardNum
+                 JOIN user user
+                    ON user.userId = board.boardUserId
+                JOIN kategory kategory
+                    ON kategory.kategoryNum = board.boardKategory
+                JOIN state state
+                    ON board.boardProState = state.stateNum
+                join location location
+                    on user.userCheck = location.locationNum
             WHERE board.deleted_yn='N' and board.boardType='p'
             ORDER BY board.boardNum desc
+        ]]>
+    </select>
+
+<!--    검색기능-->
+    <select id="search" parameterType="hashmap"  resultType="com.example.pamarket00.dto.ProductBoardDto">
+        <![CDATA[
+        SELECT board.boardTitle, board.boardProPrice, location.locationName, kategory.kategoryName, state.stateName,
+               board.boardHitCnt,board.boardLike, board.boardContents,board.boardUserId, board.boardNum, file.filePath,
+               file.fileBoardNum
+        FROM board
+                 LEFT JOIN (SELECT * FROM file GROUP BY file.fileBoardNum) file
+                           ON board.boardNum = file.fileBoardNum
+                 JOIN location location
+                      ON location.locationNum = board.boardUserCheck
+                 JOIN kategory kategory
+                      ON kategory.kategoryNum = board.boardKategory
+                 JOIN state state
+                      ON board.boardProState = state.stateNum
+        WHERE board.deleted_yn='N' and board.boardType='p' and boardTitle REGEXP #{searchText}
+        ORDER BY board.boardNum desc
         ]]>
     </select>
 
@@ -124,4 +146,10 @@
 ]]>
     </update>
 
+<!--지역인증 업데이트하기-->
+    <update id="locationBtnCheck" parameterType="com.example.pamarket00.dto.UserDto">
+        <![CDATA[
+        UPDATE user set userCheck = #{userCheck} where userId = #{userId}
+]]>
+    </update>
 </mapper>

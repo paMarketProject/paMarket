@@ -3,6 +3,7 @@ package com.example.pamarket00.mapper;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.FileDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.example.pamarket00.dto.UserDto;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +14,9 @@ public interface YuriBoardMapper {
 //    List<ProductBoardDto> selectProductBoardList() throws Exception;
 
     Page<ProductBoardDto> selectProductBoardListPage();
+
+//    검색한 값 조회
+    Page<ProductBoardDto> search(String searchText) throws Exception;
 
     void insertProductBoard(BoardDto board) throws Exception;
 
@@ -32,4 +36,7 @@ public interface YuriBoardMapper {
 //    조회수 증가
     void updateProductHitCount(int boardNum) throws Exception;
     ProductBoardDto selectProductBoardDetail(@Param("boardNum") int boardNum) throws Exception;
+
+//      지역인증
+    void locationBtnCheck(String userId, int userCheck);
 }

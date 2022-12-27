@@ -125,7 +125,7 @@
         <input type="file" class="form-control" id="files" name="files" multiple>
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-success" type="button">업로드</button>
+<!--            <button class="btn btn-success" type="button">업로드</button>-->
     </div>
     <hr>
 
@@ -200,13 +200,13 @@
                 </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-success" type="button" id="btn-final-save">저장</button>
+                    <button class="btn btn-success mt-3" type="button" id="btn-final-save">저장</button>
                 </div>
                 <input type="hidden" name="mapX" id="mapX">
                 <input type="hidden" name="mapY" id="mapY">
-            <div class="container mt-5 p-5">
-                <hr>
-            </div>
+<!--            <div class="container mt-5 p-5">-->
+<!--                <hr>-->
+<!--            </div>-->
         </div>
     </div>
         </div>
@@ -344,7 +344,7 @@
                 if (!confirm("이곳으로 정하시겠습니까?")) {
                     alert("다시 선택해주세요");  //아니오
                 } else {
-                    alert(placePosition); //예
+                    // alert(placePosition); //예
                     let removeBracket1 = placePosition.toString().replace("(", "");
                     let removeBracket2 = removeBracket1.toString().replace(")", "");
 
@@ -635,8 +635,7 @@
     function zoomOut() {
         map.setLevel(map.getLevel() + 1);
     }
-
-
 </script>
+<div th:insert="~{footer.html::footer}"></div>
 </body>
 </html>
