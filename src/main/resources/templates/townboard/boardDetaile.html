@@ -29,7 +29,6 @@
 
     <script th:inline="javascript">
         $(document).ready(function (){
-
             $("#commentSubmit").on("click", function(){
                 /*<![CDATA[*/
                 const pageNum = [[${board.boardNum}]];
@@ -38,7 +37,8 @@
                 const commentContents = $("#commentContents").val();
                 const commentNum = $("#commentNum").val();
                 // const commentUserId = $("#commentUserId").val()
-                const commentUserId = $('#userId').val();
+                const commentUserId = $("#userId").val();
+
                 const datas = {"commentContents": commentContents, "commentUserId":commentUserId, "commentBoardNum" :commentBoardNum, "commentNum":commentNum};
 
                 $.ajax({
@@ -51,17 +51,22 @@
                         if (data.length > 0) {
                             $("#comment--group").empty();
 
+
+
                             for (let i = 0; i < data.length; i++) {
                                 let comments = '';
                                 comments = '<li id="comment--1" class="list-group-item d-flex justify-content-between">';
-                                comments += '<div name="commentContents">' + data[i].commentContents + '</div>';
+
+                                comments += '<div name= "commentContents">';
+                                comments += '<div type="text" className="form-control-plaintext">' + data[i].commentContents+ '</div>';
+                                comments += '</div>';
                                 comments += '<div>';
                                 comments += '<div class="d-flex">';
                                 comments += '<div class="text-muted commentNum" style="display: none">'+data[i].commentNum+'</div>';
                                 comments += '<div class="text-muted commentUserId" style="margin-right: 8px" name="commentUserId">' + data[i].commentUserId + ' &nbsp;</div>';
                                 comments += '<div class="text-muted">' + data[i].commentDate + '&nbsp;</div>';
                                 comments += '<button class="badge btn-reply" type="button" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글 </button>'
-                                comments += '<button class="badge btn-reply" type="button" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>'
+                                comments += '<button class="badge commentUpdate" type="button" name="commentUpdate" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>'
                                 comments += '<button class="badge commentDelete" type="button" name="commentDelete" style="background-color: rgba(0,204,0,0.6)">삭제</button>'
                                 comments += '</div>'
                                 comments += '</div>'
@@ -85,19 +90,15 @@
             $('.commentDelete').on('click', function() {
                 const userId = $('#userId').val();
                 const commentUserId = $(this).parent().children('div.commentUserId').text();
-                console.log(userId);
-                console.log(commentUserId);
-
+                const commentNum = $(this).parent().children('div.commentNum').text();
                 if(userId == commentUserId){
-
-                    const commentNum = $(this).parent().children('div.commentNum').text();
                     // alert(commentNum);
                     /*<![CDATA[*/
                     const pageNum = [[${board.boardNum}]];
                     /*]]>*/
                     const commentBoardNum = pageNum;
-                    const commentDeleted_yn = 0;
-                    const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum, "commentDeleted_yn" : commentDeleted_yn};
+                    const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum};
+
 
                     $.ajax({
                         url:"/boardTownCommentDelete",
@@ -110,121 +111,103 @@
                         error: function (request, status, error){
                             alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                         }
-                    });
-
+                    })
                 }
-                else {
-                    alert('댓글삭제 권한이 없습니다.')
+                else{
+                    alert('삭제권한이 없습니다.')
                 }
             });
 
+
+            // 댓글 수정
             $('.commentUpdate').on('click', function() {
+                const userId = $('#userId').val();
+                const commentUserId = $(this).parent().children('div.commentUserId').text();
                 const commentNum = $(this).parent().children('div.commentNum').text();
                 const commentContents = $(this).parent().parent().parent().find('input.form-control-plaintext').val();
-                alert(commentContents);
-                /*<![CDATA[*/
-                const pageNum = [[${board.boardNum}]];
-                /*]]>*/
-                const commentBoardNum = pageNum;
-
-                const datas = {"commentBoardNum" :commentBoardNum,"commentContents": commentContents, "commentNum":commentNum};
-
-                $.ajax({
-                    url:"/commentUpdate",
-                    type: "post",
-                    data: datas,
-                    success: function (data){
-                        alert('댓글을 수정했습니다.')
-                        location.reload()
-                    },
-
-                    error: function (request, status, error){
-                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                    }
-                })
-            });
-
-
-            $('#boardDelete').on('click', function (){
-                const userId = $('#userId').val();
-                const boardUserId = $('#boardUserId').val();
-
-                if(userId == boardUserId){
+                if(userId == commentUserId){
                     /*<![CDATA[*/
-                    const boardNum = [[${board.boardNum}]];
+                    const pageNum = [[${board.boardNum}]];
                     /*]]>*/
-                    const datas = {"boardNum": boardNum};
+                    const commentBoardNum = pageNum;
+
+                    const datas = {"commentBoardNum" :commentBoardNum,"commentContents": commentContents, "commentNum":commentNum};
 
                     $.ajax({
-                        url:"/boardTownDelete",
+                        url:"/commentUpdate",
                         type: "post",
                         data: datas,
                         success: function (data){
-                            alert('게시글을 삭제하였습니다.')
-                            frm.action = "/boardTown"
-                            frm.submit();
-
+                            alert('댓글을 수정했습니다.')
+                            location.reload()
                         },
-                        error: function (request, status, error){
-                            alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                        }
-                    })
-                }
-                else {
-                    alert('삭제 권한이 없습니다.')
-                }
-            })
 
-            $('#boardUpdate').on('click', function(){
-                const userId = $('#userId').val();
-                const boardUserId = $('#boardUserId').val();
-
-                if(userId == boardUserId){
-                    /*<![CDATA[*/
-                    const boardNum = [[${board.boardNum}]];
-                    /*]]>*/
-
-                    const boardTitle = $("#boardTitle").val();
-                    const boardContents = $("#boardContents").val();
-                    const pageNum = [[${board.boardNum}]];
-                    /*]]>*/
-                    const datas = {"boardNum": boardNum, "boardTitle":boardTitle, "boardContents":boardContents};
-
-                    $.ajax({
-                        url:"/boardTownUpdate",
-                        type:"post",
-                        data: datas,
-                        success: function (data){
-                            alert('게시글을 수정하였습니다')
-                            frm.action = "/boardTown"
-                            frm.submit();
-
-
-                        },
                         error: function (request, status, error){
                             alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                         }
                     })
                 }
                 else{
-                    alert('수정권한이 없습니다')
+                    alert('수정 권한이 없습니다.')
                 }
+            });
+
+
+
+
+            $('#boardDelete').on('click', function (){
+                /*<![CDATA[*/
+                const boardNum = [[${board.boardNum}]];
+                /*]]>*/
+                const datas = {"boardNum": boardNum};
+
+                $.ajax({
+                    url:"/boardTownDelete",
+                    type: "post",
+                    data: datas,
+                    success: function (data){
+                        alert('게시글을 삭제하였습니다.')
+                        frm.action = "/boardTown"
+                        frm.submit();
+
+                    },
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
             })
 
+            $('#boardUpdate').on('click', function(){
+                /*<![CDATA[*/
+                const boardNum = [[${board.boardNum}]];
+                /*]]>*/
 
+                const boardTitle = $("#boardTitle").val();
+                const boardContents = $("#boardContents").val();
+                const pageNum = [[${board.boardNum}]];
+                /*]]>*/
+                const datas = {"boardNum": boardNum, "boardTitle":boardTitle, "boardContents":boardContents};
+
+                $.ajax({
+                    url:"/boardTownUpdate",
+                    type:"post",
+                    data: datas,
+                    success: function (data){
+                        alert('게시글을 수정하였습니다')
+                        frm.action = "/boardTown"
+                        frm.submit();
+
+
+                    },
+                    error: function (request, status, error){
+                        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+
+            })
         });
 
-        // $("#commentDelete").on("click", function(){
-        //     const pageNum = [[${board.boardNum}]];
-        //     /*]]>*/
-        //     const commentBoardNum = pageNum;
-        //     const commentNum = $("#commentNum").text();
-        //     const commentDeleted_yn = 0;
-        //     const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum, "commentDeleted_yn" : commentDeleted_yn};
-        //
-        //
-        //
-        // })
+
 
 
 
@@ -245,6 +228,7 @@
     <div th:insert="~{LoginHeader.html::header}"></div>
 </div>
 <input type="hidden" id="userId" name="userId" th:value="${session.user.userId}">
+
 <div class="container" style="margin-top: 30px">
     <hr>
     <div class="col-md-10">
@@ -319,7 +303,7 @@
         </div>
     </div>
     <div class="card" style="width: 83.4%">
-        <div class="card-header">댓글리스트</div>
+        <div class="card-header"  >댓글리스트</div>
         <ul id="comment--group" class="list-group">
             <li th:if="${#lists.size(commentList)}>0" th:each="item : ${commentList}" id="comment--1" class="list-group-item d-flex justify-content-between" >
 
@@ -329,7 +313,7 @@
                 <div>
                     <div class="d-flex">
                         <div th:text="${item.commentNum}" class="text-muted commentNum" name="commentNum" style="display: none"></div>
-                        <div th:text="${item.commentUserId}" class="text-muted commentUserId" style="margin-right: 8px" name="commentUserId"></div>
+                        <div th:text="${item.commentUserId}" class="text-muted commentUserId" style="margin-right: 8px" name="commentUserId">지은이 &nbsp;</div>
                         <div th:text="${item.commentDate}" name="commentDate" class="text-muted commentDate">등록날짜&nbsp;</div>
                         <button class="badge btn-reply" type="button" style="background-color: rgba(0,204,0,0.6); margin-left: 8px; ">답글</button>
                         <button class="badge commentUpdate" type="button" name="commentUpdate" style="background-color: rgba(0,204,0,0.6); margin-right: 5px; margin-left: 5px">수정</button>
