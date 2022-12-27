@@ -1,40 +1,131 @@
-<!doctype html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Websocket ChatRoom</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="widh=device-width", initial-scale="1">
+    <link rel="stylesheet" href="/css/bootstrap.css ">
+    <title>대파마켓</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css">
     <style>
+        body{
+            background:#f3f3f3;
+            margin-top:20px;
+            color: #616f80;
+        }
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+            box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+        }
+
+        .avatar-xs {
+            height: 2.3rem;
+            width: 2.3rem;
+        }
+
+        /*    페이지네이션 색*/
+        .page-link {
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #146c43;
+            font-weight:bold;
+            background-color: #f1f1f1;
+            border-color: #ccc;
+
+        }
+
+        .page-link:focus, .page-link:hover {
+            color: #146c43;
+            background-color: #fafafa;
+            border-color: #ccc;
+        }
+
         [v-cloak] {
             display: none;
         }
+
+        #footer {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
     </style>
+    <script>
+        $(document).ready(function (){
+            let userId = $('#userId').val();
+            $('#btn-write').on('click',function (){
+
+                if(userId == null){
+                    console.log(userId);
+                    alert('로그인이 필요한 서비스 입니다.');
+                    location.href='/login';
+                }
+                else{
+                    location.href="/boardTownWrite";
+                }
+            });
+        });
+
+        // window.localStorage.getItem(roomname)
+    </script>
 </head>
+
 <body>
-<div class="container" id="app" v-cloak>
-    <div>
-        <h2>{{room.name}}</h2>
-    </div>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <label class="input-group-text">내용</label>
-        </div>
-        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
-        </div>
-    </div>
-    <ul class="list-group">
-        <li class="list-group-item" v-for="message in messages">
-            {{message.sender}} - {{message.message}}
-        </li>
-    </ul>
-    <div></div>
+
+<!-- 헤더 -->
+<div th:if="${session.user == null}">
+    <div th:insert="~{header.html::header}"></div>
 </div>
+<div th:if="${session.user != null}">
+    <div th:insert="~{LoginHeader.html::header}"></div>
+</div>
+<div th:if="${session.user != null}">
+    <input type="hidden" id="userId" name="userId" th:value="${session.user.userId}">
+</div>
+
+
+
+<!--채팅방-->
+<div id="wrapper">
+    <div class="container" id="app" v-cloak>
+
+        <div>
+            <h1>{{room.name}}</h1>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" style="background-color: rgba(66,177,100,0.6)">내용</label>
+            </div>
+            <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage" >
+            <button class="btn btn-success" type="button" @click="sendMessage" style="background-color: rgba(66,177,100,0.6)">보내기</button>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="message in messages">
+                {{message.sender}} - {{message.message}}
+            </li>
+        </ul>
+        <div></div>
+    </div>
+</div>
+
+<div th:insert="~{footer.html::footer}" ></div>
+
+
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
@@ -97,4 +188,8 @@
     connect();
 </script>
 </body>
+
+
+
 </html>
+
