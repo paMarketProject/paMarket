@@ -37,7 +37,7 @@
                 const commentContents = $("#commentContents").val();
                 const commentNum = $("#commentNum").val();
                 // const commentUserId = $("#commentUserId").val()
-                const commentUserId = 'testid';
+                const commentUserId = $("#userId").val();
 
                 const datas = {"commentContents": commentContents, "commentUserId":commentUserId, "commentBoardNum" :commentBoardNum, "commentNum":commentNum};
 
@@ -88,13 +88,17 @@
             });
 
             $('.commentDelete').on('click', function() {
+                const userId = $('#userId').val();
+                const commentUserId = $(this).parent().children('div.commentUserId').text();
                 const commentNum = $(this).parent().children('div.commentNum').text();
+                if(userId == commentUserId){
                 // alert(commentNum);
                 /*<![CDATA[*/
                 const pageNum = [[${board.boardNum}]];
                 /*]]>*/
                 const commentBoardNum = pageNum;
                 const datas = {"commentBoardNum" :commentBoardNum, "commentNum":commentNum};
+
 
                 $.ajax({
                     url:"/boardTownCommentDelete",
@@ -108,14 +112,20 @@
                         alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 })
+                }
+                else{
+                    alert('삭제권한이 없습니다.')
+                }
             });
 
 
             // 댓글 수정
             $('.commentUpdate').on('click', function() {
+                const userId = $('#userId').val();
+                const commentUserId = $(this).parent().children('div.commentUserId').text();
                 const commentNum = $(this).parent().children('div.commentNum').text();
                 const commentContents = $(this).parent().parent().parent().find('input.form-control-plaintext').val();
-                alert(commentContents);
+                if(userId == commentUserId){
                 /*<![CDATA[*/
                 const pageNum = [[${board.boardNum}]];
                 /*]]>*/
@@ -136,6 +146,10 @@
                         alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                     }
                 })
+                }
+                else{
+                    alert('수정 권한이 없습니다.')
+                }
             });
 
 
@@ -213,6 +227,7 @@
 <div th:if="${session.user != null}">
     <div th:insert="~{LoginHeader.html::header}"></div>
 </div>
+<input type="hidden" id="userId" name="userId" th:value="${session.user.userId}">
 
 <div class="container" style="margin-top: 30px">
     <hr>
