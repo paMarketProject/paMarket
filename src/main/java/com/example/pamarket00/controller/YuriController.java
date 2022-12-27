@@ -4,6 +4,7 @@ package com.example.pamarket00.controller;
 import com.example.pamarket00.common.FileUtils;
 import com.example.pamarket00.dto.BoardDto;
 import com.example.pamarket00.dto.ProductBoardDto;
+import com.example.pamarket00.dto.UserDto;
 import com.example.pamarket00.service.YuriBoardService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -41,6 +44,25 @@ public class YuriController {
 
         return mv;
     }
+
+    //    검색기능 진행 중
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ModelAndView search(@RequestParam(required = false, defaultValue = "1")int pageNum, @RequestParam("searchText")String searchText) throws Exception {
+        ModelAndView mv = new ModelAndView("yuri/search");
+
+        PageInfo<ProductBoardDto> dataList = new PageInfo<>(yuriBoardService.search(pageNum,searchText));
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+
+//    @RequestMapping(value = "/search",method = RequestMethod.POST)
+//    public String search(@RequestParam(value="searchText") String searchText) {
+//
+//        return "search.html";
+//    }
+
+
+
 
     // 게시물 등록 view 페이지
     @RequestMapping("/productWrite")
@@ -86,9 +108,20 @@ public class YuriController {
     }
 
     @RequestMapping("/locationCheck")
-    public String yurilocationCheck() throws Exception {
+    public String locationCheck() throws Exception {
         return "yuri/locationCheck";
     }
+
+//    지역인증하기
+    @ResponseBody
+    @RequestMapping(value = "/locationBtnCheck",method = RequestMethod.POST)
+    public String locationBtnCheck(@RequestParam(value = "userId") String userId, @RequestParam(value = "userCheck") int userCheck) throws Exception {
+        yuriBoardService.locationBtnCheck(userId, userCheck);
+        return "redirect:/myPage";
+    }
+
+
 }
+
 
 
