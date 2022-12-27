@@ -93,9 +93,7 @@
             <tbody>
             <tr th:if="${#lists.size(reviewBoard.getList())} > 0" th:each="item : ${reviewBoard.getList()}">
               <td th:text="${item.reviewScore}" style="text-align: center"></td>
-              <td style="text-align: center">
-                <a href="/boardTown" th:attrappend="href=${item.reviewNum}" th:text="${item.reviewContents}" style="text-decoration: none; color: inherit; text-align: center"  class="text-decoration-none"></a>
-              </td>
+              <td style="text-align: center" th:text="${item.reviewContents}"></td>
               <td th:text="${item.reviewToUserId}" style="text-align: center"></td>
               <td th:text="${item.reviewDate}" style="text-align: center"></td>
             </tr>
