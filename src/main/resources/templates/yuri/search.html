@@ -7,30 +7,95 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        #title{
-            color: #00FF80;
-            font-size: large;
-            font-weight: bold;
-        }
-        hr{
-            background-color : pink;
-        }
-        .pagination > .active > a,
-        .pagination > .active > span,
-        .pagination > .active > a:hover,
-        .pagination > .active > span:hover,
-        .pagination > .active > a:focus,
-        .pagination > .active > span:focus {
-            background: #5bbebb;
-            border-color: #5bbebb;
-        }
+        /*#title{*/
+        /*    color: #00FF80;*/
+        /*    font-size: large;*/
+        /*    font-weight: bold;*/
+        /*}*/
+        /*hr{*/
+        /*    background-color : pink;*/
+        /*}*/
+        /*.pagination > .active > a,*/
+        /*.pagination > .active > span,*/
+        /*.pagination > .active > a:hover,*/
+        /*.pagination > .active > span:hover,*/
+        /*.pagination > .active > a:focus,*/
+        /*.pagination > .active > span:focus {*/
+        /*    background: #5bbebb;*/
+        /*    border-color: #5bbebb;*/
+        /*}*/
+        /*.page-link{*/
+        /*    color: #999;*/
+        /*}*/
+
+        /*#search{*/
+        /*    float: right;*/
+        /*    margin-right:280px;*/
+        /*}*/
+        /*.card {*/
+        /*    border: none;*/
+        /*    margin-bottom: 24px;*/
+        /*    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);*/
+        /*    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);*/
+        /*}*/
+
+
+    /*    소스코드 복사해온것*/
         .page-link{
             color: #999;
+        }
+
+
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+            box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+        }
+
+        /*    페이지네이션 색*/
+        .page-link {
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #146c43;
+            font-weight:bold;
+            background-color: #f1f1f1;
+            border-color: #ccc;
+
+        }
+
+        .page-link:focus, .page-link:hover {
+            color: #146c43;
+            background-color: #fafafa;
+            border-color: #ccc;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 300px;
+        }
+        .thumbnail img{
+            width: 100%;
+            height: 100%;
+        }
+        .list_box .card{
+            border: 1px solid darkseagreen;
+            box-shadow: rgba(0,0,0,0.1) 5px 5px 25px;
+        }
+        body {
+            background: #f3f3f3;
+            margin-top: 20px;
         }
 
         #search{
             float: right;
             margin-right:280px;
+
         }
     </style>
 
@@ -130,10 +195,6 @@
                 </div>
             </div>
         </div>
-<!--        &lt;!&ndash;글쓰기버튼&ndash;&gt;-->
-<!--        <form method="post">-->
-<!--            <button class="btn btn-outline-success" type="button" id="btn-write">글쓰기</button>-->
-<!--        </form>-->
     </div>
     </div>
 </section>
