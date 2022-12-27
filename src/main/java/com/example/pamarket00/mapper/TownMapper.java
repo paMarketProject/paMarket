@@ -31,7 +31,7 @@ public interface TownMapper {
 
     Page<TownDto> selectBoardListPage();
 
-    Page<ReviewDto> selectReviewListPage() throws Exception;
+    Page<ReviewDto> selectReviewListPage(String reviewFromUserId) throws Exception;
 
 
 

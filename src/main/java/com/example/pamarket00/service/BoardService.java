@@ -18,7 +18,7 @@ public interface BoardService {
 
     public TownDto selectBoardDetail(int boardNum) throws Exception;
 
-    public Page<ReviewDto> selectReviewList(int pageNum) throws Exception;
+    public Page<ReviewDto> selectReviewList(int pageNum, String reviewFromUserId) throws Exception;
 
 
     List<CommentDto> selectCommentList(int boardNum) throws Exception;

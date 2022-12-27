@@ -90,9 +90,9 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public Page<ReviewDto> selectReviewList(int pageNo) throws Exception {
+    public Page<ReviewDto> selectReviewList(int pageNo, String reviewFromUserId) throws Exception {
         PageHelper.startPage(pageNo,10);
-        return townMapper.selectReviewListPage();
+        return townMapper.selectReviewListPage(reviewFromUserId);
     }
 
     @Override

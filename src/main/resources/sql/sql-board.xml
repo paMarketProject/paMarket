@@ -56,7 +56,7 @@
 
 
 
-    <select id="selectReviewListPage" resultType="com.example.pamarket00.dto.ReviewDto">
+    <select id="selectReviewListPage" resultType="com.example.pamarket00.dto.ReviewDto" parameterType="String">
         <![CDATA[
         SELECT
             reviewNum, reviewContents, reviewToUserId,
