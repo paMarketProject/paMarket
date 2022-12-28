@@ -50,9 +50,6 @@
 
                         if (data.length > 0) {
                             $("#comment--group").empty();
-
-
-
                             for (let i = 0; i < data.length; i++) {
                                 let comments = '';
                                 comments = '<li id="comment--1" class="list-group-item d-flex justify-content-between">';
@@ -73,12 +70,9 @@
 
                                 $("#comment--group").append(comments);
                             }
-
                         }
                         else {
-
                         }
-
                     },
                     error: function (request, status, error){
                         alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
