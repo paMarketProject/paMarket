@@ -20,6 +20,7 @@
 <br>
 
 ## 🧡 DB설계
+<img src="https://user-images.githubusercontent.com/101693599/221791474-18a55d53-c4dd-4ecd-8951-1689e709f813.PNG"/>
 
   
 ## 🏃‍♂️ 구성원
